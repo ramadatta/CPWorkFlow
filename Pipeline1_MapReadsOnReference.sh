@@ -1,5 +1,5 @@
 Location -
-/storage/data/DATA4/analysis/27_Paeurginosa_183_samples_Shawn
+/storage/data/DATA4/analysis/27_Project
 
 #################################################################################################################################
 
@@ -34,7 +34,7 @@ $ for d in $(ls -d */ | tr -d "/"); do cd $d; echo $d; base=`ls *DDM*HFKWVCCX2*L
 # Unzip the gz files 
 time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d; gunzip *.gz; cd ..; done
 
-cd /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/1_Rawdata/Samples_without_Topup
+cd /storage/data/DATA4/analysis/27_Project/1_Rawdata/Samples_without_Topup
 
 # Unzip the gz files - because these are softlinks we write to  an other file
 time for d in $(ls *.fq.gz); do base=`echo $d | sed 's/.fq.gz//'`; gunzip -c $d >"$base".fq; done
@@ -81,7 +81,7 @@ manually copied the bbmap command log into adapter_trimming.log
 mkdir ../2_AdapterTrimmed_bbduk_Q30
 
 # move the adapter trimmed files into another directory
-mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/2_AdapterTrimmed_bbduk_Q30/2_AdapterTrimmed_bbduk_Q30
+mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/2_AdapterTrimmed_bbduk_Q30
 
 # move to specific folder
 $ for d in $(ls *.fq| awk -F_ '{print $1}' | sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
@@ -217,7 +217,7 @@ So using 179 samples for prokka because of same species and ST
 $ mkdir 9_Prokka
 $ cd 9_Prokka
 
-$ ln -s /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/4_SPAdes_Assemblies/gteq1kb/*.fasta .
+$ ln -s /storage/data/DATA4/analysis/27_Project/4_SPAdes_Assemblies/gteq1kb/*.fasta .
 $ for d in $(cat log_mlst | sort -nrk3,3 | fgrep '-' | cut -f1); do echo $d; rm ../9_Prokka/$d ; done # remove No Species, No ST samples
 
 $ for d in $(ls *.fasta | sed 's/_spades.gte1kb.contigs.fasta//g'); do echo "$d"; prokka --force --cpus 32 --outdir "$d"_prokka_out --prefix "$d" "$d"_spades.gte1kb.contigs.fasta >>prokka_log 2>>prokka_error; done
@@ -438,7 +438,7 @@ manually copied the bbmap command log into adapter_trimming.log
 mkdir ../2_AdapterTrimmed_bbduk_Q30
 
 # move the adapter trimmed files into another directory
-mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/2_AdapterTrimmed_bbduk_Q30/2_AdapterTrimmed_bbduk_Q30
+mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/2_AdapterTrimmed_bbduk_Q30
 
 # move to specific folder
 $ for d in $(ls *.fastq| awk -F_ '{print $1}' | sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
@@ -476,16 +476,16 @@ Observations: adapters are removed and the bases are quality trimmed in sequence
 
 ## Running SNIPPY on 179 ST308 samples internal and 31 Jeanette's samples
 
-$ cd /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/
+$ cd /storage/data/DATA4/analysis/27_Project/
 
 $ mkdir 15_SNIPPY_internal179_Jeanette_31_ST308samples
 
 #Generate a list of ID R1 R2 for running multiple samples
 ##########################################################
 
-$ for d in $(cat list_PAE_ST308_179samples); do echo "$d"; find /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/ -name "$d*.fq*" | grep 'bbmap' | sort; done | paste - - - >input.tab
+$ for d in $(cat list_PAE_ST308_179samples); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/ -name "$d*.fq*" | grep 'bbmap' | sort; done | paste - - - >input.tab
 
-2_AdapterTrimmed_bbduk_Q30]$ for d in $(ls -d */ | tr -d "/"); do echo "$d"; find /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30 -name "$d*bbmap*.fastq" | sort; done | paste - - - >>/storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/15_SNIPPY_internal179_Jeanette_31_ST308samples/input.tab
+2_AdapterTrimmed_bbduk_Q30]$ for d in $(ls -d */ | tr -d "/"); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30 -name "$d*bbmap*.fastq" | sort; done | paste - - - >>/storage/data/DATA4/analysis/27_Project/15_SNIPPY_internal179_Jeanette_31_ST308samples/input.tab
 
 $ /storage/apps/snippy/bin/snippy-multi input.tab --ref PAO1_reference.fasta --cpus 32 > paeruginosa_snippy_runme.sh
 
@@ -538,17 +538,17 @@ integrase     3473759 - 3474958
 
 
 
-for d in $(ls /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/17_srst2/"$base"_S1_L001_R1_001.fq; done
+for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
 
-for d in $(ls /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/17_srst2/"$base"_S1_L001_R2_001.fq; done
+for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
 
-for d in $(ls /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/17_srst2/"$base"_S1_L001_R1_001.fq; done
+for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
 
-for d in $(ls /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/17_srst2/"$base"_S1_L001_R2_001.fq; done
+for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
 
 $ for d in $(ls *.fq | awk -F_ '{print $1}'|sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
 
-$ time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d;  R1=`ls *_S1_L001_R1_001.fq`; R2=`ls *_S1_L001_R2_001.fq`; echo "R1: $R1----R2: $R2"; time srst2 --input_pe $R1 $R2 --output test_srst2 --log --gene_db /storage/data/DATA4/analysis/27_Paeruginosa_183_samples_Shawn/16_Check_presence_of_ICETn43716385/ICETn43716385.fasta --threads 48; cd ..; done
+$ time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d;  R1=`ls *_S1_L001_R1_001.fq`; R2=`ls *_S1_L001_R2_001.fq`; echo "R1: $R1----R2: $R2"; time srst2 --input_pe $R1 $R2 --output test_srst2 --log --gene_db /storage/data/DATA4/analysis/27_Project/16_Check_presence_of_ICETn43716385/ICETn43716385.fasta --threads 48; cd ..; done
 
 $ cat */test_srst2__fullgenes__ICETn43716385__results.txt | awk '{print $1 "\t" $2 "\t" $4 "\t" $5 "\t" $7}' | grep -v 'coverage' | column -t
 
