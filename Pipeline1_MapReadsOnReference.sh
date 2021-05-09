@@ -165,7 +165,7 @@ Fill the form with the sample details
 
 Go to webpage: https://cge.cbs.dtu.dk/services/cge/
 
-Login: ramadatta.88 - Krisarc8892
+Login: ramadatta.88 - nb9GxPxm
 
 Upload the metadataform and fasta files (gteq1kb size) - Click Submit! Provide email address to get intimated by CGE server when the data processing is done.
 
@@ -179,11 +179,6 @@ cd 2_AdapterTrimmed_bbduk/
 
 $ time for d in $(ls -d */ | tr -d '/'); do echo $d; cd $d; R1=`ls *_1_*.fq | sed 's/.fq//g'`; R2=`ls *_2_*.fq | sed 's/.fq//g'`; echo "$R1 $R2"; kraken2 --db /storage/apps/Kraken2/Kraken2_db/minikraken_8GB_20200312 --threads 48 --report "$d"_kraken2_report --paired "$R1".fq "$R2".fq --output "$d"_kraken2_result; cd ../; done
 
-real	59m52.226s
-user	381m15.221s
-sys	55m7.728s
-
-
 --> Top species
 
 $ for d in $(ls */*report); do echo $d; egrep -m1 "\sS\s" $d; done >>ALL_kraken2_report_top1species 
@@ -196,223 +191,158 @@ mv */*kraken2* ../7_KRAKEN2
 7. Kleborate (Only if all species are Klesiella Species)
 #########################################################
 
- Backburner...
+#Not performed for this project since these are PAE samples
 
  mkdir 8_Kleborate
 
-8. Prokka
-#########
+8. Core Genome alignment and variant calling
+#############################################
 
-MLST tool assignment: 
+# From MLST tool assignment, 179 samples/183 with P.aeruginosa ST308 (NUH samples from Jeanette's paper are also ST308)
 
-- 179 samples/183 with P.aeruginosa ST308 (same as jeanette's paper)
+# On March 23rd, Dr. Ng wanted to add 31 samples of PAE from Jeanette's study from NUH to our data and run the SNIPPY using PA01 as reference genomes
+# and generate a BEAST evolutionary tree. So, downloaded the 31 samples data from NCBI link : https://www.ncbi.nlm.nih.gov/bioproject/PRJNA507901
 
-Out of the rest 4 samples, 
+#The details and raw-read processing of these 31 samples are listed in the bottom (please refer Ad-Hoc Analysis 1). The adapter-trimmed-quality-filtered data is used for the core-genome aligned
 
-- 3 samples are assigned with P.aeruginosa, No ST assigned, 
-- 1 sample with No Species, No ST
+## Running SNIPPY on 179 ST308 samples internal and 31 Jeanette's samples to generate recombinant free polymorphic SNP sites
 
-So using 179 samples for prokka because of same species and ST
+$ cd /storage/data/DATA4/analysis/27_Project/
 
-$ mkdir 9_Prokka
-$ cd 9_Prokka
+$ mkdir 15_SNIPPY_internal179_Jeanette_31_ST308samples
 
-$ ln -s /storage/data/DATA4/analysis/27_Project/4_SPAdes_Assemblies/gteq1kb/*.fasta .
-$ for d in $(cat log_mlst | sort -nrk3,3 | fgrep '-' | cut -f1); do echo $d; rm ../9_Prokka/$d ; done # remove No Species, No ST samples
+#Generate a list of ID R1 R2 for running multiple samples for SNIPPY input (based on SNIPPY's documentation)
+############################################################################################################
 
-$ for d in $(ls *.fasta | sed 's/_spades.gte1kb.contigs.fasta//g'); do echo "$d"; prokka --force --cpus 32 --outdir "$d"_prokka_out --prefix "$d" "$d"_spades.gte1kb.contigs.fasta >>prokka_log 2>>prokka_error; done
+# 179 PAE samples
+$ for d in $(cat list_PAE_ST308_179samples); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/ -name "$d*.fq*" | grep 'bbmap' | sort; done | paste - - - >input.tab
 
-mkdir ../10_Roary
+# 31 NUH samples
+2_AdapterTrimmed_bbduk_Q30]$ for d in $(ls -d */ | tr -d "/"); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30 -name "$d*bbmap*.fastq" | sort; done | paste - - - >>/storage/data/DATA4/analysis/27_Project/15_SNIPPY_internal179_Jeanette_31_ST308samples/input.tab
 
-cp */*.gff ../10_Roary/
+# Create a runMe file of SNIPPY commands using the following command (based on SNIPPY's documentation)
+$ /storage/apps/snippy/bin/snippy-multi input.tab --ref PAO1_reference.fasta --cpus 32 > paeruginosa_snippy_runme.sh
 
-9. Roary
-########
+# Run SNIPPY pipeline
+$ ./paeruginosa_snippy_runme.sh # This script generates all the core genome alignments
 
-$ time roary -e --mafft -g 60000 -p 48 -cd 95 *.gff
+# Remove all the "weird" characters and replace them with N. This is required if we are running gubbins (based on SNIPPY's documentation)
+$ /storage/apps/snippy/bin/snippy-clean_full_aln core.full.aln > clean.core.full.aln
 
-real	41m2.056s
-user	591m33.247s
-sys	10m39.796s
+# "clean.core.full.aln" file contains full genome alignment with SNPs flaged by SNIPPY. 
+# Run gubbins on clean.core.full.aln to fiter the recombinant regions. Gubbins generates recombinant free polymorphic SNP sites.
+$ run_gubbins.py -p gubbins clean.core.full.aln --threads 48 --verbose
 
+#############--------------Divergence tree estimation - For BEAST analysis------------------#################
 
-$ mkdir ../11_SNP_Validation
+# The recombinant free polymorphic SNP sites fasta file can be used an input by 
+#   1) by adding invariant sites (beast constant sites)  into XML (OR)
+#   2) by adding invariant sites to sequences and sequences loaded into BEAST through XML.
 
---> Create a list of all the samples according to ST type to be SNP validated
+# From experience, method 1 is magnitude times faster than method 2 simply because loading the whole genome into memory for computation is intensive than loading only SNP sites with constant sites.
 
-# This oneliner generates list of files with the sample IDs according to the ST assigned by MLST tool
+# I am listing steps using both methods
 
-# Make sure there is a tab delimted space when using the fgrep
+#----------------> Divergence tree estimation - method 1
 
-for d in $(cat ../5_MLST/log_mlst | awk '{print $3}' | sort -u);do 
-num=`grep -P "\t$d\t" ../5_MLST/log_mlst | wc -l`; 
-grep -P "\t$d\t" ../5_MLST/log_mlst | awk '{print $1 "\t" $3}' | sed 's/_spades.*//g' >list_PAE_ST"$d"_"$num"samples; 
-done
+# Append date to the fasta headers
 
-$ cp list_PAE_ST*samples../11_SNP_Validation/
-$ cp core_gene_alignment.aln ../11_SNP_Validation
+time perl /storage/apps/SNP_Validation_Scripts/tools/BEAST_DatesHeader.pl <inputfasta> <outputfile_Prefix>
+time perl /storage/apps/SNP_Validation_Scripts/tools/BEAST_DatesHeader.pl postGubbins.filtered_polymorphic_sites.fasta postGubbins.filtered_polymorphic_sites # This command generates postGubbins.filtered_polymorphic_sites_withDates_forBEAST.fasta file
 
-10. SNP Validation
-###################
+#----------------> Divergence tree estimation - method 2
 
-cd ../11_SNP_Validation  
+# Steps: Mask recombination in the full alignment using maskrc-svg, 
 
-cp /storage/apps/SNP_Validation_Scripts/tools/snpvalidation.sh .
+# Generate a cleancore.full.recomb.masked.fasta alignment
+$ maskrc-svg.py --aln clean.core.full.aln --out cleancore.full.recomb.masked.fasta --gubbins gubbins
 
-In the snpvalidation.sh script, change the path of the directory for R1 and R2 to run snippy. For example, for wenjian project here I have put:
+# Pad Invariant Sites after Gubbins - this script takes genome calculates invariant sites, Runs trimal and removes recombinant regions but retains "-" by converting to Ns. Beast takes the input with gaps (-)/Ns
+time /storage/apps/SNP_Validation_Scripts/tools/padInvariantSites_afterGubbins.sh PAO1_reference.fasta
 
-/storage/data/DATA4/analysis/24_Wenjian_data_analysis/2_AdapterTrimmed_bbduk_Q30/$d/"$d"*_1_bbmap_adaptertrimmed.fastq #---> for R1 
-/storage/data/DATA4/analysis/24_Wenjian_data_analysis/2_AdapterTrimmed_bbduk_Q30/$d/"$d"*_2_bbmap_adaptertrimmed.fastq #---> for R2 
+# remove extra inforamtion other than sample names
+sed -i 's/ 6091903 bp//g'  cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend.fasta
 
+# Append date to the fasta headers
+time perl /storage/apps/SNP_Validation_Scripts/tools/BEAST_DatesHeader.pl cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend.fasta cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta
 
-$ time ./snpvalidation.sh list_PAE_ST-_4samples
+# Exclude the fasta sequences without dates
+grep -A1 "|" cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates.fasta >cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
 
+sed -i 's/--//g' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
+sed -i '/^$/d' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
 
+5 samples did not have dates so excluded from the analysis. So BEAST run on 205 samples from ST308
 
 
-time ./snpvalidation.sh list_PAE_ST308_179samples
-real	265m40.723s
-user	2240m11.863s
-sys	143m41.217s
+# SRST2 check for ICETn43716385 
 
+SRST2 has some version issue. So, created a new SRST2 environment and installed the SRST2
 
+conda activate srst2_environment
 
-11. Gubbins (We no more do padding before gubbins) &&  Calculate SNP difference
-######################################################################
+Extracted region :
 
-Once the snpvalidation is done, change directory into the PAE_ST308_179samples, and run gubbins
+trbl        3401482 - 3405853
+ndm        3431913
+radc        3463390
+integrase     3473759 - 3474958
 
-cd PAE_ST308_179samples # Later repeat the following steps to the WJ_Klebsiella_ST23_4samples also
 
-$ mkdir Gubbins
 
-$ cp core_gene_alignment_withConsensus_convertXtoN_convertgaptoLittleN_editedByGATK_renamed.fasta Gubbins/
+for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
 
-$ cd Gubbins/
+for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
 
-# Convert the consensus alignment into one liner fasta format
+for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
 
-$ perl /storage/apps/SNP_Validation_Scripts/tools/convertFastatoOneLine.pl core_gene_alignment_withConsensus_convertXtoN_convertgaptoLittleN_editedByGATK_renamed.fasta
+for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
 
-# Assuming consensus is on top remove consensus sequence from the above fasta file
-sed '1,2d' core_gene_alignment_withConsensus_convertXtoN_convertgaptoLittleN_editedByGATK_renamed.fasta_OneLine.fasta >>core_gene_alignment_woConsensus_editedByGATK_renamed.fasta
+$ for d in $(ls *.fq | awk -F_ '{print $1}'|sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
 
-$ time run_gubbins.py --prefix postGubbins --filter_percentage 100 --threads 48 core_gene_alignment_woConsensus_editedByGATK_renamed.fasta --verbose 
-real	9m17.957s
-user	69m1.245s
-sys	0m23.285s
-$ cp /storage/apps/SNP_Validation_Scripts/tools/dnaDist.r .
+$ time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d;  R1=`ls *_S1_L001_R1_001.fq`; R2=`ls *_S1_L001_R2_001.fq`; echo "R1: $R1----R2: $R2"; time srst2 --input_pe $R1 $R2 --output test_srst2 --log --gene_db /storage/data/DATA4/analysis/27_Project/16_Check_presence_of_ICETn43716385/ICETn43716385.fasta --threads 48; cd ..; done
 
-$ Rscript dnaDist.r 
+$ cat */test_srst2__fullgenes__ICETn43716385__results.txt | awk '{print $1 "\t" $2 "\t" $4 "\t" $5 "\t" $7}' | grep -v 'coverage' | column -t
 
-(Repeat the above steps in 11.Gubbins for all the ST groups - for this project the second ST group is : WJ_Klebsiella_ST23_4samples)
 
+# To stitch contigs based on the mapped regions to ICETn43716385
 
-12. Clustering (Did not do this for Wenjian - but documenting for reference)
-############################################################################ 
+time bash DenovoAssemble_fromBAM_AND_orderGenomeContigs.sh &
 
-# We want to cluster all the isolates which have a SNP difference  with certain threshold (for this case : 0 SNPs, Therefore my awk has $NF==0)
+# This C01992 samples was giving a problem so removing to run BEAST
 
-# The following one-liner takes the SNP difference file | takes pair1,pair2,SNP Diff | removes double quotes if any | extract pairs satisfyingSNP Diff threshold (Here 0 SNPs) | print rhe pair1, pair2 to a file
+sed  '/C01992|2020.39071038251/,+1d' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta >cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates_Exlcuded_C01992_sample.fasta
 
-$ cat postGubbins.filtered_polymorphic_sites_melt_sorted.csv | awk -F',' '{print $2"\t"$3"\t"$4}' |  tr -d "\"" | awk '$NF==0' | awk '{print $1"\t"$2}' >pairsFile.list
+###########################################------------------------Ad-Hoc Analysis 1----------------------################################################
 
-# The Clustering Script will recruit the isolates if any of the isoaltes has link with another to the group
-
-$ cp /storage/apps/PlasmidSeeker/Databases_aftr_04122019/ECCMID_2020/Deduplicated_Fasta_for_PlasmidSeeker_DB/ClustrPairs_v3.pl .
-
-$ perl ClustrPairs_v3.pl pairsFile.list 
-
-
-13. Visualization of tree
-#########################
-
-Using Figtree: 
-
-$ java -jar /storage/apps/FigTree_v1.4.3/lib/figtree.jar
-
-File -> Open -> postGubbins.final_tree.tre
-
-
-
-To generate plots
-#################
-
-1) Pre and Post Trimmed Reads
-
-qualStats.R (on datta's desktop)
-qualStats_aggregated.R (on datta's desktop)
-
-
-2) Assembly Size
-
-Full assemblies & gteq1kb:
-
-$ statswrapper.sh *.fasta >full_assemblies_summary_stats.txt
-$ statswrapper.sh *.fasta >gteq1kb_assemblies_summary_stats.txt
-
-Extract columns (n_contigs_full_assembly, contig_bp_full_assembly, ctg_N50_full_assembly,ctg_max_full_assembly) from the above files and create one file (full_gteq1kb_combined.csv)
-
-Run in R console
-
-plotAssembly_stats.R
-
-3) MLST
-
-Run in R console
-
-plotMLST.R
-
-4) CGE - (https://cge.cbs.dtu.dk/services/cge/index.php)
-
-Run in R console
-
-plotCGE.R
-
-5) Kraken
-
-6) Table with SNP results
-
-plotSNPDiff_matrix.R --> Need full triangle to plot the heatmap 
-
-7) Phylogenetic tree
-
-
-On March 23rd, Dr. Ng wanted to add 31 samples of PAE from Jeanette's study from NUH to our data and run the SNIPPY using PA01 as reference genomes and form a BEAST evolutionary tree.
-So, downloaded the 31 samples data from NCBI link : https://www.ncbi.nlm.nih.gov/bioproject/PRJNA507901
+# On March 23rd, Dr. Ng wanted to add 31 samples of PAE from Jeanette's study from NUH to our data and run the SNIPPY using PA01 as reference genomes
+# and generate a BEAST evolutionary tree. So, downloaded the 31 samples data from NCBI link : https://www.ncbi.nlm.nih.gov/bioproject/PRJNA507901
 
 # Download the sequences using following weblink by providing SRX number concatenated with comma
-https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=search_seq_name
+# https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=search_seq_name or use fasterq-dump
 
-or use fasterq-dump
-
-for d in $(cat SraAccList.txt; do echo $d; fasterq-dump $d -p; done
+$ for d in $(cat SraAccList.txt); do echo $d; fasterq-dump $d -p; done
 
 # Rename SRR Names to Sample Names in paper
 $ while read line; do echo $line; srr=`echo $line | awk '{print $1}'`; sample=`echo $line | awk '{print $2}'`; echo "srr: $srr, sample: $sample"; mv "$srr"_1.fastq "$sample"_1.fastq; mv "$srr"_2.fastq "$sample"_2.fastq; done <SRRIds_SamplesNames.list 
 
-
 # Make sure the file extension is as needed (fastq,fq,fastq etc)
-
-for d in $(ls *.fastq | cut -f1 -d "_"  | sort -u); do mkdir $d; mv $d*.fastq $d; done
+$ for d in $(ls *.fastq | cut -f1 -d "_"  | sort -u); do mkdir $d; mv $d*.fastq $d; done
 
 # Run fastqc on the raw reads
-time for d in $(ls -d */| sed 's/\///g'); do echo $d; cd $d; /storage/apps/FastQC/fastqc -t 3 *.fastq & cd ..; done
+$ time for d in $(ls -d */| sed 's/\///g'); do echo $d; cd $d; /storage/apps/FastQC/fastqc -t 3 *.fastq & cd ..; done
 
 #combine all fastqc reports using multiqc
-multiqc .
+$ multiqc .
 
-Observations: adapters are present in many sequences. So, trimmed them using BBMAP.
+#Observations: adapters are present in many sequences. So, trimmed them using BBMAP. But base quality of all the samples looking high (above Q30).
 
-But base quality of all the samples looking high (above Q30).
+# Q30 Stats
+############
 
-Q30 Stats
-#########
+# The perl script calculates the Total_Reads, Total_Bases, Total_Q20_Bases, Total_Q30_Bases, Mean Read Length from the fastq file passed as an input
 
-The perl script calculates the Total_Reads, Total_Bases, Total_Q20_Bases, Total_Q30_Bases, Mean Read Length from the fastq file
-
-time for d in $(ls */*fq); do echo $d; perl /storage/apps/SNP_Validation_Scripts/tools/Q20_Q30_Stats_wo_functions.pl $d & done 
-
+$ time for d in $(ls */*fq); do echo $d; perl /storage/apps/SNP_Validation_Scripts/tools/Q20_Q30_Stats_wo_functions.pl $d & done 
 mv Q30_Q20_readstats.txt rawData_Q30_Q20_readstats.txt
 
 Let us plot the numbers generated from the above perl script
@@ -474,89 +404,8 @@ multiqc .
 
 Observations: adapters are removed and the bases are quality trimmed in sequences. Plot looks much better now.
 
-## Running SNIPPY on 179 ST308 samples internal and 31 Jeanette's samples
 
-$ cd /storage/data/DATA4/analysis/27_Project/
-
-$ mkdir 15_SNIPPY_internal179_Jeanette_31_ST308samples
-
-#Generate a list of ID R1 R2 for running multiple samples
-##########################################################
-
-$ for d in $(cat list_PAE_ST308_179samples); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/ -name "$d*.fq*" | grep 'bbmap' | sort; done | paste - - - >input.tab
-
-2_AdapterTrimmed_bbduk_Q30]$ for d in $(ls -d */ | tr -d "/"); do echo "$d"; find /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30 -name "$d*bbmap*.fastq" | sort; done | paste - - - >>/storage/data/DATA4/analysis/27_Project/15_SNIPPY_internal179_Jeanette_31_ST308samples/input.tab
-
-$ /storage/apps/snippy/bin/snippy-multi input.tab --ref PAO1_reference.fasta --cpus 32 > paeruginosa_snippy_runme.sh
-
-$ ./paeruginosa_snippy_runme.sh # This script generates all the core genome alignments
-
-# Remove all the "weird" characters and replace them with N. This is required if we are running gubbins
-
-$ /storage/apps/snippy/bin/snippy-clean_full_aln core.full.aln > clean.core.full.aln
-
-# Run gubbins on clean.core.full.aln
-
-$ run_gubbins.py -p gubbins clean.core.full.aln --threads 48 --verbose
-
-# Generate a cleancore.full.recomb.masked.fasta alignment
-
-$ maskrc-svg.py --aln clean.core.full.aln --out cleancore.full.recomb.masked.fasta --gubbins gubbins
-
-# Pad Invariant Sites after Gubbins
-
-time /storage/apps/SNP_Validation_Scripts/tools/padInvariantSites_afterGubbins.sh PAO1_reference.fasta
-
-# remove extra inforamtion other than sample names
-sed -i 's/ 6091903 bp//g'  cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend.fasta
-
-# Append date to the fasta headers
-time perl /storage/apps/SNP_Validation_Scripts/tools/BEAST_DatesHeader.pl cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend.fasta cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta
-
-# Exclude the fasta sequences without dates
-grep -A1 "|" cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates.fasta >cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
-
-sed -i 's/--//g' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
-sed -i '/^$/d' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta
-
-
-5 samples did not have dates so excluded from the analysis. So BEAST run on 205 samples from ST308
-
-
-##SRST2 check for ICETn43716385 
-
-SRST2 has some version issue. So, created a new SRST2 environment and installed the SRST2
-
-conda activate srst2_environment
-
-Extracted region :
-
-trbl        3401482 - 3405853
-ndm        3431913
-radc        3463390
-integrase     3473759 - 3474958
+###########################################------------------------Ad-Hoc Analysis 1----------------------################################################
 
 
 
-for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
-
-for d in $(ls /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
-
-for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_1_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R1_001.fq; done
-
-for d in $(ls /storage/data/DATA4/analysis/27_Project/14_Jeanette_31samples_NUH/2_AdapterTrimmed_bbduk_Q30/*/*_2_bbmap_adaptertrimmed.fastq); do echo "$d"; base=`echo "$d" | awk -F/ '{print $(NF-1)}'`;ln -s $d /storage/data/DATA4/analysis/27_Project/17_srst2/"$base"_S1_L001_R2_001.fq; done
-
-$ for d in $(ls *.fq | awk -F_ '{print $1}'|sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
-
-$ time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d;  R1=`ls *_S1_L001_R1_001.fq`; R2=`ls *_S1_L001_R2_001.fq`; echo "R1: $R1----R2: $R2"; time srst2 --input_pe $R1 $R2 --output test_srst2 --log --gene_db /storage/data/DATA4/analysis/27_Project/16_Check_presence_of_ICETn43716385/ICETn43716385.fasta --threads 48; cd ..; done
-
-$ cat */test_srst2__fullgenes__ICETn43716385__results.txt | awk '{print $1 "\t" $2 "\t" $4 "\t" $5 "\t" $7}' | grep -v 'coverage' | column -t
-
-
-# To stitch contigs based on the mapped regions to ICETn43716385
-
-time bash DenovoAssemble_fromBAM_AND_orderGenomeContigs.sh &
-
-# This C01992 samples was giving a problem so removing to run BEAST
-
-sed  '/C01992|2020.39071038251/,+1d' cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates.fasta >cleancore.full.recomb.masked.GapsStripped.trimal.oneline_InvarSitesAppend_withDates.fasta_BEAST_withDates_ExcludedFastawithoutDates_Exlcuded_C01992_sample.fasta
