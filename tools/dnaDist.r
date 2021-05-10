@@ -3,7 +3,7 @@ library(dplyr)
 library(reshape2)
 
 ## Read in fasta file
-    data <- read.FASTA(file = "postGubbins_filtered_polymorphic_sites.fasta") # Read input multiple fasta file
+    data <- read.FASTA(file = "postGubbins.filtered_polymorphic_sites.fasta") # Read input multiple fasta file
 
 ## Calculate the pair-wise distance
 # Route 1 #
@@ -30,4 +30,3 @@ options(scipen=10000)
 D_out_melt = melt(as.matrix(out), varnames = c("row", "col"))
 D_out_melt_sorted = arrange(D_out_melt, value)
 write.csv(D_out_melt_sorted, "postGubbins.filtered_polymorphic_sites_melt_sorted.csv")
-
