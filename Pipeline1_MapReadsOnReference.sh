@@ -260,6 +260,11 @@ $ cp /storage/apps/PlasmidSeeker/Databases_aftr_04122019/ECCMID_2020/Deduplicate
 
 $ perl ClustrPairs_v3.pl pairsFile.list 
 
+# Find the number of clusters with SNP cutoff range: 0-12 
+for d in {0..12}; do cat postGubbins.filtered_polymorphic_sites_melt_sorted.csv | awk -F',' '{print $2"\t"$3"\t"$4}' |  tr -d "\"" | awk -v i="$d" '$NF<=i' | awk '{print $1"\t"$2}' >pairsFile__snpscutoff__"$d".list; echo -n "pairsFile__snpscutoff__"$d".list has Clusters: "; perl ClustrPairs_v3.pl pairsFile__snpscutoff__"$d".list | fgrep -c 'Cluster:';  done
+
+
+
 # Step 14.  Generate a divergence tree
 ######################################
 
