@@ -30,6 +30,12 @@ time for d in $(ls -d */| sed 's/\///g'); do echo $d; cd $d; /storage/apps/FastQ
 cd 1_Rawdata
 multiqc .
 
+# Unzip the gz files - because these are softlinks we write to  an other file
+cd 11F
+time for x in $(ls -d */ | tr -d '/'); do cd $x; echo $x; for d in $(ls *.fq.gz); do base=`echo $d | sed 's/.fq.gz//'`; gunzip -c $d >"$base".fq & done; cd ..;  done
+cd Env
+time for x in $(ls -d */ | tr -d '/'); do cd $x; echo $x; for d in $(ls *.fq.gz); do base=`echo $d | sed 's/.fq.gz//'`; gunzip -c $d >"$base".fq & done; cd ..;  done
+
 # Observations from raw fastq: Adapters are present in many sequences. So, trimmed them using BBMAP.
 # But base quality of all the samples looking high (above Q30).
 
@@ -55,13 +61,14 @@ cd rawDataStats_RPlots
 
 
 # Step 2. Adapter trimming using BBDuk 
-#################################
+######################################
 
-#Samples_with_Topup
-$ time for d in $(ls -d */); do echo $d; subdir=`echo $d`; cd $subdir; R1=`ls *8_1.fq | sed 's/.fq//g'`; R2=`ls *8_2.fq | sed 's/.fq//g'`; echo "$R1 $R2"; /storage/apps/bbmap/bbduk.sh -Xmx6g in1=$R1.fq in2=$R2.fq out1=$R1\_bbmap_adaptertrimmed.fq out2=$R2\_bbmap_adaptertrimmed.fq ref=/storage/apps/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 qtrim=rl trimq=30 minavgquality=30; cd ..; done
+# 11F
+time for d in $(ls -d */); do echo $d; subdir=`echo $d`; cd $subdir; R1=`ls *_1.fq | sed 's/.fq//g'`; R2=`ls *_2.fq | sed 's/.fq//g'`; echo "$R1 $R2"; /storage/apps/bbmap/bbduk.sh -Xmx6g in1=$R1.fq in2=$R2.fq out1=$R1\_bbmap_adaptertrimmed.fq out2=$R2\_bbmap_adaptertrimmed.fq ref=/storage/apps/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 qtrim=rl trimq=30 minavgquality=30; cd ..; done
 
-#Samples_without_Topup
-time for d in $(ls -d */); do echo $d; subdir=`echo $d`; cd $subdir; R1=`ls *8_1.fq | sed 's/.fq//g'`; R2=`ls *8_2.fq | sed 's/.fq//g'`; echo "$R1 $R2"; /storage/apps/bbmap/bbduk.sh -Xmx6g in1=$R1.fq in2=$R2.fq out1=$R1\_bbmap_adaptertrimmed.fq out2=$R2\_bbmap_adaptertrimmed.fq ref=/storage/apps/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 qtrim=rl trimq=30 minavgquality=30; cd ..; done
+# Env
+time for d in $(ls -d */); do echo $d; subdir=`echo $d`; cd $subdir; R1=`ls *_1.fq | sed 's/.fq//g'`; R2=`ls *_2.fq | sed 's/.fq//g'`; echo "$R1 $R2"; /storage/apps/bbmap/bbduk.sh -Xmx6g in1=$R1.fq in2=$R2.fq out1=$R1\_bbmap_adaptertrimmed.fq out2=$R2\_bbmap_adaptertrimmed.fq ref=/storage/apps/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 qtrim=rl trimq=30 minavgquality=30; cd ..; done
+
 
 manually copied the bbmap command log into adapter_trimming.log
 
@@ -72,6 +79,11 @@ mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Project/2_AdapterT
 
 # move to specific folder
 $ for d in $(ls *.fq| awk -F_ '{print $1}' | sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
+
+# Copying Nanopore trimmed and filtered data 
+cd 2_AdapterTrimmed_bbduk_Q30
+mkdir nanopore_qcat_adaptertrimmed
+
 
 Q30 Stats
 #########
