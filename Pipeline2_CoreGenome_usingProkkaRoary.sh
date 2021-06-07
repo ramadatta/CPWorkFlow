@@ -1,5 +1,5 @@
 Location -
-/storage/data/DATA4/analysis/27_Project
+/storage/data/DATA4/analysis/30_Aqueous_Env_11F_data_analysis
 
 #################################################################################################################################
 
@@ -10,41 +10,28 @@ mkdir 1_Rawdata
 
 cd 1_Rawdata
 
-# Move the files to respective folders
-awk -F/ '{$NF=""; print $0}' Paeruginosa_183_samples | tr ' ' '/' >Paeruginosa_183_samples_locations
-for d in $(cat Paeruginosa_183_samples_locations); do ls "$d"*.fq*; ln -s "$d"*.fq.gz .; done #Never use force (-sf) when creating softlinks using ln
+# 11F data - 12 samples
+mkdir 11F
+cd 11F
+# Copying softlinks of the raw data files
+ln -s /storage/data/DATA2/Sequencing_Company_Metadata/AITBiotech/May2021/X401SC20093883-Z01-F005/raw_data/*/*.fq.gz /storage/data/DATA4/analysis/30_Aqueous_Env_11F_data_analysis/1_Rawdata/11F
+for d in $(ls *.gz | cut -f1 -d "_"  | sort -u); do mkdir $d; mv "$d"_*.gz $d; done
 
-# Make sure the file extension is as needed (fastq,fq,fastq etc)
+# Env data - 59 samples
+mkdir Env
+cd Env
+ln -s /storage/data/DATA2/Sequencing_Company_Metadata/AITBiotech/Mar2021/QSG2006080005_Batch_4/X401SC20093883-Z01-F004/raw_data/*/*.fq.gz /storage/data/DATA4/analysis/30_Aqueous_Env_11F_data_analysis/1_Rawdata/Env/
+for d in $(ls *.gz | cut -f1 -d "_"  | sort -u); do mkdir $d; mv "$d"_*.gz $d; done #Copy the softlinks to respective sample folder
 
-for d in $(ls *.gz | cut -f1 -d "_"  | sort -u); do mkdir $d; mv $d*.gz $d; done
-
-# Run fastqc on the raw reads
+# Run fastqc on the raw reads (Env + 11F)
 time for d in $(ls -d */| sed 's/\///g'); do echo $d; cd $d; /storage/apps/FastQC/fastqc -t 48 *.fq.gz; cd ..; done
 
-# Samples with Topup sequencing are copied seperately into the folder "Samples_with_Topup" and the rest of the samples are in Samples_without_Topup
-
-$ mkdir Samples_with_Topup
-for d in $(ls */*.fq.gz | awk -F/ '{print $1}' | sort | uniq -c | sort -n | grep "^\s*4" | awk '{print $2}'); do echo $d; mv $d Samples_with_Topup/; done
-
-#Combine the topup sequencing files
-
-$ for d in $(ls -d */ | tr -d "/"); do cd $d; echo $d; base=`ls *DDM*HFKWVCCX2*L8_1.fq.gz | awk '{print $1}' | cut -f2 -d "_"`; cat *_L8_1.fq.gz >"$d"_"$base"_combined_topup_L8_1.fq.gz; cd ..; done
-$ for d in $(ls -d */ | tr -d "/"); do cd $d; echo $d; base=`ls *DDM*HFKWVCCX2*L8_2.fq.gz | awk '{print $1}' | cut -f2 -d "_"`; cat *_L8_2.fq.gz >"$d"_"$base"_combined_topup_L8_2.fq.gz; cd ..; done
-
-# Unzip the gz files 
-time for d in $(ls -d */ | tr -d "/"); do echo $d; cd $d; gunzip *.gz; cd ..; done
-
-cd /storage/data/DATA4/analysis/27_Project/1_Rawdata/Samples_without_Topup
-
-# Unzip the gz files - because these are softlinks we write to  an other file
-time for d in $(ls *.fq.gz); do base=`echo $d | sed 's/.fq.gz//'`; gunzip -c $d >"$base".fq; done
-
 #combine all fastqc reports using multiqc
+cd 1_Rawdata
 multiqc .
 
-Observations: adapters are present in many sequences. So, trimmed them using BBMAP.
-
-But base quality of all the samples looking high (above Q30).
+# Observations from raw fastq: Adapters are present in many sequences. So, trimmed them using BBMAP.
+# But base quality of all the samples looking high (above Q30).
 
 Q30 Stats
 #########
