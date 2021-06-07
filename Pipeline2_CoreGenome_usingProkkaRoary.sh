@@ -75,15 +75,19 @@ manually copied the bbmap command log into adapter_trimming.log
 mkdir ../2_AdapterTrimmed_bbduk_Q30
 
 # move the adapter trimmed files into another directory
-mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/27_Project/2_AdapterTrimmed_bbduk_Q30/2_AdapterTrimmed_bbduk_Q30
+ mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/30_Aqueous_Env_11F_data_analysis/2_AdapterTrimmed_bbduk_Q30/illumina_bbmap_trimmed/11F
+ mv */*bbmap_adaptertrimmed.fq /storage/data/DATA4/analysis/30_Aqueous_Env_11F_data_analysis/2_AdapterTrimmed_bbduk_Q30/illumina_bbmap_trimmed/Env
 
 # move to specific folder
-$ for d in $(ls *.fq| awk -F_ '{print $1}' | sort -u); do echo $d; mkdir $d; mv "$d"_* $d; done
+for d in $(ls *.fq| awk -F_ '{print $1}' | sort -u); do echo $d; mkdir $d; mv "$d"_*.fq $d; done
 
-# Copying Nanopore trimmed and filtered data 
+# Copying Nanopore trimmed and filtered data from Nanopore harddisk
 cd 2_AdapterTrimmed_bbduk_Q30
 mkdir nanopore_qcat_adaptertrimmed
-
+cd nanopore_qcat_adaptertrimmed
+mkdir 11F
+mkdir Env
+mkdir ../3_Unicycler
 
 Q30 Stats
 #########
@@ -116,16 +120,19 @@ multiqc .
 
 Observations: adapters are removed and the bases are quality trimmed in sequences. Plot looks much better now.
 
-# Step 3. Spades
+# Step 3. Unicycler
 ################
 
-time for d in $(ls -d */ | grep -v 'multiqc'); do echo $d; subdir=`echo -n $d | tr -d "/"`; cd $subdir; R1=`ls *_1_bbmap_adaptertrimmed.fq `; R2=`ls *_2_bbmap_adaptertrimmed.fq`; echo "$R1 $R2"; spades.py --pe1-1 "$R1" --pe1-2 "$R2" -o "$subdir"_spades --careful -t 48 >>log_spades; cd ..; done
+conda activate unicycler-env #Spades has some problem with python 3.6, so created a new environment with correct tool versions
 
-[datta@ttshbio 2_AdapterTrimmed_bbduk]$ mkdir ../3_SPAdes
-[datta@ttshbio 2_AdapterTrimmed_bbduk]$ mv */*_spades/ ../3_SPAdes/
+bash unicycler_assembly_cmds.sh # Unicycler assembly command was created for all the input files illumina and nanopore reads for each sample
+
+conda deactivate
 
 #Copy and rename the assemblies
-cd ../3_SPAdes/
+cd ../3_Unicycler
+Done till here
+----
 $ for d in $(ls *_spades/contigs.fasta); do prefix=`echo "$d" | cut -f1 -d "/"`; cp "$d" "$prefix"_contigs.fasta; done
 
 $ mkdir ../4_SPAdes_Assemblies
