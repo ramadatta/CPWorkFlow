@@ -87,6 +87,12 @@ mkdir nanopore_qcat_adaptertrimmed
 cd nanopore_qcat_adaptertrimmed
 mkdir 11F
 mkdir Env
+
+# Filtering long reads by quality
+# According to this post (https://github.com/rrwick/Unicycler/issues/118) in unicycler issues, unicycler can get choked with large amount of nanopore data. So we filter the long reads using filtlong  
+time for d in $(ls *.fastq | sed 's/.fastq//g'); do filtlong --min_length 1000 --keep_percent 90 --target_bases 500000000 "$d".fastq > "$d".filtlong.fastq & done
+
+
 mkdir ../3_Unicycler
 
 Q30 Stats
