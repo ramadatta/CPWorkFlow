@@ -95,6 +95,10 @@ time for d in $(ls *.fastq | sed 's/.fastq//g'); do filtlong --min_length 1000 -
 # Calculating Stats using NanoStat
 time for d in $(ls *.fastq | sed 's/.fastq//g'); do echo $d; NanoStat --fastq "$d".fastq -n "$d"_NanoStat; done &
 
+# To plot the read distribution by plotting split_violin plots for each sample
+# generate files with readlengths 
+for d in $(ls *.fastq | sed 's/_Nanopore.*//g' | sort -u); do awk -v d="$d" 'NR%4==2{print length($0) "\t" d "\t" FILENAME}' "$d"*.fastq >>11F_melt_readlengths.txt; done &
+for d in $(ls *.fastq | sed 's/_Nanopore.*//g' | sort -u); do awk -v d="$d" 'NR%4==2{print length($0) "\t" d "\t" FILENAME}' "$d"*.fastq >>Env_melt_readlengths.txt; done &
 mkdir ../3_Unicycler
 
 Q30 Stats
