@@ -9,9 +9,11 @@ To keep track of analysis creating multiple markdown documents and preserving th
  
 #### Contents 
  
-  * [bbstats.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/bbstats.md) - Data Visualization of Pre and Post Trimmmed Nanopore reads: Statistics from bbtools statswrapper
-
-
+| Document      | Description   | ChartType |
+| ------------- |:-------------:| -----:|
+| [bbstats.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/bbstats.md) | Data Visualization of Pre and Post Trimmmed Nanopore reads: Statistics from bbtools statswrapper | Dumbbell |
+| [readlenDist.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/bbstats.md) | Data Visualization of Pre and Post Trimmmed Nanopore reads: Read length distribution | Split Violin|
+| zebra stripes | are neat      |    $1 |
 
 
 
