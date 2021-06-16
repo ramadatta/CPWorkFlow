@@ -10,11 +10,15 @@ To keep track of analysis creating multiple markdown documents and preserving th
 #### Contents 
  
 | Document      | Description   | ChartType |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------| :-----|
 | [bbstats.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/bbstats.md) | Data Visualization of Pre and Post Trimmmed Nanopore reads: Statistics from bbtools statswrapper | Dumbbell |
 | [readlenDist.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/readlenDist.md) | Data Visualization of Pre and Post Trimmmed Nanopore reads: Read length distribution | Split Violin|
-| [cgeResistome.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of CGE Resistome  | Barplot, Heatmap|
-
+| [cgeResistome.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of CGE Resistome  |Barplot,Heatmap |
+| [beasttmrca.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of BEAST Phylotree - in progress | tree |
+| [SNPDiffmatrix.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of SNP Difference Matrix - in progress | Heatmap|
+| [datesPlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of dates between different institutions - in progress | scatterplot |
+| [SamplingSite.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of sampling sites between different institutions - in progress| Barplot|
+| [WafflePlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of how many samples have a gene present and not - in progress  | Waffle|
 
 
 #### *Notes for authors*
