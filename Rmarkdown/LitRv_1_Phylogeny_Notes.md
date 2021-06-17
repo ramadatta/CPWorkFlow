@@ -19,3 +19,4 @@
 
 * **Bayesian posterior probabilities:** A bayesian tree has posterior values but if we can also add bootstrap values for each branch along with posterior values from the newick tree.
 
+* **Recombination:** SNPs are introduced into a genome when recombination takes place. These cause difficulties when generating a phylogeny. SO these are usually removed. These regions are usually predicted by tools like Gubbins/ClonalframeML and filtered. Phandago plots can even visualize the recombination regions in the whole set of genomes. For example see [here](https://www.researchgate.net/figure/Inferred-recombination-in-clinical-isolates-of-colistin-resistant-A-baumannii-These_fig1_330892994)
