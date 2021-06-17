@@ -1,0 +1,1 @@
+* Maximum Likelihood phylogeny tree was generated using Mega software v7.0.26. The Tamura-Nei model with discrete Gamma distribution was applied to model evolutionary rate differences among sites (4 categories (+G, parameter = 0.1133))
