@@ -13,7 +13,7 @@ editor_options:
 
 ### Step 1: Run mobtyper 
 
-I wrote a shell script (available here: https://github.com/ramadatta/Scripts/blob/master/Shell/mob_typer_OnEachContig.sh) with mobtyper which breaks an assembly into single contig fasta file and run mobtyper on each contig seperately. By doing so, we can know which specific contig has what Inc group. 
+I wrote a shell [script](https://github.com/ramadatta/Scripts/blob/master/Shell/mob_typer_OnEachContig.sh) with mobtyper which breaks an assembly into single contig fasta file and run mobtyper on each contig seperately. By doing so, we can know which specific contig has what Inc group. 
 
 
 ```bash
