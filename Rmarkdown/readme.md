@@ -15,6 +15,7 @@ To keep track of analysis creating multiple markdown documents and preserving th
 | [readlenDist.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/readlenDist.md) | Data Visualization of Pre and Post Trimmmed Nanopore reads: Read length distribution | Split Violin|
 | [cgeResistome.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of CGE Resistome  |Barplot,Heatmap |
 | [Cmp_RawFilt_UnicyclerAssemblies.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Cmp_RawFilt_UnicyclerAssemblies.md) | Data Visualization of Raw and Filtered Unicycler Assemblies | Barplot in Facetwrap |
+| [plotMob.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/plotMob.md) | Data Visualization of Replicons from Mobtyper output | Barplot in Facetwrap |
 | [beasttmrca.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of BEAST Phylotree - in progress | tree |
 | [SNPDiffmatrix.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of SNP Difference Matrix - in progress | Heatmap|
 | [datesPlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of dates between different institutions - in progress | scatterplot |
