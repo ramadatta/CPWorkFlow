@@ -1,0 +1,123 @@
+setwd("~/Work/CircuitBreaker2/PCA/")
+
+# R TIPS ----
+# TIP 014 | Intro to PCA in R ----
+# - PCA - Principal Component Analysis
+# - Interactively Visualizing PCA
+#
+# 👉 For Weekly R-Tips, Sign Up Here: https://mailchi.mp/business-science/r-tips-newsletter
+
+# LIBRARIES ----
+
+library(broom)
+library(ggfortify)
+library(plotly)
+library(tidyverse)
+library(janitor)
+
+# DATA ----
+mpg <- read.csv("PCA.csv",sep = ",", header = TRUE)
+
+head(mpg)
+
+# DATA WRANGLING ----
+# - dplyr is covered in DS4B 101-R Weeks 2 & 3
+
+# * Extract Target (Y) ----
+y_tbl <- mpg %>%
+  select(sample_name) %>%
+  rowid_to_column()
+
+head(y_tbl)
+unique(mpg$mlst)
+# * Encode Features (X) ----
+x_tbl <- mpg %>%
+  
+  # Add Row ID to maintain order
+  rowid_to_column() %>%
+  
+  # One Hot Encode: transmission
+  mutate(
+    mlst_308 = str_detect(mlst, "308") %>% as.numeric(),
+    mlst_Unknown  = str_detect(mlst, "Unknown") %>% as.numeric(),
+    mlst_1654  = str_detect(mlst, "1654") %>% as.numeric(),
+    mlst_2613  = str_detect(mlst, "2613") %>% as.numeric()
+  ) %>%
+  
+  select(-mlst) %>%
+  
+  # Resistance split
+  filter(!(is.na(resistance)|resistance==""))%>% 
+  mutate(rn = row_number()) %>% 
+  separate_rows(resistance,sep = ",") %>%
+  mutate(i1 = 1) %>% 
+  pivot_wider(names_from = resistance, values_from = i1, values_fill = list(i1 = 0)) %>%
+  select(-rn, -sample_name)
+
+x_tbl 
+x_tbl %>% glimpse()
+
+x_tbl_Janitor = janitor::clean_names(x_tbl)
+
+#data.frame(mymsa = colnames(x_tbl), x = colnames(x_tbl_Janitor))
+
+#x_tbl_Janitor %>% glimpse()
+
+# PCA  ----
+# - Modeling the Principal Components
+# - Modeling & Machine Learning is covered in DS4B 101-R Week 6
+str(x_tbl)
+summary(x_tbl_Janitor)
+str(x_tbl_Janitor)
+#is.numeric(as.matrix(x_tbl_Janitor))
+#which(!grepl('^[0-9]',x_tbl_Janitor))
+
+#Remove all the columns which have a constant variance.
+nums <- unlist(lapply(x_tbl_Janitor, is.numeric))
+nums
+x_tbl_Janitor_new <- x_tbl_Janitor[, nums]
+x_tbl_Janitor_new <- x_tbl_Janitor_new[, apply(x_tbl_Janitor_new, 2, var) != 0]
+
+x_tbl_Janitor_new
+
+fit_pca <- prcomp(
+  formula = ~ . - rowid,
+  data    = x_tbl_Janitor_new,
+  scale.  = TRUE)
+
+fit_pca
+
+fit_pca %>% tidy()
+
+
+
+# VISUALIZE PCA ----
+# - Visualization with ggplot is covered in DSRB 101-R Week 4
+
+g <- autoplot(
+  
+  object = fit_pca,
+  x = 2,
+  y = 3,
+  
+  # Labels
+  data = y_tbl,
+  label = TRUE,
+  label.label = "sample_name",
+  label.size = 3,
+  
+  # LOADINGS
+  loadings.label = TRUE,
+  loadings.label.size = 2,
+  
+  scale = 0
+) +
+  labs(title = "Visualizing PCA in R")+
+  theme_minimal()
+
+g
+class(g)
+#plotly::ggplotly(g)
+
+library(ggbiplot)
+ggbiplot(g)
