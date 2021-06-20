@@ -1,0 +1,3 @@
+* Creating project timelines plot Ganntt charts : https://stats.andrewheiss.com/misc/gantt.html
+* https://medium.com/@jeffgriesemer/creating-timeline-charts-in-r-my-fitness-activity-58eeb14af3df
+* https://medium.com/european-data-journalism-network/beautiful-gantt-charts-with-ggplot2-80ccd8c2c788
