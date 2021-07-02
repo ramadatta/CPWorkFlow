@@ -9,3 +9,6 @@
 * Replicate anything in R
 * https://simplystatistics.org/2019/08/28/you-can-replicate-almost-any-plot-with-ggplot2/
 
+* Ridgeline plot
+* https://www.r-graph-gallery.com/294-basic-ridgeline-plot.html
+
