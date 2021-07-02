@@ -6,3 +6,6 @@
 * Combine two plots with same axis
 * https://stackoverflow.com/questions/48531987/incorporate-more-information-about-variables-on-axes-into-a-heatmap-in-ggplot
 
+* Replicate anything in R
+* https://simplystatistics.org/2019/08/28/you-can-replicate-almost-any-plot-with-ggplot2/
+
