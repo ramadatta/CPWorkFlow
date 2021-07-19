@@ -36,3 +36,5 @@ Observational study, cohort definition, descriptive analysis, pre/post analysis,
 
 # Blogposts
 * https://towardsdatascience.com/how-to-use-kaggle-to-master-data-science-1467d45788ea
+* https://www.kaggle.com/getting-started/44915
+* 
