@@ -38,8 +38,8 @@
 * dataroma
 
 ### Statistics
-* Distributions, statistical testing, regression,
-* Prediction, Classification, Clustering, time series forecasting, regression models, etc
+* Distributions, statistical testing, regression, - _Develop Your Data Analysis Skills,_ _Statistics Foundations: 2_
+* Prediction, Classification, Clustering, time series forecasting, regression models, etc  
 
 ### Cloud
 * AWS - Understanding Cloud Fundamentals
