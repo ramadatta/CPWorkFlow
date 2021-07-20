@@ -17,7 +17,11 @@
   * _Advance Your Skills as an R Expert_
 
 * SQL 
-  * _Master SQL for Data Science_  * 
+  * _Master SQL for Data Science_
+
+### Kaggle
+
+https://www.youtube.com/watch?v=8igH8qZafpo
 
 ### Machine learning - Dependencies
 
