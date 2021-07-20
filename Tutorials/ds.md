@@ -23,6 +23,24 @@
 
 https://www.youtube.com/watch?v=8igH8qZafpo
 
+#### For classification Task
+Titanic: Machine Learning from Disaster
+
+#### For Regression Task
+Predict Future Sales
+House Prices: Advanced Regression Techniques
+
+#### For NLP Task
+Real or Not? NLP with Disaster Tweets
+
+#### For Computer Vision
+Digit Recognizer
+
+#### For Time Series Task
+M5 Forecasting - Accuracy
+
+
+
 ### Machine learning - Dependencies
 
 * Python - pandas, numpy, seaborn, sk-learn, TensorFlow 
