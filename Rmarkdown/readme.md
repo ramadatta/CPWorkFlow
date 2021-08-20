@@ -17,7 +17,6 @@ To keep track of analysis creating multiple markdown documents and preserving th
 | [Cmp_RawFilt_UnicyclerAssemblies.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Cmp_RawFilt_UnicyclerAssemblies.md) | Data Visualization of Raw and Filtered Unicycler Assemblies | Barplot in Facetwrap |
 | [plotMob.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/plotMob.md) | Data Visualization of Replicons from Mobtyper output | Barplot in Facetwrap |
 | [proLolli.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/proLolli.md) | Data Visualization of SNPs across the Genome Sequence | Lollipop Plot |
-proLolli.md
 | [beasttmrca.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of BEAST Phylotree - in progress | tree |
 | [SNPDiffmatrix.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of SNP Difference Matrix - in progress | Heatmap|
 | [datesPlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of dates between different institutions - in progress | scatterplot |
