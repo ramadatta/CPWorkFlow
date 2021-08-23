@@ -1,7 +1,7 @@
 ---
 title: "proLolli"
 author: "Prakki Sai Rama Sridatta"
-date: "2021-08-23"
+date: "`r format(Sys.Date())`"
 output:
   html_document:
     keep_md: true
@@ -9,14 +9,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ### Step 1: Reference genome annotation
 
 For this step, I have annotated my reference genome using Prokka.
 
-
-```bash
+```{r prokka, engine = 'bash', eval = FALSE}
 prokka2 --force --cpus 32 --outdir  SHG10_pKPC2-km_prokka_out --prefix  SHG10_pKPC2-km  SHG10_pKPC2-km_unicycler.gte1kb.contigs.fasta >>prokka_log 2>>prokka_error; 
 ```
 
@@ -24,8 +25,7 @@ prokka2 --force --cpus 32 --outdir  SHG10_pKPC2-km_prokka_out --prefix  SHG10_pK
 
 Using the above reference, I have run SNIPPY for multiple samples
 
-
-```bash
+```{r snippy, engine = 'bash', eval = FALSE}
 snippy commands
 ```
 
@@ -34,8 +34,7 @@ snippy commands
 SNIPPY generates a VCF file for each sample and we want the SNPs.
 As we can see below 3 WT files have around 10-16 SNPs
 
-
-```bash
+```{r SNPextract, engine = 'bash', eval = FALSE}
 $ grep "" *WT*/snps.filt.vcf  | grep -v '#' | cut -f1 -d":" | sort | uniq -c
      15 SGH10_WT_G300__1/snps.filt.vcf
      16 SGH10_WT_G300__2/snps.filt.vcf
@@ -46,8 +45,7 @@ $ grep "" *WT*/snps.filt.vcf  | grep -v '#' | cut -f1 -d":" | sort | uniq -c
 
 Let us use SNPs from `SGH10_WT_G300__3` sample.
 
-
-```bash
+```{r snpParse, engine = 'bash', eval = FALSE}
 cat snps.filt.vcf | grep -v "#" | awk '{print $1 "\t" $2}' >SGH10_WT_G300__2_snps.list
 ```
 
@@ -58,28 +56,23 @@ Basically using SNPs from `SGH10_WT_G300__2_snps.list` file, let us bedtools int
 
 Once the regions and coordinates are found, we pass this to `trackViewer` which generates lollipop plot
 
-
-```bash
+```{r Rscript, engine = 'bash', eval = FALSE}
 bash lollipop_rcode_generator.sh >proLolli.R
 ```
 
 ### Step 6: Generate Lollipop Plot using R script
 
-
-```r
+```{r snp1, fig.width=12, fig.height=4, message=FALSE}
 setwd("/home/prakki/Documents/LeaRn/proLolli/SingleVCF/")
 
 source(file = "proLolli.R")
 ```
 
-![](proLolli_files/figure-html/snp1-1.png)<!-- -->
-
 ### Step 7: Extract SNPs from Multiple VCF file
 
 Let us use SNPs from `SGH10_WT_G300__3` sample.
 
-
-```bash
+```{r snpCount_multVCF, engine = 'bash', eval = FALSE}
 cat *snps.filt.vcf | grep -v "#" | grep "TYPE=snp" | awk '{print $2}' | sort | uniq -c | awk '{print $2 "\t" $1}' >snpCount_multiVCF.list
 ```
 
@@ -90,21 +83,17 @@ Basically using SNPs from all files, let us bedtools intersect and extract the r
 
 Once the regions and coordinates are found, we pass this to `trackViewer` which generates lollipop plot
 
-
-```bash
+```{r multiVCF_Rscript, engine = 'bash', eval = FALSE}
 bash lollipop_rcode_generator_multiVCF.sh >proLolli_multi.R
 ```
 
 ### Step 9: Generate Lollipop Plot using R script
 
-
-```r
+```{r proLolli_multi, fig.width=12, fig.height=4, message=FALSE}
 setwd("/home/prakki/Documents/LeaRn/proLolli/MultiVCF")
 
 source(file = "proLolli_multi.R")
 ```
-
-![](proLolli_files/figure-html/proLolli_multi-1.png)<!-- -->
 
 ### Step 10: Increase resolution of the Sequence
 
@@ -112,8 +101,7 @@ Having a very big chromosome in MBs or even 40 to 50Kb does not help viewing the
 So, let us just concentrate on plotting a lollipop plot of ~3Kb regions with 3 genes "hisI_2","yciC_1","feoB_2".
 
 
-
-```r
+```{r proLolli_multi_fragment, fig.width=12, fig.height=4, message=FALSE}
 setwd("/home/prakki/Documents/LeaRn/proLolli/MultiVCF")
 
 snpCount_df <- read.table("snpCount_multiVCF.list",sep = "\t", header = FALSE)
@@ -129,5 +117,3 @@ Sample_Count <- GRanges("chr1", IRanges(SNP, width=1, names=paste0("snp", SNP)),
 )
 lolliplot(Sample_Count, features)
 ```
-
-![](proLolli_files/figure-html/proLolli_multi_fragment-1.png)<!-- -->
