@@ -1,4 +1,4 @@
-## Molecular epidemiology and genomic analysis of individual patient isolates and environmental sampling reveals transmission of bacterial plasmids harboring carbapenem resistant genes
+## Molecular epidemiology and genomic analysis of XX isolates and XX reveals transmission of bacterial plasmids harboring carbapenem resistant genes
 
 ### Abstract
 
