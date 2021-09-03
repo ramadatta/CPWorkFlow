@@ -1,6 +1,6 @@
 ## Molecular epidemiology and genomic analysis of individual patient isolates and environmental sampling reveals transmission of bacterial plasmids harboring carbapenem resistant genes
 
-[RefPaper1](https://sci-hub.se/https://doi.org/10.1093/jac/dkaa398)
+[RefPaper1](https://sci-hub.se/https://doi.org/10.1093/jac/dkaa398) , [RefPaper2](https://sci-hub.se/https://doi.org/10.1093/jac/dkz146)
 ### Introduction:
 * Most important problem in healthcare setting
 * Which order of bacteria is causing it? What makes it more deadly and powerful to attack the humans?
@@ -44,70 +44,19 @@
    - Plasmid replicon types were detected, and associations with carbapenemase genes were assessed - Among OXA-48-producing isolates, Inc-- replicon plasmids were common in Serratia marcescens (85.7%) and K. pneumoniae (61.1%), IncL/M plasmids were more common among E. coli and Enterobacter spp. (66.7% and 50.0%, respectively), and IncHI2 plasmids were most common among E. cloacae complex (61.5%). All three types have previously been described to carry the IMP-4 gene in Australia (9, 34). KPC-2-producing K. pneumoniae commonly carried IncFIB (94.6%), ColRNAI (90.2%), and IncX3 (85.7%). In contrast, NDM and OXA isolates carried a wide range of plasmid types. Plasmid replicon sequences were only rarely detected on the same contig as a carbapenemase gene. Fifteen isolates had no plasmid replicon sequences detected at these identity/coverage cutoffs, including all IMI- and SME-producing isolates (chromosomal carbapenemases).
    - Genomic transmission analyses were performed on 33 subgroups of the same species, carbapenemase gene, and ST (where available), including 131 isolates from 119 patients; subgroups included 2 to 14 isolates (median, 3 isolates) (Table S6). Pairwise SNP distances were plotted for each species
    - Plasmid replicon typing results were consistent with transmission analysis results in epidemiologically confirmed clusters, in that all isolates within a cluster carried the same plasmid replicon types, with the exception of the mixed NDM-5/NDM-5 plus OXA-232 cluster (K. pneumoniae ST16), where only the isolates with OXA-232 had the ColKP3-type plasmid detected, suggesting carriage of the OXA-232 gene on this plasmid.
+   -  Not much diversity of resistance genes in ST308 isolates - Spread of both of these lineages are more or less heavily dependent on these resistant genes
 
 ### Discussion
-   - Resistome analysis
+   - OXA-48-producing Enterobacterales isolates have been reported from hospital and extra-hospital reservoirs. Most of the studies on
+this subject have been conducted in developed countries, but the major epicentres of OXA-48-producing Enterobacterales are located in Mediterranean countries such as Algeria, where this resistance mechanism is endemic.
+   - Therefore our study encompasses OXA-48 isolates - Plasmid mediated transmission - usual species but serratia - associated with specific plasmids and replicons
+   - Along these lines, the presence of additional antimicrobial co-resistance genes could have played a key role in the selection and persistence of this IncL-pVIM-1 variant over the conserved IncL-pOXA-48.
 
-
-
-
-* **ST308 population structure by phylogenetic network analysis:** 
-    - How many clades?
-    - largest clade? 
-    - Are the isolates between the country/regions/hospital scattered in all clades?
-    - Are there any clades specific to a country? 
-    - Do the clades have specific geographical origin? 
-    - Any clades with all the country/regions/hospital?
-    - 
-    
-* **Spatiotemporal origin of the ST308 clone**
-    - What is tMRCA of the isolates date to? What is the HPD interval from the date of isolation of the latest isolate in year 2020?
-    - When was the oldest isolate isolated and from where country/hospital/continent?
-    - When does clade show that the isolate was emerged in the country? Is the split in the year 2005 confirmed with Bayesian approach with a posterior probability score of 1.0. This suggests that in Singapore the spread of ST308 is comprised of atleast two independent clades.
-    - Are the SNPs present in the core genome? How much percentage of the SNPs are present in resistant genes and how many in virulent genes?
-    - When is the emergence of year of different groups and clades?
-    - tMRCA tree figure 
-
-* **High diversity of foreign antibiotic resistant determinants among the ST308 isolates**
-    - Resistome Figure, a table in supplementary
-    - Prevalence of antibiotics figure
-    - How much percentage of isolates possess how many classes of ARG?
-    - How much percentage of isolates possess how many classes of Beta-lactamases?    
-    - How much percentage of isolates possess how many classes of Carbapenemases? What are they? Any other types of carbapenemases?
-    - Any specific clades with specific carbapenemases?
-    - The number of acquired resistance genes was significantly lower or higher in the isolates collected between two clades (Inst A and Inst B)
-   
- * **ST308-specific determinants**
-    -  Does St308 rely on any specific determinants?
-    -  Is the gene signature shared among the widespread clones?
-    -  Any specific genes found only in the ST308 isolates but not nonST308 clones?
-
-### Discussion
-
- * **ST308-specific determinants**
-    -  Does ST308 rely on any specific determinants? How about the genes DprA, RecQ, RecA, - needs more study 
-
- * **Not much diversity of resistance genes in ST308 isolates**
-    - Spread of both of these lineages are more or less heavily dependent on these resistant genes
-
- * **Role of Fluoroquinolones**
-    - Overall, although other features of ST235 may have contributed to its spread, fluoroquinolone use could have highly favoured the spread of exoU strains (including ST308) in which the fitness burden of the resistance to these major antibiotics is lower.
+### Conclusions
  
- 
- 
- 
- ## Additional backup
- 
- Also can write up if the samples are specific to any ST types
- 
-#### ST clone
-
-* ST235 one of the high risk clone and poorly understood
-
-#### History of the ST308 clone
-
-* To better understand the history of the P. aeruginosa STXXX lineage as a high-risk international clone, we carried out a Bayesian phylogenetic reconstruction using XXX P. aeruginosa STXXX isolates collected from five continents/countries/hospitals over a XXX-year period.
-
-#### Genomic study of the ST308 clone
-
-* Genome comparison of these isolates identified antibiotic-resistance determinants, virulence genes and ST235-specific genes that may have contributed to the success of this clone.
+ - In conclusion, how many lineages combined with versions of the same plasmid carrying XX cp genes or OXA-48 have contributed to the dispersion of CPSm in our institution.
+ - Moreover, our results also indicate that the IncL-pOXA-48 plasmid has the ability not only to transfer among different Enterobacterales species, including
+S. marcescens, but also to exchange genetic material. This fact facilitates the acquisition of other genetic structures carrying multiple resistance genes, including other carbapenemases such as blaVIM-1, thus generating nosocomial pathogens with a higher MDR profile. The transmission of these plasmids among different clinical pathogens including S. marcescens clones with the potential capacity to spread in hospital units with a high risk of infection,
+such as ICUs, represents a new challenge and should be considered a public health priority. 
+This study reinforces the relevance of species different from K. pneumoniae or E. coli in the CPE landscape and circulating lineages and plasmids in the local
+CPE epidemiology.
