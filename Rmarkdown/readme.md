@@ -43,6 +43,6 @@ To keep track of analysis creating multiple markdown documents and preserving th
 
 * Then we upload this md document along with the files generated in the folder. Here in this case, for example, I simply dragged and dropped into the browser 1) markdown document 2) bbstats_files folder.
 
-* Without the bbstats_files folder we can view images since images are stored in that folder.
+* Without the bbstats_files folder we cannot view images since images are stored in that folder.
 
 
