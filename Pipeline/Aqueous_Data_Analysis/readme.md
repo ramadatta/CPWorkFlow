@@ -1,6 +1,21 @@
 ## Molecular epidemiology and genomic analysis of individual patient isolates and environmental sampling reveals transmission of bacterial plasmids harboring carbapenem resistant genes
 
+### Abstract
+
+#### Objectives
+The incidence of carbapenem-resistant Enterobacterales (CRE) is found to be increasing since year 2010 in Singapore. To this end, we have used Whole Genome Sequencing (WGS) to characterize and analyze the chromosomal and plasmid molecular epidemiology of CRE from patients and hospital environment in Singapore.
+
+#### Methods
+A total of Seventy Enterobacterales isolates (patient n=12; environmental=58;) were sequenced for short-reads from Illumina and long-reads from Oxford Nanopore GridION platforms. The resulting sequence data was assembled and multilocus sequence types (MLST), species assignment, resistome & virulome analysis and plasmid replicon types and phylogenetic relationships between the samples was determined.
+
+#### Results
+Majority of the CPE isolates (61.4%; 43/70) were identified as Serratia marcescens followed by Klebsiella Pneumonia (24.2%; 17/70), Enterobacter cloacae (7.14%; 5/70), Escherichia coli (5.7%; 4/70), Klebsiella oxytoca (1.42%; 1/70). blaOXA-48 was found to be the most abundant carbapenemase gene from all the isolates (60/70). Co-carriage of multiple CP genes in samples was not observed. Except for the Enterobacter Species, the blaOXA-48 gene was pre-dominantly found to be present on a 67-kb plasmid in Serratia and Klebsiella species. Overall, X transmission clusters were identified from N=70 isolates. 
+
+#### Conclusions
+Combination of short-read and long-read sequencing can effectively help to determine the transmission of carbapenemase gene and in characterizing the specific plasmid carrying the carbapenemase gene. The current study of the isolates further our understanding CPE in the hospital setting. Also, clear associations between patient and environmental isolates were found by studying the transmission of carbapenem resistant plasmids. This reveals that the surrounding environment of patient has certainly plays in CPE transmission dynamics.
+
 [RefPaper1](https://sci-hub.se/https://doi.org/10.1093/jac/dkaa398) , [RefPaper2](https://sci-hub.se/https://doi.org/10.1093/jac/dkz146)
+
 ### Introduction:
 * Most important problem in healthcare setting
 * Which order of bacteria is causing it? What makes it more deadly and powerful to attack the humans?
@@ -20,6 +35,18 @@
 * Of the four exotoxins (ExoS, ExoT, ExoU, ExoY), ExoU, a potent phospholipase that disrupts the plasma membrane and leads to rapid cell death, is the most virulent 
 
 ### Methods
+
+#### Whole Genome Sequencing and Genome assembly
+Sequencing of the 70 isolates was performed using Illumina and Oxford Nanopore GridION platforms. De novo hybrid genome assemblies were generated using the short reads and long reads as an input to Unicycler assembler (Ref). The fastq files are deposited in NCBI SRA database with Bioproject accession (PRJNAXXX).
+
+#### Sequence Typing, Species Identification and Resistome
+Multilocus Sequencing Type (MLST) were identified using MLST tool (Ref). Species assignment was done based on Kraken2. The antimicrobial resistant genes were identified using resfinder available CGE website (Ref) and virulent genes by using ABRicate tool with vfdb as database (Ref). Plasmid replicons were assigned using Mob_suite tool (Ref)
+
+#### Bacterial core genome analysis 
+For each species, core genome analysis of the bacterial isolates was performed to find the possible transmission clusters. At first the genomes were annotated using prokka (Ref). Then, Roary (Page et al., 2015) was used to generate core genome alignment and SNPs were extracted from the core genome alignment using SNP-sites (https://github.com/sanger-pathogens/snp-sites). For the validation of SNPs generated from SNP-sites tool, another set of SNP sites were generated from mapping reads against the consensus genome sequence using SNIPPY tool. Only SNPs found in both SNP sets were considered as genuine SNPs and the unvalidated SNPs from core genome approach are converted to N to mask the polymorphism. Recombination filtering was performed using Gubbins and the resulting polymorphic snp sites output from gubbins was used to calculate SNP difference between the isolate pairs.
+
+#### Phylogenetic analysis and mutation rate calculation
+For the species E.coli and Klebsiella Pneumoniae, mutation rate previously inferred by our group in one of the previous study published (ref) was used. For the Serratia species, to estimate substitution rate, we used SNP alignment generated after eliminating recombined regions by gubbins was imported into BEAUti v2.5 to create an Extensive Markup Language (xml) file for BEAST v2.5 [57]. Using the S. marcescens Db11 (NCBI accession HG326223.1) reference genome the proportion of nucleotide bases of A, T, G, C were calculated and constant sites of A:1040770, T:1029706, C:1522977, G:1520300 were added in xml tag to keep the model representative of S. marcescens Db11 complete genome. We used Strict molecular clock as clock model, bModelTest [58] was used as a substitution model. Three independent runs of BEAST, each with .xml file was given as an input to BEAST to run 10 million MCMC cycles. Mixing and convergence statistics were monitored in Tracer v1.6 (Rambaut et al., 2014). Subsequently, convergence was determined for the given model by checking if the ESS values > 200 for all the parameters. A burn-in of 10 million states was left out from each of the three independent runs of this model. We then combined the results from those runs with the logcombiner program from the BEAST package. We took the age of the root as the height of the root of the Maximum Clade Credibility (MCC) tree reconstructed by combining trees using the tree annotator program from the BEAST package.
 
 ### Results
 
