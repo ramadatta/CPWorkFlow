@@ -1,5 +1,5 @@
 ---
-title: "Compare Resistome from Short Read Samples Raw Reads vs Assembly"
+title: "Comparison of resistome for samples at different time points using Raw reads and Assembly"
 author: "Prakki Sai Rama Sridatta"
 date: "2021-09-03"
 output:
