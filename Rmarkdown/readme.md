@@ -23,6 +23,7 @@ To keep track of analysis creating multiple markdown documents and preserving th
 |10| [datesPlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of dates between different institutions - in progress | scatterplot |
 |11| [SamplingSite.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of sampling sites between different institutions - in progress| Barplot|
 |12| [WafflePlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of how many samples have a gene present and not - in progress  | Waffle|
+|13| [mutRate_BoxPlot.md](https://github.com/ramadatta/tute/blob/main/R/boxplot/mutRate_BoxPlot.md)| Boxplot from pre-calculated values  | Boxplot | 
 
 
 #### *Notes for authors*
