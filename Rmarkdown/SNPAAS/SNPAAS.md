@@ -60,4 +60,4 @@ ggplot(SNPMat_long, aes(SNP, Sample, fill = Pres_Abs,alpha = Pres_Abs)) +
 
 ggsave("SNP_PA_matrix_allSamples.png",dpi = 600, width = 8, height = 6, units = "in")
 ```
-![Test Image 1](3DTest.png)
+![SNP_PA_matrix_allSamples](SNP_PA_matrix_allSamples.png)
