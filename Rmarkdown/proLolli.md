@@ -94,6 +94,16 @@ Once the regions and coordinates are found, we pass this to `trackViewer` which 
 ```bash
 bash lollipop_rcode_generator_multiVCF.sh >proLolli_multi.R
 ```
+if the reference gff complains with error
+
+```
+Error: line number x of file file.gff has 1 fields, but 9 were expected.
+```
+
+then
+```
+sed '/^##FASTA$/,$d' file.gff
+```
 
 ### Step 9: Generate Lollipop Plot using R script
 
