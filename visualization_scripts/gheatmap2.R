@@ -1,3 +1,5 @@
+# This script will draw phylogenetic tree from newick file and also generate a SNP matrix 
+
 library(ggtree)
 library(ggtreeExtra)
 library(ggplot2)
@@ -74,15 +76,6 @@ head(sorted_labels)
 reordered_distances <- distances[sorted_labels]
 reordered_distances
 class(reordered_distances)
-
-# # lets add color for the tip points- based on the sampleType
-# nb.cols <- length(unique(complete_snp_table$SNPDiff))
-# nb.cols
-# customPal <- colorRampPalette(brewer.pal(8, "Dark2"))(nb.cols) # Set2, Accent, Paired
-# #class(customPal)
-# customPal
-
-
 
 sampleType <- sample_ARG_Cat_long %>% select(sample_name,category,SampleType) %>%  unique()
 head(sampleType)
