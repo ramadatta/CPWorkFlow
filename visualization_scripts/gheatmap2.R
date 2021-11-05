@@ -1,5 +1,3 @@
-# This script will draw phylogenetic tree from newick file and also generate a SNP matrix 
-
 library(ggtree)
 library(ggtreeExtra)
 library(ggplot2)
@@ -77,6 +75,15 @@ reordered_distances <- distances[sorted_labels]
 reordered_distances
 class(reordered_distances)
 
+# # lets add color for the tip points- based on the sampleType
+# nb.cols <- length(unique(complete_snp_table$SNPDiff))
+# nb.cols
+# customPal <- colorRampPalette(brewer.pal(8, "Dark2"))(nb.cols) # Set2, Accent, Paired
+# #class(customPal)
+# customPal
+
+
+
 sampleType <- sample_ARG_Cat_long %>% select(sample_name,category,SampleType) %>%  unique()
 head(sampleType)
 
@@ -121,6 +128,8 @@ p2 <- gheatmap(p1,reordered_distances, offset=offset_var, width=2,
  # scale_fill_gradient(low="#ffd662ff", high="#24868EFF",name="genotype")
   scale_fill_gradientn(limits = SNP_limits, colours=c("#ffd662ff", "#24868EFF"),
                        breaks=b, labels=format(b), na.value="tomato3", name="SNP Difference") + 
+  scale_fill_manual(values=NA) +              
+  guides(colour=guide_legend("SNP Difference >100", override.aes=list(colour="tomato3"))) +
   labs(x="", y="", title = paste0(organism," Gubbins Phylogenetic Tree and SNP Difference Matrix"))
 
 p2
@@ -143,18 +152,6 @@ setwd("/data02/Analysis/Projects/8_Aqueos_samples/9_SNP_matrix_redo_analysis")
 #   wid = 15,
 #   hei = 10
 # )
-
-#SM
-Plot_PGT_SNPMat(
-  newickFile = "SM_postGubbins.final_tree.tre",
-  meltfile = "postGubbins.filtered_polymorphic_sites_SM_full_triangle.csv",
-  organism = "Serratia Marcescens",
-  offset_var = 1,
-  SNP_limits = c(0, 12),
-  legend_limits = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-  wid = 18,
-  hei = 13
-)
 
 #SM
 Plot_PGT_SNPMat(
