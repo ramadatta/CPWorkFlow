@@ -7,6 +7,9 @@ library(lubridate)
 library(ggplot2)
 library(ggtree)
 library(reshape2)
+library(ggtreeExtra)
+library(ggnewscale)
+library(phytools)
 
 # Load BEAST Tree
 beast_tree <- read.beast(file = "postGubbins.filtered_polymorphic_sites_BEAST_withDates_treecombined_samplestate_10000_treeannotator.tree")
@@ -24,8 +27,8 @@ dd = as.data.frame(tipcategories)
 head(dd)
 
 # Basic Tree
-#thetree <- ggtree(beast_tree, open.angle=15, mrsd = "2020-11-07") +  
-thetree <- ggtree(beast_tree, open.angle=20, layout="fan",mrsd = "2020-11-07")  + # If needed circular
+thetree <- ggtree(beast_tree, open.angle=15, mrsd = "2020-11-07") +  
+#thetree <- ggtree(beast_tree, open.angle=20, layout="fan",mrsd = "2020-11-07")  + # If needed circular
 #  geom_range(range='height_0.95_HPD', color='red', alpha=.2, size=2) + # Bars
   geom_treescale(x=2005, y=250, offset=2, fontsize = 3) +
   geom_rootpoint()
@@ -35,16 +38,18 @@ thetree
 # Add Details to tree
 thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =2, aes(col=Institution)) + 
  # geom_tippoint( aes(shape = Institution), color = "black", size = 1, show.legend = FALSE) + # To add tippoints
-   ggplot2::xlim(1999, 2021) + theme_tree2() +
+  #  geom_range(range='height_0.95_HPD', color='red', alpha=.2, size=2) + # Bars
+     ggplot2::xlim(1999, 2021) + theme_tree2() +
   # geom_text(aes(x=branch, label=height_0.95_HPD), size=2, vjust=-.3, color="firebrick") + # This will help find the values 2020.85245901639−11.178206=2009.6, 2020.85245901639−18.850128= 2002.006
    # geom_text2(aes(label=round(as.numeric(posterior), 2), subset=as.numeric(posterior)> 0.1, x=branch), vjust=1,nudge_x = 0.2,size=3) + #Bootstrap values
   scale_color_manual(values=c("#E7B800", "#FC4E07", "darkgreen", "darkblue", "purple")) +
   scale_x_continuous(breaks=c(2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020, 2021))
 
 # Storing the above tree in an object for adding other layers later
-p1 <- thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =1, aes(col=Institution)) + 
+divergent_tree <- thetree %<+% dd +   aes(color=Institution) + geom_tiplab(align=TRUE, linesize=.1, size =1, aes(col=Institution)) + 
   # geom_tippoint( aes(shape = Institution), color = "black", size = 1, show.legend = FALSE) +
-  ggplot2::xlim(1999, 2021) + theme_tree2() +
+    geom_range(range='height_0.95_HPD', color='blue', alpha=.10, size=2) + # Bars
+    ggplot2::xlim(1999, 2021) + theme_tree2() +
   # geom_text(aes(x=branch, label=height_0.95_HPD), size=2, vjust=-.3, color="firebrick") + # This will help find the values 2020.85245901639−11.178206=2009.6, 2020.85245901639−18.850128= 2002.006
   # geom_text2(aes(label=round(as.numeric(posterior), 2), subset=as.numeric(posterior)> 0.1, x=branch), vjust=1,nudge_x = 0.2,size=3) + #Bootstrap values
   scale_color_manual(values=c("#E7B800", "#FC4E07", "darkgreen", "darkblue", "purple")) +
@@ -52,6 +57,7 @@ p1 <- thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =1, aes(col=In
   labs(x="",
        y="",
        title = "Pseudomonas aeruginosa Divergence Tree and Resistant Gene Presence/Absence Matrix")
+divergent_tree
 
 # Save tree
 setwd("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/BEAST")
@@ -63,6 +69,8 @@ cge_log <-  read.csv("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40
 #view(cge_log)
 #head(cge_log)
 tail(cge_log)
+
+cge_log %>% select(FILE,GENE) %>% filter(GENE=="blaNDM-1")
 
 # Presence/Absence Matrix
 #mat <- acast(cge_log, BEAST_Header~GENE,length) #  this gives count matrix. But i want only pres/abs 
@@ -87,8 +95,10 @@ reordered_distances.transpose <- distances.transpose[do.call(order,as.data.frame
 reordered_distances <- t(reordered_distances.transpose)
 reordered_distances
 
-gheatmap(p1,reordered_distances, offset=15, width=1,
-                     colnames_angle=90, colnames_offset_y = 265,font.size = 1) +
+####METHOD1 : to have heatmap (Label names of genes are not properly shown in linear chart - circular have to adjust a bit)
+
+gheatmap(divergent_tree,reordered_distances, offset=3, width=1,
+                     colnames_angle=90, colnames_offset_y = 265,font.size = 2) +
   scale_fill_gradientn(limits = c(0,1), colours=c("#ffd662ff", "#24868EFF"),
                        breaks=c(0,1), labels=format(c(0,1)), na.value="tomato3", name="Gene Presence/Absence") +
   labs(x="",
@@ -96,7 +106,8 @@ gheatmap(p1,reordered_distances, offset=15, width=1,
        title = "BEAST Phylogenetic Tree and Resistant Gene Presence/Absence Matrix")
 
  ggsave("ST308_PAE_PGTree_Gene_PAMat.pdf",dpi = 600, width = 10, height = 8, units = "in")
-
+ 
+ ####METHOD2 : to have heatmap (Best method for label names of genes are properly shown in linear chart - circular layout cannot draw as of now)
 library(aplot)
 # p1
 #geneBySample_df_long <- reshape2:::melt(as.matrix(mat))
@@ -106,30 +117,47 @@ head(geneBySample_df_long)
 
 #geneBySample_df_long %>% filter(Value>=2)
 
-arg_freq_df1 <- geneBySample_df_long %>% filter(Value == 1) 
+# If want to add additional information like bar chart - else not needed
+# arg_freq_df1 <- geneBySample_df_long %>% filter(Value == 1) 
+# 
+# arg_freq_df2 <- as.data.frame(table(arg_freq_df1$Gene))
+# 
+# colnames(arg_freq_df2) <- c("ARG","Frequency")
+# 
+# arg_freq <- ggplot(arg_freq_df2,aes(x=ARG,y=Frequency,fill=ARG)) +
+#   #geom_col(stat = count)
+#   geom_bar(stat = "identity") +
+#   geom_text(aes(label=Frequency), position=position_dodge(width=0.9), vjust=-0.25) + 
+#   theme_minimal() +
+#   theme(panel.grid.major = element_blank(), axis.text.x=element_blank(),axis.title.x = element_blank())
+# 
+# arg_freq 
 
-arg_freq_df2 <- as.data.frame(table(arg_freq_df1$Gene))
-
-colnames(arg_freq_df2) <- c("ARG","Frequency")
-
-arg_freq <- ggplot(arg_freq_df2,aes(x=ARG,y=Frequency,fill=ARG)) +
-  #geom_col(stat = count)
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=Frequency), position=position_dodge(width=0.9), vjust=-0.25) + 
-  theme_minimal() +
-  theme(panel.grid.major = element_blank(), axis.text.x=element_blank(),axis.title.x = element_blank())
-
-arg_freq 
-
-p2 <- ggplot(geneBySample_df_long,aes(x=Gene, y=BEAST_Header)) + 
+ggplot_heatmap <- ggplot(geneBySample_df_long,aes(x=Gene, y=BEAST_Header)) + 
   geom_tile(aes(fill=Value)) + 
   #scale_fill_viridis_c() + 
   scale_fill_gradient(low = "#ffd662ff", high = "#24868EFF", name='Gene Presence/Absence', ) +
   theme_minimal() + xlab(NULL) + ylab(NULL) + 
-  theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1), 
-        axis.text.y=element_blank(), axis.ticks.y=element_blank())
+ theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1), 
+       axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-p2 # This will contain heatmap of all the samples in the tree
+ggplot_heatmap # This will contain heatmap of all the samples in the tree
+
+# This set of code puts labels in the ya xis after to the right of heatmap
+
+# p2 <- ggplot(geneBySample_df_long,aes(x=Gene, y=BEAST_Header)) +
+#   geom_tile(aes(fill=Value)) +
+#   #scale_fill_viridis_c() +
+#   scale_fill_gradient(low = "#ffd662ff", high = "#24868EFF", name='Gene Presence/Absence', ) +
+#   theme_minimal() + xlab(NULL) + ylab(NULL) +
+#    theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1)) +
+#   scale_y_discrete(position = "right") #+
+# 
+#   # theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1),
+#   #       axis.text.y=element_blank(), axis.ticks.y=element_blank())
+# 
+# p2 # This will contain heatmap of all the samples in the tree
+
 
 # First lets put bar chart on top
 # arg_freq_top_heatmap_down <- p2 %>% insert_top(arg_freq)
@@ -138,12 +166,122 @@ p2 # This will contain heatmap of all the samples in the tree
 
 # But, I just want tree on left and heatmap on right
 
-p4 <- p2 %>% insert_left(p1)
-p4
+divtree_ggplot_heatmap <- ggplot_heatmap %>% insert_left(divergent_tree)
+divtree_ggplot_heatmap
 
 ggsave("test.pdf",dpi = 600, width = 20, height = 18, units = "in")
 
 #ggsave("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/BEAST/test.pdf", width = 50, height = 50, units = "cm", limitsize = FALSE)
+
+########################################-----DIFFERENT ANALYSIS - PHYLOGENETIC TREE + TTSH SAMPLES -------#########################################
+
+# Load BEAST Tree
+beast_tree <- read.tree(file = "/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/Gubbins/TTSH_Isolates/postGubbins.filtered_polymorphic_sites_BEAST_withDates_TTSH.fasta.treefile")
+beast_tree
+
+# Add Meta-data into dataframe
+tipcategories = read.csv("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/BEAST/Combined_TTSH_NUH_SGH_SpecimenSite.csv", 
+                         sep = ",",
+                         header = TRUE)
+
+head(tipcategories)
+
+dd = as.data.frame(tipcategories)
+
+head(dd)
+
+# Basic Tree
+thetree <- ggtree(beast_tree, open.angle=15) +xlim(0,0.2) +
+# thetree <- ggtree(beast_tree, open.angle=20, layout="fan")  + # If needed circular
+  #  geom_range(range='height_0.95_HPD', color='red', alpha=.2, size=2) + # Bars
+  geom_treescale(x=0.05, y=40, offset=2, fontsize = 3) #+
+  #geom_treescale(x=2005, y=250, offset=2, fontsize = 3) +
+ # geom_rootpoint()
+
+thetree
+
+# Add Details to tree
+thetree %<+% dd + geom_tiplab(align=FALSE, linesize=.1, size =2.5, aes(col=Institution)) + 
+  # geom_tippoint( aes(shape = Institution), color = "black", size = 1, show.legend = FALSE) + # To add tippoints
+  # theme_tree() +
+  scale_color_manual(values=c("#E7B800", "#FC4E07", "darkgreen", "darkblue", "purple")) 
+
+# Storing the above tree in an object for adding other layers later
+pg_tree_TTSH <- thetree %<+% dd + geom_tiplab(align=FALSE, linesize=.1, size =1, aes(col=Institution)) + 
+  # geom_tippoint( aes(shape = Institution), color = "black", size = 1, show.legend = FALSE) + # To add tippoints
+  # theme_tree() +
+  scale_color_manual(values=c("#E7B800", "#FC4E07", "darkgreen", "darkblue", "purple"))  +
+  labs(x="",
+       y="",
+       title = "Pseudomonas aeruginosa Maximum Likelihood Phylogenetic Tree") +
+  theme(legend.position = c(0.3,0.1), 
+        legend.title = element_blank(), # no title
+        legend.key = element_blank(),
+        legend.key.size = unit(0.5, 'cm'), # sets overall area/size of the legend
+        legend.text = element_text(size = 12),) # text size) # no keys
+
+pg_tree_TTSH
+
+# Save tree
+ggsave("pae_samples_TTSH_hospital.pdf",dpi = 300, width = 20, height = 25, units = "in")
+
+# Adding resistant genes matrix to the right side of PGTree
+cge_log <-  read.csv("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/Abricate/Abricate_270_samplesresults.csv",sep = ",", header = TRUE, quote="")
+
+#view(cge_log)
+#head(cge_log)
+tail(cge_log)
+
+cge_log %>% select(FILE,GENE) %>% filter(GENE=="blaNDM-1")
+
+# Presence/Absence Matrix
+#mat <- acast(cge_log, BEAST_Header~GENE,length) #  this gives count matrix. But i want only pres/abs 
+mat <- as.data.frame(with(cge_log, table(BEAST_Header, GENE)) > 0L) +0L
+head(mat)
+class(mat)
+distances <- as.data.frame(as.matrix(mat))
+head(distances)
+class(distances)
+class(thetree$data$label)
+
+# The below line takes the tip labels first and subsets the distance matrix
+# So, only samples in particular tree will be utilised 
+# Then we omit the NA rows
+# Subset the matrix again by removing the (genes) columns with all 0 and finally write into same matrix distances
+distances <- subset(distances[na.omit(thetree$data$label),], select=colSums(distances[na.omit(thetree$data$label),]) > 0) 
+
+# Sorting the presence/absence matrix for genes and restoring to BEAST_header matrix
+distances.transpose <- t(distances)
+distances.transpose
+reordered_distances.transpose <- distances.transpose[do.call(order,as.data.frame(distances.transpose)),]
+reordered_distances <- t(reordered_distances.transpose)
+reordered_distances
+
+#### Plot Heatmap (Best method for label names of genes are properly shown in linear chart - circular layout cannot draw as of now)
+library(aplot)
+
+geneBySample_df_long <- melt(reordered_distances)
+colnames(geneBySample_df_long) <- c("BEAST_Header","Gene","Value")
+head(geneBySample_df_long)
+
+ggplot_heatmap <- ggplot(geneBySample_df_long,aes(x=Gene, y=BEAST_Header)) + 
+  geom_tile(aes(fill=Value)) + 
+  #scale_fill_viridis_c() + 
+  scale_fill_gradient(low = "#ffd662ff", high = "#24868EFF", name='Gene Presence/Absence', ) +
+  theme_minimal() + xlab(NULL) + ylab(NULL) + 
+  theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1), 
+        axis.text.y=element_blank(), axis.ticks.y=element_blank())
+
+ggplot_heatmap # This will contain heatmap of all the samples in the tree
+
+# But, I just want tree on left and heatmap on right
+
+TTSHtree_ggplot_heatmap <- ggplot_heatmap %>% insert_left(pg_tree_TTSH)
+TTSHtree_ggplot_heatmap
+
+
+
+########################################-----DIFFERENT ANALYSIS - PHYLOGENETIC TREE + SNP MATRIX -------#########################################
 
 # Plot SNP Matrix along with Phylogenetic tree
 

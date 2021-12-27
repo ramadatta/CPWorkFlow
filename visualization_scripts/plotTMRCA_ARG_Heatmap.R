@@ -24,9 +24,9 @@ dd = as.data.frame(tipcategories)
 head(dd)
 
 # Basic Tree
-#thetree <- ggtree(beast_tree, open.angle=15, mrsd = "2020-11-07") +  
-thetree <- ggtree(beast_tree, open.angle=20, layout="fan",mrsd = "2020-11-07")  + # If needed circular
-#  geom_range(range='height_0.95_HPD', color='red', alpha=.2, size=2) + # Bars
+thetree <- ggtree(beast_tree, open.angle=15, mrsd = "2020-11-07") +  
+#thetree <- ggtree(beast_tree, open.angle=180, layout="circular",mrsd = "2020-11-07")  + # If needed circular
+  geom_range(range='height_0.95_HPD', color='red', alpha=.2, size=2) + # Bars
   geom_treescale(x=2005, y=250, offset=2, fontsize = 3) +
   geom_rootpoint()
 
@@ -42,7 +42,7 @@ thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =2, aes(col=Institut
   scale_x_continuous(breaks=c(2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020, 2021))
 
 # Storing the above tree in an object for adding other layers later
-p1 <- thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =1, aes(col=Institution)) + 
+p1 <- thetree %<+% dd + geom_tiplab(align=TRUE, linesize=.1, size =2, aes(col=Institution)) + 
   # geom_tippoint( aes(shape = Institution), color = "black", size = 1, show.legend = FALSE) +
   ggplot2::xlim(1999, 2021) + theme_tree2() +
   # geom_text(aes(x=branch, label=height_0.95_HPD), size=2, vjust=-.3, color="firebrick") + # This will help find the values 2020.85245901639−11.178206=2009.6, 2020.85245901639−18.850128= 2002.006
@@ -87,15 +87,15 @@ reordered_distances.transpose <- distances.transpose[do.call(order,as.data.frame
 reordered_distances <- t(reordered_distances.transpose)
 reordered_distances
 
-gheatmap(p1,reordered_distances, offset=15, width=1,
-                     colnames_angle=90, colnames_offset_y = 265,font.size = 1) +
-  scale_fill_gradientn(limits = c(0,1), colours=c("#ffd662ff", "#24868EFF"),
-                       breaks=c(0,1), labels=format(c(0,1)), na.value="tomato3", name="Gene Presence/Absence") +
-  labs(x="",
-       y="",
-       title = "BEAST Phylogenetic Tree and Resistant Gene Presence/Absence Matrix")
-
- ggsave("ST308_PAE_PGTree_Gene_PAMat.pdf",dpi = 600, width = 10, height = 8, units = "in")
+# gheatmap(p1,reordered_distances, offset=15, width=2,
+#                      colnames_angle=90, colnames_offset_y = 265,font.size = 2) +
+#   scale_fill_gradientn(limits = c(0,1), colours=c("#ffd662ff", "#24868EFF"),
+#                        breaks=c(0,1), labels=format(c(0,1)), na.value="tomato3", name="Gene Presence/Absence") +
+#   labs(x="",
+#        y="",
+#        title = "Enterobacter Species Gubbins Phylogenetic Tree and Resistant Gene Presence/Absence Matrix")
+# 
+# ggsave("Enterobacter Species_PGTree_Gene_PAMat.pdf",dpi = 600, width = 10, height = 8, units = "in")
 
 library(aplot)
 # p1
