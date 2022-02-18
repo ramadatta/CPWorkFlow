@@ -1,5 +1,4 @@
-bbstats.md - 
-# VisAnnDATA - Visualization & Analysis DATA 
+# Data Analysis & Visualization
 
 All the data analysis steps and visualizations are converted into markdown documents and compiled into markdown library
 
