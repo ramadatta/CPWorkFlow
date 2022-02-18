@@ -25,7 +25,9 @@ To keep track of analysis creating multiple markdown documents and preserving th
 |12| [WafflePlot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/cgeResistome.md)| Data Visualization of how many samples have a gene present and not - in progress  | Waffle|
 |13| [mutRate_BoxPlot.md](https://github.com/ramadatta/tute/blob/main/R/boxplot/mutRate_BoxPlot.md)| Boxplot from pre-calculated values  | Boxplot | 
 |14| [SNPAAS.md](https://github.com/ramadatta/tute/blob/main/SNPs/SNPAAS/SNPAAS.md)| Find and Plot SNPs Across All Samples | HeatMap | 
-|15| [multiDumbell.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/multiDumbell.md)| Adding multiple timepoint on dumbbell plot | Dumbell Plot | 
+|15| [multiDumbell.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/multiDumbell.md)| Adding multiple timepoint on dumbbell plot | Dumbell Plot |
+|16| [Final_PAE_Phylotree_Plot_v2.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Final_PAE_Phylotree_Plot_v2.md)| Using ggtree package to drawn phylogenetic trees | GGTREE | 
+
 
 
 
