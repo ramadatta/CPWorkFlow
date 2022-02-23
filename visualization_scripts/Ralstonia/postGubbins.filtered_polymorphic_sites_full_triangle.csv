@@ -1,0 +1,17 @@
+"","row","col","value"
+"1","ADH0090_Duplicate","ADH0090_Duplicate",0
+"2","ADH0090","ADH0090_Duplicate",0
+"3","ADH0090_Duplicate","ADH0090",0
+"4","ADH0090","ADH0090",0
+"5","ADH0091","ADH0091",0
+"6","ADH0092","ADH0092",0
+"7","ADH0091","ADH0090_Duplicate",1
+"8","ADH0091","ADH0090",1
+"9","ADH0090_Duplicate","ADH0091",1
+"10","ADH0090","ADH0091",1
+"11","ADH0092","ADH0091",12
+"12","ADH0091","ADH0092",12
+"13","ADH0092","ADH0090_Duplicate",13
+"14","ADH0092","ADH0090",13
+"15","ADH0090_Duplicate","ADH0092",13
+"16","ADH0090","ADH0092",13
