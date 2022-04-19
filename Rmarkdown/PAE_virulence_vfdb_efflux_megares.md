@@ -20,7 +20,7 @@ library(reshape2)
 library(factoextra) #fviz_eig
 library(tidyverse)
 
-vir.db <- read.table("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/5_Abricate_vfdb/abricate_270_samples-vfdb.txt",
+vir.db <- read.table("/data02/Analysis/Projects/6_Paeruginosa_199_C_31_A_40_C/5_Abricate_vfdb/abricate_270_samples-vfdb.txt",
                      sep = "\t", header = TRUE, check.names = FALSE)
 #head(vir.db)
 
@@ -105,7 +105,7 @@ fviz_pca_ind(res.pca.scaleT2 ,fill.ind = vir.mat.whosp.scaleT2$HOSPITAL,pointsha
 
 ## PCA with efflux pump encoding genes
 
-megares.db <- read.table("/data02/Analysis/Projects/6_Paeruginosa_199_TTSH_31_NUH_40_SGH/6_Abricate_Megares/PAE_Abricate_megares.txt",
+megares.db <- read.table("/data02/Analysis/Projects/6_Paeruginosa_199_C_31_A_40_C/6_Abricate_Megares/PAE_Abricate_megares.txt",
                      sep = "\t", header = TRUE, check.names = FALSE)
 #head(megares.db)
 
