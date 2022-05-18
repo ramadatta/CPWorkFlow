@@ -28,6 +28,7 @@ To keep track of analysis creating multiple markdown documents and preserving th
 |16| [Final_PAE_Phylotree_Plot_v2.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Final_PAE_Phylotree_Plot_v2.md)| Using ggtree package to drawn phylogenetic trees | GGTREE | 
 |17| [Plasmid_Profile_PCA_plot.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Plasmid_Profile_PCA_plot.md)| Profile Plasmid genes and draw PCA plot | Heatmap,PCA |
 |18| [PAE_virulence_vfdb_efflux_megares.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/PAE_virulence_vfdb_efflux_megares.md)| PCA plot for virulence genes and efflux pumps | PCA | 
+|19| [Roary_PCA_flex_withmeta_v5.1.md](https://github.com/ramadatta/CPWorkFlow/blob/main/Rmarkdown/Plasmid_PCA/Roary_PCA_flex_withmeta_v5.1.md)| PCA plot for genes presence absence matrix for plasmids | PCA | 
 
 
 
