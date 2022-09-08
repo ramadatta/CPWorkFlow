@@ -1,0 +1,53 @@
+#Start	Stop	Label
+1	885	RepA
+1560	1898	ArdK
+2006	2539	Ssb
+2569	3354	Mpr
+3534	3956	ArdB
+3974	4264	hypothetical protein
+4268	4798	ArdR
+5974	6765	hypothetical protein
+6934	7203	CcgC
+7245	7445	hypothetical protein
+7500	7997	putative transcriptional regulator
+8777	8983	hypothetical protein
+9058	9240	CcgAI
+9299	9649	hypothetical protein
+9711	10079	StbC
+10082	10798	StbB
+10807	11238	StbA
+11719	12141	TraK
+12141	13673	TraJ
+13678	16884	TraI
+16881	17150	FipA
+17147	20044	TnpA
+20139	20744	TnpR
+20749	21117	mannose-6-phosphate isomerase
+21130	21393	transposase
+21420	22250	IS3-like element ISSen4 family transposase
+22332	22589	N-(5'-phosphoribosyl)anthranilate isomerase
+22699	23250	bleomycin_binding_protein_Ble-MBL
+23131	23943	class B beta-lactamase NDM-1
+24239	25270	TnpA
+25286	25885	IS30 family transposase
+26946	27257	hypothetical protein
+27254	27781	phospholipase D family protein
+27778	28779	TraG
+28830	29969	TraF
+29969	30856	TraO
+30867	31562	TraE
+31781	32818	TraD
+32835	33077	Eex
+33087	33788	TraC
+33804	36377	TraB
+36378	36695	TraA
+36735	37031	conjugal transfer protein TraM
+37040	37318	KorA
+37278	38060	TraL
+38160	38477	KorB
+38481	38831	hypothetical protein
+38828	39166	KikA-like protein
+39170	39478	hypothetical protein
+39763	39948	ribbon-helix-helix domain-containing protein
+39945	40553	resolvase
+40719	41051	hypothetical protein
