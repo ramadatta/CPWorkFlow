@@ -1,0 +1,523 @@
+---
+title: "5 year CPE Tranmission - Plasmid Clustering"
+author: "Prakki Sai Rama Sridatta"
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    code_folding: hide
+    keep_md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Loading data
+
+```{r cumplots, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+setwd("/data02/Analysis/Projects/2_CPE_Transmission/Kmer_Comparison_ForPlasmidClustering")
+
+library(igraph)
+library(ggplot2)
+library(circlize)
+library(dplyr)
+library(ggrepel)
+library(kableExtra)
+library(InteractiveComplexHeatmap)
+library(ComplexHeatmap)
+
+plasmid_similarity_df <- data.table::fread("List_1071_Plasmid_seqs_kmer_comp_Jaccard_v2.tab", header= FALSE, sep = "\t")
+#head(plasmid_similarity_df)
+
+colnames(plasmid_similarity_df) <- c("Plasmid1","Plasmid1_length","Plasmid2","Plasmid2_length", "Plasmid_similarity","Plasmid_disimilarity")
+```
+
+
+# Plasmid Clustering
+```{r Plasmid_kmerClusters, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# Generate a similarity matrix
+  simMatrix  <- plasmid_similarity_df %>% 
+    # head() %>%
+    select(Plasmid1, Plasmid2, Plasmid_similarity) %>% 
+    data.table::dcast(Plasmid1~Plasmid2, value.var="Plasmid_similarity") %>% 
+    replace(is.na(.), 1)
+  
+  simMatrix <- simMatrix %>% tibble::column_to_rownames("Plasmid1")
+  
+  simMatrix[is.na(simMatrix)] <- 1
+  
+  p1 <- Heatmap(as.matrix(simMatrix), name = "Plasmid Similarity", show_row_names = FALSE, show_column_names = FALSE)
+  
+Closed_CP_Plasmids_metadata_df <- data.table::fread("/data02/Analysis/Projects/2_CPE_Transmission/Reference_Excels/Closed_CP_Plasmids_metadata_07102022.csv", header= TRUE, sep = ",")
+  
+  Closed_CP_Plasmids_metadata_subsetdf <- Closed_CP_Plasmids_metadata_df %>%  select(Plasmid_name_filename,CP_Gene,Hospital,Sample_type,Inc_group_regrouped)
+
+Plas_CPdf <- Closed_CP_Plasmids_metadata_subsetdf %>%  select(Plasmid_name_filename,CP_Gene)
+Plas_CPdf <- Plas_CPdf %>% tibble::column_to_rownames("Plasmid_name_filename")
+
+p2 <- Heatmap(Plas_CPdf, name = "CP Genes", show_row_names = FALSE)
+
+#p1
+
+#ht_list <- p1 + p2
+
+#ht_list 
+#htShiny(ht_list)
+
+
+  # col_fun = colorRamp2(c(0, 0.25, 0.5, 0.75, 1), c( "#06d6a0", "#80cfba", "#ffd166", "#eda4b5", "#ef476f"))
+  # #col_fun
+  # Heatmap(as.matrix(simMatrix), name = "Plasmid Similarity", show_row_names = FALSE, show_column_names = FALSE,col = col_fun)
+ # Heatmap(as.matrix(simMatrix), name = "Plasmid Similarity", show_row_names = FALSE, show_column_names = FALSE,col = col_fun, row_km = 7, column_km = 5)
+  
+    col_fun = colorRamp2(c(0, 0.25, 0.5, 0.75, 0.9, 1), c("#0232de", "#4e6dde", "#ffd166", "#fabb28", "#ef476f", "#e30742")) 
+  
+  Heatmap(as.matrix(simMatrix), name = "Plasmid Similarity", show_row_names = FALSE, show_column_names = FALSE,col = col_fun,
+  heatmap_legend_param = list(
+    title = "Plasmid Similarity", at = c(0, 0.25, 0.5, 0.75, 0.9, 1), 
+    labels = c(0, 0.25, 0.5, 0.75, 0.9, 1)
+  ))
+
+```
+
+
+## Cumulative plots {.tabset}
+
+### Histogram1
+
+#### Plasmid Similarity histogram (Bin size 0.02)
+
+```{r Histogram1, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# plasmid_similarity_df %>% 
+#   ggplot(aes(x=Plasmid_similarity)) +
+#   geom_histogram(binwidth=0.02,color="black",fill = "#4dbfbc") +
+#   scale_x_continuous(breaks = seq(0, 20, 1)) +
+#   stat_bin(binwidth=0.02, geom="text", aes(label=..count..), vjust=-1.5)+
+#   labs(x = "Plasmid Similarity (Jaccard)", y = "Plasmid Pair Counts") +
+#   ggtitle("Histogram of Plasmid Similarity (Bin size 0.02)") +
+#   theme_classic()
+
+#NOTE: The above geom_histogram did not give me expected counts. So, I calculated ranges first and then tabled and then made the dataframe which was then supplied to ggplot to draw a plot
+
+stack(table(cut(plasmid_similarity_df$Plasmid_similarity,breaks=seq.int(from=0,to=1,by=0.02)))) %>% 
+  as.data.frame() %>% 
+  rename(PlasmidPairCount=values, Range=ind) %>% 
+  ggplot(aes(x=Range,y=PlasmidPairCount, label = PlasmidPairCount)) + 
+  geom_col(color="black",fill = "#4dbfbc",position = "dodge") +
+   geom_text(position = position_dodge(width = 1), hjust = -0.1) +
+  labs(x = "Plasmid Similarity (Jaccard)", y = "Plasmid Pair Counts") +
+  ggtitle("Histogram of Plasmid Similarity (Bin size 0.02)") +
+  theme_classic() +
+    theme(axis.text.y=element_text(size=10,  vjust = 0, hjust = 1),
+        axis.text.x=element_text(size=10, angle=90, vjust = 0, hjust = 1.2),
+        axis.line=element_blank(),
+        axis.ticks=element_blank(),
+        legend.position="top") +
+  coord_flip()
+```
+
+### Histogram2
+
+#### Plasmid Similarity histogram (Bin size 0.05)
+
+```{r Histogram2, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# plasmid_similarity_df %>% 
+#   ggplot(aes(x=Plasmid_similarity)) +
+#   geom_histogram(binwidth=0.05,color="black",fill = "#4dbfbc") +
+#   #scale_x_continuous(breaks = seq(0, 20, 1), limits = c(0, 1)) + 
+#   stat_bin(binwidth=0.05, geom="text", aes(label=..count..), vjust=-1.5)+
+#   labs(x = "Plasmid Similarity (Jaccard)", y = "Plasmid Pair Counts") +
+#   ggtitle("Histogram of Plasmid Similarity (Bin size 0.05)") +
+#   theme_classic()
+# 
+# plasmid_similarity_df %>% 
+#   ggplot(aes(x=Plasmid_similarity)) +
+# geom_histogram(
+#   color="black",fill = "#4dbfbc",
+#     breaks = seq(0, 1, by = 0.05), 
+#     aes(fill = ..count..), position = "identity") + 
+#   #scale_y_log10() +
+#     scale_x_continuous(breaks = seq(0, 1, by=0.05)) +
+#   stat_bin(binwidth=0.05, geom="text", aes(label=..count..), vjust=-1.5, hjust=-0.2)+
+#     labs(x = "Plasmid Similarity (Jaccard)", y = "Plasmid Pair Counts") +
+#   ggtitle("Histogram of Plasmid Similarity (Bin size 0.05)") +
+#   theme_classic()
+# 
+# plasmid_similarity_df %>% 
+#   ggplot(aes(x=Plasmid_similarity)) +
+#     stat_bin(binwidth=0.02) +  
+#     stat_bin(binwidth=0.02, geom="text", aes(label=..count..), vjust=-1.5) +
+#   scale_x_continuous(breaks = seq(0, 1, by=0.02)) 
+
+stack(table(cut(plasmid_similarity_df$Plasmid_similarity,breaks=seq.int(from=0,to=1,by=0.05)))) %>% 
+  as.data.frame() %>% 
+  rename(PlasmidPairCount=values, Range=ind) %>% 
+  ggplot(aes(x=Range,y=PlasmidPairCount, label = PlasmidPairCount)) + 
+  geom_col(color="black",fill = "#4dbfbc",position = "dodge") +
+   geom_text(position = position_dodge(width = 1), hjust = -0.1) +
+  labs(x = "Plasmid Similarity (Jaccard)", y = "Plasmid Pair Counts") +
+  ggtitle("Histogram of Plasmid Similarity (Bin size 0.05)") +
+  theme_classic() +
+    theme(axis.text.y=element_text(size=10,  vjust = 0, hjust = 1),
+        axis.text.x=element_text(size=10, angle=90, vjust = 0, hjust = 1.2),
+        axis.line=element_blank(),
+        axis.ticks=element_blank(),
+        legend.position="top") +
+  coord_flip()
+
+
+```
+
+### Full
+
+#### Cumulative frequency plot
+
+```{r cumplots_full, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+plasmid_similarity_df %>% 
+  count(Plasmid_similarity) %>% 
+  mutate(cumsum_n = cumsum(n)) %>% 
+  ggplot(aes(x=Plasmid_similarity, y=cumsum_n)) +
+  geom_point(color="red", size=0.1) +
+  theme_classic()
+```
+
+
+### Cutoff 0.97
+#### Cumulative frequency plot at plasmid similarity 0.97 cutoff
+
+```{r cumplots_filtered0.97, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# Cumulative frequency plot from 0.9
+plasmid_similarity_df %>% 
+  count(Plasmid_similarity) %>% 
+  mutate(cumsum_n = cumsum(n)) %>%
+  filter(Plasmid_similarity>=0.97) %>% 
+  ggplot(aes(x=Plasmid_similarity, y=cumsum_n)) +
+  geom_point(color="red", size=0.1) +
+  theme_classic()
+```
+
+### Cutoff 0.9
+#### Cumulative frequency plot at plasmid similarity 0.9 cutoff
+
+```{r cumplots_filtered0.9, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# Cumulative frequency plot from 0.9
+plasmid_similarity_df %>% 
+  count(Plasmid_similarity) %>% 
+  mutate(cumsum_n = cumsum(n)) %>%
+  filter(Plasmid_similarity>=0.9) %>% 
+  ggplot(aes(x=Plasmid_similarity, y=cumsum_n)) +
+  geom_point(color="red", size=0.1) +
+  theme_classic()
+```
+
+### Cutoff 0.8
+#### Cumulative frequency plot at plasmid similarity 0.9 cutoff
+
+```{r cumplots_filtered0.8, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+# Cumulative frequency plot from 0.9
+plasmid_similarity_df %>% 
+  count(Plasmid_similarity) %>% 
+  mutate(cumsum_n = cumsum(n)) %>%
+  filter(Plasmid_similarity>=0.8) %>% 
+  ggplot(aes(x=Plasmid_similarity, y=cumsum_n)) +
+  geom_point(color="red", size=0.1) +
+  theme_classic()
+```
+
+```{r clusters_numsamples, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+#summary(plasmid_similarity_df)
+
+for(sim_cutoff in seq(0.80, 1, by = 0.01)) {
+
+Plaus_ClustrPairs <- plasmid_similarity_df %>% 
+  filter(Plasmid_similarity >= sim_cutoff) %>% 
+  select(Plasmid1,Plasmid2)
+  nrow(Plaus_ClustrPairs)
+
+ 
+  g1 <- graph.data.frame(Plaus_ClustrPairs, directed = FALSE)
+  g1
+  #plot(g1)
+  
+  #Fancy figure start
+  #n = 100
+  #p = 1.5/n
+  #g = erdos.renyi.game(n, p)
+  #coords = layout.fruchterman.reingold(g)
+  #plot(g1, layout=coords, vertex.size = 3, vertex.label=NA)
+  #plot(g1, vertex.label=NA, vertex.size=2, vertex.color="#0CCF02")
+  #Fancy figure end
+  
+  
+  # To generate Sample and their ClusterNumber
+  cl1 <- clusters(g1)
+  
+  tbl1 <- cbind( V(g1)$name, cl1$membership )
+  #class(tbl1)
+  tbl1 <- as.data.frame(tbl1)
+  colnames(tbl1) = c("sample", "Cluster")
+  tbl1 <- tbl1 %>% arrange(as.numeric(Cluster)) 
+  
+  write.table(tbl1,file=paste0("Samples_ClusterNumber_sim_cutoff",sim_cutoff,".txt"),row.names=FALSE) # drops the rownames and write to text file
+}  
+```
+
+
+```
+awk '{print FILENAME "\t" $0}' Samples*.txt | sed -e 's/Samples_ClusterNumber_sim_cutoff//g' -e 's/.txt//g' | grep -v 'sample' | sed 's/"//g' | awk '{print $1 "\t" $2 "\t" $3}' >Combined_cutoff_0.8to1_sample_clusternumber.tab
+```
+
+## Plasmid and Cluster Count plots {.tabset}
+
+### Table
+
+#### Similarity Cutoff, Plasmid Counts and ClusterCounts for each cutoff
+
+```{r clusters_numsamples_plot, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+cutoff_sample_clusternumber_df <- data.table::fread("Combined_cutoff_0.8to1_sample_clusternumber.tab", header= FALSE, sep = "\t")
+#head(cutoff_sample_clusternumber_df)
+
+colnames(cutoff_sample_clusternumber_df) <- c("Cutoff","Plasmid","ClusterNumber")
+
+Cutoff_PlasmidCount <- cutoff_sample_clusternumber_df %>% 
+  count(Cutoff) %>% 
+  as.data.frame() %>% 
+  rename(PlasmidCount=n) 
+
+Cutoff_ClusterCount <-cutoff_sample_clusternumber_df %>% 
+  group_by(Cutoff) %>% 
+  summarise(max = max(ClusterNumber, na.rm=TRUE)) %>% 
+  as.data.frame() %>% 
+  rename(ClusterCount=max) 
+
+Cutoff_PlasmidCount_ClusterCount <- left_join(Cutoff_PlasmidCount, Cutoff_ClusterCount, by="Cutoff")
+
+Cutoff_PlasmidCount_ClusterCount %>% 
+  kbl(caption = "Similarity Cutoff, Plasmid Counts and ClusterCounts for each cutoff") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+### Plot1
+
+#### Similarity Cutoff, Plasmid Counts and ClusterCounts for each cutoff
+
+```{r Cutoff_PlasmidCount_ClusterCount_plot, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Cutoff_PlasmidCount_ClusterCount %>% 
+  ggplot(aes(PlasmidCount,ClusterCount), color=Cutoff) +
+  geom_point(color="blue", size=1) +
+    geom_label_repel(aes(label = Cutoff),
+                  box.padding   = 0.35, 
+                  point.padding = 0.5,
+                  segment.color = 'grey50') +
+  theme_classic()
+```
+
+### Plot2
+
+#### Similarity Cutoff, Plasmid Counts and ClusterCounts for each cutoff
+
+```{r Cutoff_PlasmidCount_ClusterCount_plot_filt, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Cutoff_PlasmidCount_ClusterCount %>% 
+  filter(Cutoff!=1) %>% 
+  ggplot(aes(PlasmidCount,ClusterCount), color=Cutoff) +
+  geom_point(color="blue", size=1) +
+  scale_x_continuous(breaks=seq(920, 1020, 10)) +
+    geom_label_repel(aes(label = Cutoff),
+                  box.padding   = 0.35, 
+                  point.padding = 0.5,
+                  segment.color = 'grey50') +
+  theme_classic()
+
+```
+
+
+
+
+# Plasmid Clusters information table
+
+```{r Clusters_info_datatable, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+CP_Plasmids_meta_ClusterNumber_cutoff0.9_df <- data.table::fread("Closed_CP_Plasmids_metadata_07102022.tab", header= TRUE, sep = "\t")
+#head(CP_Plasmids_meta_ClusterNumber_cutoff0.9_df)
+
+Clusters_info_df <- CP_Plasmids_meta_ClusterNumber_cutoff0.9_df %>% 
+  select(ClusterNumber_based_on_0.9_cutoff, Inc_group_regrouped, Relaxase_type_corrected, Length,ENT_ID,PID) %>% 
+  group_by(ClusterNumber_based_on_0.9_cutoff) %>% 
+  summarise(Inc_group_regrouped_collapse=paste(unique(Inc_group_regrouped),collapse='#'),
+            Relaxase_type_corrected_collapse=paste(unique(Relaxase_type_corrected),collapse='#'),
+            IsolateCount=n(),
+            PatientCount = n_distinct(PID),
+            PlasmidLength_Min = min(Length),
+            PlasmidLength_Max = max(Length),
+            ) %>% 
+  rename(ClusterNum=ClusterNumber_based_on_0.9_cutoff,
+         Inc_Group=Inc_group_regrouped_collapse,
+         Relaxase=Relaxase_type_corrected_collapse) 
+
+Clusters_info_df %>% 
+  kbl(caption = "Plasmid Clusters information table") %>% 
+  kable_classic(full_width = F, html_font = "Cambria") %>% 
+  column_spec(1, width = "1px")
+
+#write.table(Clusters_info_df,file="Clusters_info_datatable.txt",sep = "\t", row.names=FALSE) # drops the rownames and write to text file
+```
+
+
+# Plasmid persistence
+
+We are trying to check how the plasmid is persistent across the year whereas the clonal cluster outbreaks are sporadic and short-lived.
+
+```{r Plasmid_persistence_plot, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+library(lubridate)
+library(ggplot2)
+library(forcats)
+library(glue)
+
+meta <- read.table("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/Closed_CP_Plasmids_1071_complete_v3_Plasmid_meta_for_gubbins.csv", sep = ",", header = TRUE)
+
+Phylodynamics_staticplot <- function(plot_title,clusterNum){
+  #View(meta)
+  # Subsetting to a smaller set for ease of simplicity - selecting OXA-48 Plasmids records with n=41 rows
+ subset_clusterNum <- Closed_CP_Plasmids_metadata_df %>% 
+  filter(ClusterNumber_based_on_0.9_cutoff==clusterNum) %>%  # Although the variable number
+  mutate(Unique_Plasmid_Cluster = if_else(is.na(Clonal_cluster),paste0("Singleton_", row_number()), as.character(Clonal_cluster))) %>%  # assign unique id for NA values
+    group_by(Unique_Plasmid_Cluster) %>% 
+    mutate(group_id = cur_group_id())
+  
+subset_clusterNum$Date_of_culture <- as.Date(subset_clusterNum$Date_of_culture, format = "%d/%m/%Y")
+  
+#View(subset_clusterNum)
+  
+pd1 <- subset_clusterNum %>%
+  ungroup() %>% 
+  mutate(Unique_Plasmid_Cluster = forcats::fct_reorder(Unique_Plasmid_Cluster, Date_of_culture, min)) %>%
+  ggplot(aes(Date_of_culture, Unique_Plasmid_Cluster,color = Lab_Species, shape= factor(Hospital))) +
+  geom_line(aes(group=Unique_Plasmid_Cluster), color='black') +
+  geom_point(size=3) +
+  ggtitle(plot_title) +
+  ylab("Cluster") + xlab("Date") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    legend.position = "right",
+    legend.key=element_rect(fill='gray96'),
+    legend.title =element_text(size=10),
+    text=element_text(size=12),
+    axis.title.x = element_text(vjust = 0, size = 11),
+    axis.title.y = element_text(vjust = 2, size = 11),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 9),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank())
+pd1
+
+}
+
+Phylodynamics_dynamicplot <- function(plot_title,clusterNum){
+    #View(meta)
+  # Subsetting to a smaller set for ease of simplicity - selecting OXA-48 Plasmids records with n=41 rows
+ subset_clusterNum <- Closed_CP_Plasmids_metadata_df %>% 
+  filter(ClusterNumber_based_on_0.9_cutoff==clusterNum) %>%  # Although the variable number
+  mutate(Unique_Plasmid_Cluster = if_else(is.na(Clonal_cluster),paste0("Singleton_", row_number()), as.character(Clonal_cluster))) %>%  # assign unique id for NA values
+    group_by(Unique_Plasmid_Cluster) %>% 
+    mutate(group_id = cur_group_id())
+  
+subset_clusterNum$Date_of_culture <- as.Date(subset_clusterNum$Date_of_culture, format = "%d/%m/%Y")
+  
+#View(subset_clusterNum)
+  
+pd1 <- subset_clusterNum %>%
+  ungroup() %>% 
+  mutate(Unique_Plasmid_Cluster = forcats::fct_reorder(Unique_Plasmid_Cluster, Date_of_culture, min)) %>%
+  ggplot(aes(Date_of_culture, Unique_Plasmid_Cluster,color = Lab_Species, shape= factor(Hospital))) +
+  geom_line(aes(group=Unique_Plasmid_Cluster), color='black') +
+  geom_point(size=3) +
+  ggtitle(plot_title) +
+  ylab("Cluster") + xlab("Date") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    legend.position = "right",
+    legend.key=element_rect(fill='gray96'),
+    legend.title =element_text(size=10),
+    text=element_text(size=12),
+    axis.title.x = element_text(vjust = 0, size = 11),
+    axis.title.y = element_text(vjust = 2, size = 11),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 9),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank())
+#pd1
+
+pd1_plotly <- plotly::ggplotly(pd1)
+pd1_plotly
+}
+
+```
+
+## Plasmid persistence plots (Static) {.tabset}
+
+### blaNDM-1
+
+```{r blaNDM-1_stat, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",clusterNum=6)
+```
+
+### blaKPC-2
+
+```{r blaKPC-2_stat, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaKPC-2 gene tranmission",clusterNum=2)
+```
+
+### blaOXA-181
+
+```{r blaOXA-181_stat, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaOXA-181 gene tranmission",clusterNum=16)
+```
+
+### blaOXA-48
+
+```{r blaOXA-48_stat, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaOXA-48 gene tranmission",clusterNum=19)
+```
+
+### blaNDM-1
+
+```{r blaNDM-1_clus5_stat, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",clusterNum=5)
+```
+
+## Plasmid persistence plots (Dynamic) {.tabset}
+
+### blaNDM-1
+
+```{r blaNDM-1_dyn, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",clusterNum=6)
+```
+
+### blaKPC-2
+
+```{r blaKPC-2_dyn, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaKPC-2 gene tranmission",clusterNum=2)
+```
+
+### blaOXA-181
+
+```{r blaOXA-181_dyn, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaOXA-181 gene tranmission",clusterNum=16)
+```
+
+### blaOXA-48
+
+```{r blaOXA-48_dyn, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaOXA-48 gene tranmission",clusterNum=19)
+```
+
+### blaNDM-1
+
+```{r blaNDM-1_clus5__dyn, fig.width=18, fig.height=10, echo=TRUE,message=FALSE}
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",clusterNum=5)
+```
+
