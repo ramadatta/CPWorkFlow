@@ -5,6 +5,8 @@ library(splitstackshape)
 library(reshape2)
 library(randomcoloR)
 library(ComplexHeatmap)
+library(data.table)
+library(kableExtra)
 
 
 
@@ -52,6 +54,31 @@ colnames(bacAnt_df) <- c("Fasta", "Contig", "Fasta_Contig", "Transposon")
 bacant_plasClass_df <- left_join(bacAnt_df, plasClass_Prob_df, by = c("Fasta_Contig")) %>% 
   select(Fasta.x,Contig.x,Fasta_Contig,Transposon,Classification,Species_ContigClass)
 
+bacant_plasClass_df %>%
+  select(Transposon,Species_ContigClass) %>%
+  table() %>% # frequency of unique transposons
+  kbl(caption = "Transposons and their counts in Chromsomes and Plasmids across Species") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+
+
+bacant_plasClass_df %>%
+ # filter(Transposon=="Tn5403|EU287476" & Species_ContigClass=="cfreundii#Plasmid") %>% 
+  select(Fasta.x,Transposon,Species_ContigClass) %>%
+  unique() %>% 
+  select(Transposon,Species_ContigClass) %>% 
+  table() %>% 
+  kbl(caption = "Sample counts for the Transposons in Chromsomes and Plasmids across Species") %>% 
+  kable_classic(full_width = F, html_font = "Cambria")
+
+head(bacant_plasClass_df)
+
+bacant_plasClass_df %>% 
+  select(Transposon,Species_ContigClass) %>% 
+  unique() %>% 
+  table() %>% # frequency of unique transposons
+  kbl(caption = "Transposons and their counts in Chromsomes and Plasmids across Species") %>% 
+  kable_classic(full_width = F, html_font = "Cambria")
+
 #----------------Step3: UpsetR Plot Transposons
  
 tn_upsetR_df <- bacant_plasClass_df %>% select(Transposon,Species_ContigClass)
@@ -59,11 +86,12 @@ tn_upsetR_df <- bacant_plasClass_df %>% select(Transposon,Species_ContigClass)
 tn_upsetR_lt <- split(tn_upsetR_df$Transposon, tn_upsetR_df$Species_ContigClass) 
 tn_comb_mat = make_comb_mat(tn_upsetR_lt)
 
+tn_comb_mat
 #str(tn_comb_mat)
 
-#as.data.frame(tn_comb_mat)
+as.data.frame(tn_comb_mat)
 # comb_mat
-#UpSet(tn_comb_mat)
+ UpSet(tn_comb_mat)
 # UpSet(t(comb_mat))
 # UpSet(comb_mat, top_annotation = upset_top_annotation(comb_mat, add_numbers = TRUE),
 # right_annotation = upset_right_annotation(comb_mat, add_numbers = TRUE))
