@@ -1,0 +1,110 @@
+locus_tag	ftype	length_bp	gene	EC_number	COG	product
+MKOEDHEA_00001	CDS	1056				replication protein RepA
+MKOEDHEA_00002	CDS	861				class A broad-spectrum beta-lactamase TEM-1
+MKOEDHEA_00003	CDS	1371	tnpA_1			transposase
+MKOEDHEA_00004	CDS	1137				hypothetical protein
+MKOEDHEA_00005	CDS	228				hypothetical protein
+MKOEDHEA_00006	CDS	543	tmrB			tunicamycin resistance protein
+MKOEDHEA_00007	CDS	861				aminoglycoside 3-N-acetyltransferase
+MKOEDHEA_00008	CDS	705				IS6 family transposase
+MKOEDHEA_00009	CDS	585				hypothetical protein
+MKOEDHEA_00010	CDS	159				hypothetical protein
+MKOEDHEA_00011	CDS	345				putative protein
+MKOEDHEA_00012	CDS	1275				type II toxin-antitoxin system RelB/DinJ family antitoxin
+MKOEDHEA_00013	CDS	273				helix-turn-helix transcriptional regulator
+MKOEDHEA_00014	CDS	684				tgtA5 cluster protein 2
+MKOEDHEA_00015	CDS	219				putative protein
+MKOEDHEA_00016	CDS	210				putative protein
+MKOEDHEA_00017	CDS	639				hypothetical protein
+MKOEDHEA_00018	CDS	321				chromosome segregation protein ParM
+MKOEDHEA_00019	CDS	849				3'-5' exonuclease
+MKOEDHEA_00020	CDS	1305	umuC_7			DNA polymerase V subunit UmuC
+MKOEDHEA_00021	CDS	435	umuD	2.7.7.7		translesion error-prone DNA polymerase V autoproteolytic subunit
+MKOEDHEA_00022	CDS	1485	ltrA	2.7.7.49		group II intron reverse transcriptase/maturase
+MKOEDHEA_00023	CDS	333	pemK			plasmid stable inheritance protein
+MKOEDHEA_00024	CDS	258	pemI			type II toxin-antitoxin system antitoxin PemI
+MKOEDHEA_00025	CDS	654				CPBP family intramembrane metalloprotease
+MKOEDHEA_00026	CDS	351				hypothetical protein
+MKOEDHEA_00027	CDS	396				lytic transglycosylase domain-containing protein
+MKOEDHEA_00028	CDS	1308	trbA			conjugal transfer protein
+MKOEDHEA_00029	CDS	951				DsbC family protein
+MKOEDHEA_00030	CDS	2088				conjugal transfer protein TrbC
+MKOEDHEA_00031	CDS	510				MucR family transcriptional regulator
+MKOEDHEA_00032	CDS	2064				Tn3 family transposase Tn2tnpA
+MKOEDHEA_00033	CDS	705	tnpA_2			transposase
+MKOEDHEA_00034	CDS	768	repA			repA
+MKOEDHEA_00035	CDS	543				DNA-binding protein
+MKOEDHEA_00036	CDS	633				ISNCY family transposase ISKpn21
+MKOEDHEA_00037	CDS	1404				ISNCY-like element ISKpn21 family transposase
+MKOEDHEA_00038	CDS	885	mph(E)			Mph(E) family macrolide 2'-phosphotransferase
+MKOEDHEA_00039	CDS	1476	msr(E)			ABC-F type ribosomal protection protein Msr(E)
+MKOEDHEA_00040	CDS	1176				IS4 family transposase ISEc29
+MKOEDHEA_00041	CDS	186				putative permease
+MKOEDHEA_00042	CDS	774	armA			ArmA
+MKOEDHEA_00043	CDS	93				hypothetical protein
+MKOEDHEA_00044	CDS	837				IS5 family transposase
+MKOEDHEA_00045	CDS	1542				IS91 family transposase
+MKOEDHEA_00046	CDS	840				dihydropteroate synthase
+MKOEDHEA_00047	CDS	483				[NiFe] hydrogenase nickel incorporation protein HybF
+MKOEDHEA_00048	CDS	876				LysR family transcriptional regulator
+MKOEDHEA_00049	CDS	1017				D-aminopeptidase DeltablaDHA-1
+MKOEDHEA_00050	CDS	261				Bleomycin resistance protein
+MKOEDHEA_00051	CDS	813				Metallo-beta-lactamase NDM-1
+MKOEDHEA_00052	CDS	705				IS6 family transposase
+MKOEDHEA_00053	CDS	477				putative protein
+MKOEDHEA_00054	CDS	462		6.1.1.22		Asparaginyl-tRNA synthetase
+MKOEDHEA_00055	CDS	249				helix-turn-helix domain-containing protein
+MKOEDHEA_00056	CDS	588				restriction endonuclease
+MKOEDHEA_00057	CDS	486				hypothetical protein
+MKOEDHEA_00058	CDS	249				hypothetical protein
+MKOEDHEA_00059	CDS	741				resolvase
+MKOEDHEA_00060	CDS	975	parA			ParA
+MKOEDHEA_00061	CDS	444				plasmid stability family protein
+MKOEDHEA_00062	CDS	564				phospholipase D family protein
+MKOEDHEA_00063	CDS	507				putative protein
+MKOEDHEA_00064	CDS	480				putative protein
+MKOEDHEA_00065	CDS	411				hypothetical protein
+MKOEDHEA_00066	CDS	264				putative protein
+MKOEDHEA_00067	CDS	363				hypothetical protein
+MKOEDHEA_00068	CDS	450				DNA repair protein RadC
+MKOEDHEA_00069	CDS	267				helix-turn-helix domain-containing protein
+MKOEDHEA_00070	CDS	1284				DGQHR domain-containing protein
+MKOEDHEA_00071	CDS	180				putative protein
+MKOEDHEA_00072	CDS	861				hypothetical protein
+MKOEDHEA_00073	CDS	339				Fibrinogen-binding protein
+MKOEDHEA_00074	CDS	231	ymoA			Histone-like protein
+MKOEDHEA_00075	CDS	114				putative protein
+MKOEDHEA_00076	CDS	216				hypothetical protein
+MKOEDHEA_00077	CDS	411				hypothetical protein
+MKOEDHEA_00078	CDS	306				putative protein
+MKOEDHEA_00079	CDS	441				Antirestriction protein KlcA
+MKOEDHEA_00080	CDS	285				putative protein
+MKOEDHEA_00081	CDS	222				putative protein
+MKOEDHEA_00082	CDS	435				Single-stranded DNA-binding protein
+MKOEDHEA_00083	CDS	312				Transcriptional regulator, HxlR family
+MKOEDHEA_00084	CDS	537				hypothetical protein
+MKOEDHEA_00085	CDS	141				putative protein
+MKOEDHEA_00086	CDS	366				MobC
+MKOEDHEA_00087	CDS	318				NikA
+MKOEDHEA_00088	CDS	1980				ChlI component of cobalt chelatase involved in B12 biosynthesis / ChlD component of cobalt chelatase involved in B12 biosynthesis
+MKOEDHEA_00089	CDS	501				DotD/TraH family lipoprotein
+MKOEDHEA_00090	CDS	780				TraJ
+MKOEDHEA_00091	CDS	1164	traJ			plasmid transfer ATPase TraJ
+MKOEDHEA_00092	CDS	261	icmT			IcmT/TraK family protein
+MKOEDHEA_00093	CDS	3528				DNA primase
+MKOEDHEA_00094	CDS	513	traL			TraL
+MKOEDHEA_00095	CDS	198				hypothetical protein
+MKOEDHEA_00096	CDS	411				H-NS histone family protein
+MKOEDHEA_00097	CDS	714				TraM
+MKOEDHEA_00098	CDS	1152				DotH/IcmK family type IV secretion protein
+MKOEDHEA_00099	CDS	1350				IncI1 plasmid conjugative transfer protein TraO
+MKOEDHEA_00100	CDS	705	traP			conjugative transfer protein
+MKOEDHEA_00101	CDS	531	traQ			conjugal transfer protein TraQ
+MKOEDHEA_00102	CDS	390				conjugal transfer protein
+MKOEDHEA_00103	CDS	495				conjugal transfer protein
+MKOEDHEA_00104	CDS	3051				conjugal transfer protein
+MKOEDHEA_00105	CDS	1209	traW			conjugal transfer protein TraW
+MKOEDHEA_00106	CDS	651				TraX-like protein
+MKOEDHEA_00107	CDS	2181	traY			TraY
+MKOEDHEA_00108	CDS	654				ExcA
+MKOEDHEA_00109	CDS	231				RepC

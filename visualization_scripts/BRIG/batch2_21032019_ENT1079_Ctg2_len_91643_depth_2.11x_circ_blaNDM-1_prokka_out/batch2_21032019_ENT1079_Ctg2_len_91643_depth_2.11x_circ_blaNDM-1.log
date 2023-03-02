@@ -1,0 +1,172 @@
+[16:17:05] This is prokka2 1.14.6
+[16:17:05] Written by Torsten Seemann <torsten.seemann@gmail.com>
+[16:17:05] Homepage is https://github.com/tseemann/prokka
+[16:17:05] Local time is Thu Feb 16 16:17:05 2023
+[16:17:05] You are prakki
+[16:17:05] Operating system is linux
+[16:17:05] You have BioPerl 1.007002
+[16:17:05] System has 64 cores.
+[16:17:05] Will use maximum of 32 cores.
+[16:17:05] Annotating as >>> Bacteria <<<
+[16:17:05] Generating locus_tag from 'batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta' contents.
+[16:17:05] Setting --locustag MKOEDHEA from MD5 648ed1eaf071aad3cb25bbda0212bdd7
+[16:17:05] Creating new output folder: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out
+[16:17:05] Running: mkdir -p batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out
+[16:17:05] Using filename prefix: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.XXX
+[16:17:05] Setting HMMER_NCPU=1
+[16:17:05] Writing log to: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.log
+[16:17:05] Command: /home/prakki/anaconda3/bin/prokka2 --force --cpus 32 --proteins batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk --outdir batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out --prefix batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta
+[16:17:05] Appending to PATH: /home/prakki/anaconda3/bin
+[16:17:05] Looking for 'aragorn' - found /home/prakki/anaconda3/bin/aragorn
+[16:17:05] Determined aragorn version is 001002 from 'ARAGORN v1.2.38 Dean Laslett'
+[16:17:05] Looking for 'barrnap' - found /home/prakki/anaconda3/bin/barrnap
+[16:17:06] Determined barrnap version is 000008 from 'barrnap 0.8'
+[16:17:06] Looking for 'blastp' - found /home/prakki/anaconda3/bin/blastp
+[16:17:06] Determined blastp version is 002009 from 'blastp: 2.9.0+'
+[16:17:06] Looking for 'cmpress' - found /home/prakki/anaconda3/bin/cmpress
+[16:17:06] Determined cmpress version is 001001 from '# INFERNAL 1.1.3 (Nov 2019)'
+[16:17:06] Looking for 'cmscan' - found /home/prakki/anaconda3/bin/cmscan
+[16:17:06] Determined cmscan version is 001001 from '# INFERNAL 1.1.3 (Nov 2019)'
+[16:17:06] Looking for 'egrep' - found /bin/egrep
+[16:17:06] Looking for 'find' - found /usr/bin/find
+[16:17:06] Looking for 'grep' - found /bin/grep
+[16:17:06] Looking for 'hmmpress' - found /home/prakki/anaconda3/bin/hmmpress
+[16:17:06] Determined hmmpress version is 003003 from '# HMMER 3.3.1 (Jul 2020); http://hmmer.org/'
+[16:17:06] Looking for 'hmmscan' - found /home/prakki/anaconda3/bin/hmmscan
+[16:17:06] Determined hmmscan version is 003003 from '# HMMER 3.3.1 (Jul 2020); http://hmmer.org/'
+[16:17:06] Looking for 'java' - found /home/prakki/anaconda3/bin/java
+[16:17:06] Looking for 'makeblastdb' - found /home/prakki/anaconda3/bin/makeblastdb
+[16:17:06] Determined makeblastdb version is 002009 from 'makeblastdb: 2.9.0+'
+[16:17:06] Looking for 'minced' - found /home/prakki/anaconda3/bin/minced
+[16:17:06] Determined minced version is 004002 from 'minced 0.4.2'
+[16:17:06] Looking for 'parallel' - found /home/prakki/anaconda3/bin/parallel
+[16:17:06] Determined parallel version is 20200722 from 'GNU parallel 20200722'
+[16:17:06] Looking for 'prodigal' - found /home/prakki/anaconda3/bin/prodigal
+[16:17:06] Determined prodigal version is 002006 from 'Prodigal V2.6.3: February, 2016'
+[16:17:06] Looking for 'prokka-genbank_to_fasta_db' - found /home/prakki/anaconda3/bin/prokka-genbank_to_fasta_db
+[16:17:06] Looking for 'sed' - found /bin/sed
+[16:17:06] Looking for 'tbl2asn' - found /home/prakki/anaconda3/bin/tbl2asn
+[16:17:06] Determined tbl2asn version is 025007 from 'tbl2asn 25.7   arguments:'
+[16:17:06] Using genetic code table 11.
+[16:17:06] Loading and checking input file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta
+[16:17:06] Wrote 1 contigs totalling 91643 bp.
+[16:17:06] Predicting tRNAs and tmRNAs
+[16:17:06] Running: aragorn -l -gc11  -w batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.fna
+[16:17:06] Found 0 tRNAs
+[16:17:06] Predicting Ribosomal RNAs
+[16:17:06] Running Barrnap with 32 threads
+[16:17:06] Found 0 rRNAs
+[16:17:06] Skipping ncRNA search, enable with --rfam if desired.
+[16:17:06] Total of 0 tRNA + rRNA features
+[16:17:06] Searching for CRISPR repeats
+[16:17:07] Found 0 CRISPRs
+[16:17:07] Predicting coding sequences
+[16:17:07] Contigs total 91643 bp, so using meta mode
+[16:17:07] Running: prodigal -i batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.fna -c -m -g 11 -p meta -f sco -q
+[16:17:08] Found 109 CDS
+[16:17:08] Connecting features back to sequences
+[16:17:08] Not using genus-specific database. Try --usegenus to enable it.
+[16:17:08] Preparing user-supplied primary BLAST annotation source: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk
+[16:17:08] Guessed source was in genbank format.
+[16:17:08] Converting genbank 'batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk' into Prokka FASTA 'batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins.faa'
+[16:17:08] Running: prokka-genbank_to_fasta_db --format genbank batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_Top100_NCBI\.gbk > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/proteins\.faa 2> /dev/null
+[16:17:22] Running: makeblastdb -dbtype prot -in batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/proteins\.faa -out batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/proteins -logfile /dev/null
+[16:17:22] Using /inference source as 'batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk'
+[16:17:22] Annotating CDS, please be patient.
+[16:17:22] Will use 32 CPUs for similarity searching.
+[16:17:22] There are still 109 unannotated CDS left (started with 109)
+[16:17:22] Will use blast to search against batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins with 32 CPUs
+[16:17:22] Running: cat batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.proteins\.tmp\.2687254\.faa | parallel --gnu --plain -j 32 --block 413 --recstart '>' --pipe blastp -query - -db batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins -evalue 1e-09 -qcov_hsp_perc 80 -num_threads 1 -num_descriptions 1 -num_alignments 1 -seg no > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.proteins\.tmp\.2687254\.blast 2> /dev/null
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: DUF1496 domain-containing protein => hypothetical protein
+[16:17:23] Modify product: DUF3883 domain-containing protein => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: conserved membrane protein of unknown function => hypothetical protein
+[16:17:23] Modify product: conserved protein of unknown function => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: conserved protein of unknown function => hypothetical protein
+[16:17:23] Modify product: conserved protein of unknown function => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: conserved exported protein of unknown function => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: DUF3085 domain-containing protein => hypothetical protein
+[16:17:23] Modify product: DUF1380 domain-containing protein => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: DUF4942 domain-containing protein => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: conserved protein of unknown function => hypothetical protein
+[16:17:23] Modify product: Uncharacterised protein => putative protein
+[16:17:23] Modify product: conserved protein of unknown function => hypothetical protein
+[16:17:23] Cleaned 25 /product names
+[16:17:23] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.proteins.tmp.2687254.faa
+[16:17:23] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.proteins.tmp.2687254.blast
+[16:17:23] There are still 4 unannotated CDS left (started with 109)
+[16:17:23] Will use blast to search against /home/prakki/anaconda3/db/kingdom/Bacteria/IS with 32 CPUs
+[16:17:23] Running: cat batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.IS\.tmp\.2687254\.faa | parallel --gnu --plain -j 32 --block 3 --recstart '>' --pipe blastp -query - -db /home/prakki/anaconda3/db/kingdom/Bacteria/IS -evalue 1e-30 -qcov_hsp_perc 90 -num_threads 1 -num_descriptions 1 -num_alignments 1 -seg no > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.IS\.tmp\.2687254\.blast 2> /dev/null
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.IS.tmp.2687254.faa
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.IS.tmp.2687254.blast
+[16:17:24] There are still 4 unannotated CDS left (started with 109)
+[16:17:24] Will use blast to search against /home/prakki/anaconda3/db/kingdom/Bacteria/AMR with 32 CPUs
+[16:17:24] Running: cat batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.AMR\.tmp\.2687254\.faa | parallel --gnu --plain -j 32 --block 3 --recstart '>' --pipe blastp -query - -db /home/prakki/anaconda3/db/kingdom/Bacteria/AMR -evalue 9.99999999999999e-301 -qcov_hsp_perc 90 -num_threads 1 -num_descriptions 1 -num_alignments 1 -seg no > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.AMR\.tmp\.2687254\.blast 2> /dev/null
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.AMR.tmp.2687254.faa
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.AMR.tmp.2687254.blast
+[16:17:24] There are still 4 unannotated CDS left (started with 109)
+[16:17:24] Will use blast to search against /home/prakki/anaconda3/db/kingdom/Bacteria/sprot with 32 CPUs
+[16:17:24] Running: cat batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.sprot\.tmp\.2687254\.faa | parallel --gnu --plain -j 32 --block 3 --recstart '>' --pipe blastp -query - -db /home/prakki/anaconda3/db/kingdom/Bacteria/sprot -evalue 1e-09 -qcov_hsp_perc 80 -num_threads 1 -num_descriptions 1 -num_alignments 1 -seg no > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.sprot\.tmp\.2687254\.blast 2> /dev/null
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.sprot.tmp.2687254.faa
+[16:17:24] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.sprot.tmp.2687254.blast
+[16:17:24] There are still 4 unannotated CDS left (started with 109)
+[16:17:24] Will use hmmer3 to search against /home/prakki/anaconda3/db/hmm/HAMAP.hmm with 32 CPUs
+[16:17:24] Running: cat batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.HAMAP\.hmm\.tmp\.2687254\.faa | parallel --gnu --plain -j 32 --block 3 --recstart '>' --pipe hmmscan --noali --notextw --acc -E 1e-09 --cpu 1 /home/prakki/anaconda3/db/hmm/HAMAP.hmm /dev/stdin > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.HAMAP\.hmm\.tmp\.2687254\.hmmer3 2> /dev/null
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.HAMAP.hmm.tmp.2687254.faa
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.HAMAP.hmm.tmp.2687254.hmmer3
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins.psq
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins.phr
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/proteins.pin
+[16:17:25] Labelling remaining 4 proteins as 'hypothetical protein'
+[16:17:25] Possible /pseudo 'putative protein' at batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 position 14299
+[16:17:25] Possible /pseudo 'putative protein' at batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 position 56259
+[16:17:25] Possible /pseudo 'putative protein' at batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 position 65266
+[16:17:25] Possible /pseudo 'conjugal transfer protein' at batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 position 82819
+[16:17:25] Possible /pseudo 'conjugal transfer protein' at batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1 position 83310
+[16:17:25] Found 21 unique /gene codes.
+[16:17:25] Fixed 2 duplicate /gene - tnpA_1 tnpA_2
+[16:17:25] Fixed 1 colliding /gene names.
+[16:17:25] Adding /locus_tag identifiers
+[16:17:25] Assigned 109 locus_tags to CDS and RNA features.
+[16:17:25] Writing outputs to batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/
+[16:17:25] Generating annotation statistics file
+[16:17:25] Generating Genbank and Sequin files
+[16:17:25] Running: tbl2asn -V b -a r10k -l paired-ends -M n -N 1 -y 'Annotated using prokka2 1.14.6 from https://github.com/tseemann/prokka' -Z batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.err -i batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.fsa 2> /dev/null
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/errorsummary.val
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.dr
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fixedproducts
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.ecn
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.val
+[16:17:25] Repairing broken .GBK output that tbl2asn produces...
+[16:17:25] Running: sed 's/COORDINATES: profile/COORDINATES:profile/' < batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.gbf > batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1_prokka_out\/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2\.11x_circ_blaNDM\-1\.gbk
+[16:17:25] Deleting unwanted file: batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.gbf
+[16:17:25] Output files:
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fsa
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.faa
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.tbl
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.tsv
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.gff
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.gbk
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.log
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.txt
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.err
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.ffn
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fna
+[16:17:25] batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_prokka_out/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.sqn
+[16:17:25] Annotation finished successfully.
+[16:17:25] Walltime used: 0.33 minutes
+[16:17:25] If you use this result please cite the Prokka paper:
+[16:17:25] Seemann T (2014) Prokka: rapid prokaryotic genome annotation. Bioinformatics. 30(14):2068-9.
+[16:17:25] Type 'prokka --citation' for more details.
+[16:17:25] Thank you, come again.

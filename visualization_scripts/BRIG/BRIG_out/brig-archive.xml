@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BRIG blastOptions="" legendPosition="upper-right" queryFile="batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta" outputFolder="" blastPlus="yes" title="PC5 Rep plasmid" imageFormat="jpg" archive="true">
+  <cgview_settings arrowheadLength="medium" backboneColor="white" backboneRadius="600" backboneThickness="medium" backgroundColor="white" borderColor="black" featureSlotSpacing="medium" featureThickness="30" giveFeaturePositions="false" globalLabel="true" height="2500" isLinear="false" labelFont="SansSerif,plain,25" labelLineLength="medium" labelLineThickness="medium" labelPlacementQuality="best" labelsToKeep="1000" longTickColor="black" minimumFeatureLength="medium" moveInnerLabelsToOuter="true" origin="12" rulerFont="SansSerif,plain,35" rulerFontColor="black" rulerPadding="40" rulerUnits="bases" shortTickColor="black" shortTickThickness="medium" showBorder="false" showShading="true" showWarning="false" tickDensity="0.2333" tickThickness="medium" titleFont="SansSerif,plain,45" titleFontColor="black" useColoredLabelBackgrounds="false" useInnerLabels="true" warningFont="Default,plain,35" warningFontColor="black" width="2600" zeroTickColor="black" tickLength="medium" />
+  <brig_settings Ring1="172,14,225" Ring2="222,149,220" Ring3="161,221,231" Ring4="49,34,221" Ring5="116,152,226" Ring6="224,206,38" Ring7="40,191,140" Ring8="158,223,139" Ring9="226,38,122" Ring10="211,41,77" defaultUpper="70" defaultLower="50" defaultMinimum="50" genbankFiles="gbk,gb,genbank" fastaFiles="fna,faa,fas,fasta,fa" emblFiles="embl" blastLocation="/home/prakki/sw/ncbi-blast-2.7.1+/bin" divider="3" multiplier="3" memory="1500" defaultSpacer="0" />
+  <special value="GC Content" />
+  <special value="GC Skew" />
+  <ring colour="14,33,225" name="Genes" position="1" upperInt="70" lowerInt="50" legend="no" size="30" labels="no" blastType="blastn">
+    <feature label="RepA" colour="red" decoration="arc">
+      <featureRange start="1" stop="1056" label="1" />
+    </feature>
+    <feature label="BlaTEM-1" colour="red" decoration="arc">
+      <featureRange start="2060" stop="2920" />
+    </feature>
+    <feature label="Transposase" colour="red" decoration="arc">
+      <featureRange start="3741" stop="5111" />
+    </feature>
+    <feature label="Tunicamycin_Resistance_Protein" colour="red" decoration="arc">
+      <featureRange start="7337" stop="7879" />
+    </feature>
+    <feature label="AAC(3)-IId" colour="red" decoration="arc">
+      <featureRange start="7892" stop="8752" />
+    </feature>
+    <feature label="IS6_Family_Transposase" colour="red" decoration="arc">
+      <featureRange start="8985" stop="9689" />
+    </feature>
+    <feature label="RelB/DinJ_Antitoxin" colour="red" decoration="arc">
+      <featureRange start="11789" stop="13063" />
+    </feature>
+    <feature label="Helix-Turn-Helix_Transcriptional_Regulator" colour="red" decoration="arc">
+      <featureRange start="13081" stop="13353" />
+    </feature>
+    <feature label="TgtA5_Cluster_Protein_2" colour="red" decoration="arc">
+      <featureRange start="13350" stop="14033" />
+    </feature>
+    <feature label="ParM" colour="red" decoration="arc">
+      <featureRange start="15360" stop="15680" />
+    </feature>
+    <feature label="3'-5'_Exonuclease" colour="red" decoration="arc">
+      <featureRange start="15683" stop="16531" />
+    </feature>
+    <feature label="UmuC" colour="red" decoration="arc">
+      <featureRange start="16554" stop="17858" />
+    </feature>
+    <feature label="DNA_Polymerase_V_Subunit" colour="red" decoration="arc">
+      <featureRange start="17807" stop="18241" />
+    </feature>
+    <feature label="Group_II_Intron_Reverse_Transcriptase/Maturase" colour="red" decoration="arc">
+      <featureRange start="18316" stop="19800" />
+    </feature>
+    <feature label="Plasmid_Stable_Inheritance_Protein" colour="red" decoration="arc">
+      <featureRange start="20495" stop="20827" />
+    </feature>
+    <feature label="Type_II_Toxin-Antitoxin_System_Antitoxin_PemI" colour="red" decoration="arc">
+      <featureRange start="20829" stop="21086" />
+    </feature>
+    <feature label="CPBP_Family_Intramembrane_Metalloprotease" colour="red" decoration="arc">
+      <featureRange start="21179" stop="21832" />
+    </feature>
+    <feature label="Lytic_Transglycosylase_Domain-Containing_Protein" colour="red" decoration="arc">
+      <featureRange start="22400" stop="22795" />
+    </feature>
+    <feature label="Conjugal_Transfer_Protein" colour="red" decoration="arc">
+      <featureRange start="22795" stop="24102" />
+    </feature>
+    <feature label="DsbC_Family_Protein" colour="red" decoration="arc">
+      <featureRange start="24113" stop="25063" />
+    </feature>
+    <feature label="TrbC" colour="red" decoration="arc">
+      <featureRange start="25076" stop="27163" />
+    </feature>
+    <feature label="MucR_Family_Transcriptional_Regulator" colour="red" decoration="arc">
+      <featureRange start="27211" stop="27720" />
+    </feature>
+    <feature label="Tn3_Family_Transposase_Tn2tnpA" colour="red" decoration="arc">
+      <featureRange start="28275" stop="30338" />
+    </feature>
+    <feature label="Transposase" colour="red" decoration="arc">
+      <featureRange start="30386" stop="31090" />
+    </feature>
+    <feature label="RepA" colour="red" decoration="arc">
+      <featureRange start="31141" stop="31908" />
+    </feature>
+    <feature label="DNA-Binding_Protein" colour="red" decoration="arc">
+      <featureRange start="31975" stop="32517" />
+    </feature>
+    <feature label="ISNCY_Family_Transposase_ISKpn21" colour="red" decoration="arc">
+      <featureRange start="32853" stop="33485" />
+    </feature>
+    <feature label="ISNCY-Like_Element_ISKpn21_Family_Transposase" colour="red" decoration="arc">
+      <featureRange start="33514" stop="34917" />
+    </feature>
+    <feature label="Mph(E)" colour="red" decoration="arc">
+      <featureRange start="35160" stop="36044" />
+    </feature>
+    <feature label="Msr(E)" colour="red" decoration="arc">
+      <featureRange start="36100" stop="37575" />
+    </feature>
+    <feature label="IS4_Family_Transposase_ISEc29" colour="red" decoration="arc">
+      <featureRange start="37974" stop="39149" />
+    </feature>
+    <feature label="Putative_Permease" colour="red" decoration="arc">
+      <featureRange start="39207" stop="39392" />
+    </feature>
+    <feature label="ArmA" colour="red" decoration="arc">
+      <featureRange start="39874" stop="40647" />
+    </feature>
+    <feature label="IS5_Family_Transposase" colour="red" decoration="arc">
+      <featureRange start="40973" stop="41809" />
+    </feature>
+    <feature label="IS91_Family_Transposase" colour="red" decoration="arc">
+      <featureRange start="42046" stop="43587" />
+    </feature>
+    <feature label="Sul1" colour="red" decoration="arc">
+      <featureRange start="43992" stop="44831" />
+    </feature>
+    <feature label="HybF" colour="red" decoration="arc">
+      <featureRange start="44936" stop="45418" />
+    </feature>
+    <feature label="LysR_Family_Transcriptional_Regulator" colour="red" decoration="arc">
+      <featureRange start="45422" stop="46297" />
+    </feature>
+    <feature label="BlaDHA" colour="red" decoration="arc">
+      <featureRange start="46408" stop="47424" />
+    </feature>
+    <feature label="Ble-MBL" colour="red" decoration="arc">
+      <featureRange start="47788" stop="48048" />
+    </feature>
+    <feature label="BlaNDM-1" colour="teal" decoration="arc">
+      <featureRange start="48157" stop="48969" label="48157" />
+    </feature>
+    <feature label="IS6_Family_Transposase" colour="red" decoration="arc">
+      <featureRange start="49278" stop="49982" />
+    </feature>
+    <feature label="Asparaginyl-TRNA_Synthetase" colour="red" decoration="arc">
+      <featureRange start="50636" stop="51097" />
+    </feature>
+    <feature label="Helix-Turn-Helix_Domain-Containing_Protein" colour="red" decoration="arc">
+      <featureRange start="51094" stop="51342" />
+    </feature>
+    <feature label="Restriction_Endonuclease" colour="red" decoration="arc">
+      <featureRange start="51335" stop="51922" />
+    </feature>
+    <feature label="Resolvase" colour="red" decoration="arc">
+      <featureRange start="52668" stop="53408" />
+    </feature>
+    <feature label="ParA" colour="red" decoration="arc">
+      <featureRange start="53649" stop="54623" />
+    </feature>
+    <feature label="Plasmid_Stability_Family_Protein" colour="red" decoration="arc">
+      <featureRange start="54626" stop="55069" />
+    </feature>
+    <feature label="Phospholipase_D_Family_Protein" colour="red" decoration="arc">
+      <featureRange start="55079" stop="55642" />
+    </feature>
+    <feature label="DNA_Repair_Protein_RadC" colour="red" decoration="arc">
+      <featureRange start="58064" stop="58513" />
+    </feature>
+    <feature label="Helix-Turn-Helix_Domain-Containing_Protein" colour="red" decoration="arc">
+      <featureRange start="58558" stop="58824" />
+    </feature>
+    <feature label="DGQHR_Domain-Containing_Protein" colour="red" decoration="arc">
+      <featureRange start="58888" stop="60171" />
+    </feature>
+    <feature label="Fibrinogen-Binding_Protein" colour="red" decoration="arc">
+      <featureRange start="62081" stop="62419" />
+    </feature>
+    <feature label="Histone-Like_Protein" colour="red" decoration="arc">
+      <featureRange start="62517" stop="62747" />
+    </feature>
+    <feature label="KlcA" colour="red" decoration="arc">
+      <featureRange start="64344" stop="64784" />
+    </feature>
+    <feature label="Single-Stranded_DNA-Binding_Protein" colour="red" decoration="arc">
+      <featureRange start="65559" stop="65993" />
+    </feature>
+    <feature label="Transcriptional_Regulator" colour="red" decoration="arc">
+      <featureRange start="66052" stop="66363" />
+    </feature>
+    <feature label="MobC" colour="red" decoration="arc">
+      <featureRange start="67533" stop="67898" />
+    </feature>
+    <feature label="NikA" colour="red" decoration="arc">
+      <featureRange start="68173" stop="68490" />
+    </feature>
+    <feature label="ChlI/ChlD_Component" colour="red" decoration="arc">
+      <featureRange start="68477" stop="70456" />
+    </feature>
+    <feature label="DotD/TraH_Family_Lipoprotein" colour="red" decoration="arc">
+      <featureRange start="70470" stop="70970" />
+    </feature>
+    <feature label="TraJ" colour="red" decoration="arc">
+      <featureRange start="70967" stop="71746" />
+    </feature>
+    <feature label="Plasmid_Transfer_ATPase_TraJ" colour="red" decoration="arc">
+      <featureRange start="71757" stop="72920" />
+    </feature>
+    <feature label="IcmT/TraK_Family_Protein" colour="red" decoration="arc">
+      <featureRange start="72910" stop="73170" />
+    </feature>
+    <feature label="DNA_Primase" colour="red" decoration="arc">
+      <featureRange start="73195" stop="76722" />
+    </feature>
+    <feature label="TraL" colour="red" decoration="arc">
+      <featureRange start="76688" stop="77200" />
+    </feature>
+    <feature label="H-NS_Histone_Family_Protein" colour="red" decoration="arc">
+      <featureRange start="77385" stop="77795" />
+    </feature>
+    <feature label="TraM" colour="red" decoration="arc">
+      <featureRange start="77863" stop="78576" />
+    </feature>
+    <feature label="DotH/IcmK" colour="red" decoration="arc">
+      <featureRange start="78585" stop="79736" />
+    </feature>
+    <feature label="TraO" colour="red" decoration="arc">
+      <featureRange start="79748" stop="81097" />
+    </feature>
+    <feature label="Conjugative_Transfer_Protein" colour="red" decoration="arc">
+      <featureRange start="81109" stop="81813" />
+    </feature>
+    <feature label="TraQ" colour="red" decoration="arc">
+      <featureRange start="81837" stop="82367" />
+    </feature>
+    <feature label="Conjugal_Transfer_Protein" colour="red" decoration="arc">
+      <featureRange start="82384" stop="82773" />
+    </feature>
+    <feature label="Conjugal_Transfer_Protein" colour="red" decoration="arc">
+      <featureRange start="82819" stop="83313" />
+    </feature>
+    <feature label="Conjugal_Transfer_Protein" colour="red" decoration="arc">
+      <featureRange start="83310" stop="86360" />
+    </feature>
+    <feature label="TraW" colour="red" decoration="arc">
+      <featureRange start="86357" stop="87565" />
+    </feature>
+    <feature label="TraX-Like_Protein" colour="red" decoration="arc">
+      <featureRange start="87562" stop="88212" />
+    </feature>
+    <feature label="TraY" colour="red" decoration="arc">
+      <featureRange start="88205" stop="90385" />
+    </feature>
+    <feature label="ExcA" colour="red" decoration="arc">
+      <featureRange start="90388" stop="91041" />
+    </feature>
+    <feature label="RepC" colour="red" decoration="arc">
+      <featureRange start="91116" stop="91346" />
+    </feature>
+  </ring>
+  <ring colour="14,22,225" name="PC5 Rep plasmid" position="0" upperInt="70" lowerInt="50" legend="no" size="30" labels="no" blastType="blastn">
+    <sequence location="gen/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta" />
+  </ring>
+  <refDir location="gra" />
+  <refDir location="gen">
+    <refFile location="gen/batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1.fasta" />
+  </refDir>
+</BRIG>
+

@@ -1,0 +1,579 @@
+>Feature batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1
+1	1056	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66538.1
+			locus_tag	MKOEDHEA_00001
+			product	replication protein RepA
+2920	2060	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66539.1
+			locus_tag	MKOEDHEA_00002
+			product	class A broad-spectrum beta-lactamase TEM-1
+5111	3741	CDS
+			gene	tnpA_1
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:ADY00035.1
+			locus_tag	MKOEDHEA_00003
+			product	transposase
+6362	5226	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BDT52986.1
+			locus_tag	MKOEDHEA_00004
+			note	DUF3883 domain-containing protein
+			product	hypothetical protein
+6640	6413	CDS
+			inference	ab initio prediction:Prodigal:002006
+			locus_tag	MKOEDHEA_00005
+			product	hypothetical protein
+7879	7337	CDS
+			gene	tmrB
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BDT52988.1
+			locus_tag	MKOEDHEA_00006
+			product	tunicamycin resistance protein
+8752	7892	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52058.1
+			locus_tag	MKOEDHEA_00007
+			product	aminoglycoside 3-N-acetyltransferase
+8985	9689	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52057.1
+			locus_tag	MKOEDHEA_00008
+			product	IS6 family transposase
+10735	10151	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00155.1
+			locus_tag	MKOEDHEA_00009
+			note	conserved protein of unknown function
+			product	hypothetical protein
+10893	10735	CDS
+			inference	ab initio prediction:Prodigal:002006
+			locus_tag	MKOEDHEA_00010
+			product	hypothetical protein
+11262	10918	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480520.1
+			locus_tag	MKOEDHEA_00011
+			product	putative protein
+11789	13063	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66571.1
+			locus_tag	MKOEDHEA_00012
+			product	type II toxin-antitoxin system RelB/DinJ family antitoxin
+13081	13353	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66570.1
+			locus_tag	MKOEDHEA_00013
+			product	helix-turn-helix transcriptional regulator
+13350	14033	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80119.1
+			locus_tag	MKOEDHEA_00014
+			product	tgtA5 cluster protein 2
+14078	14296	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480517.1
+			locus_tag	MKOEDHEA_00015
+			product	putative protein
+14299	14508	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480516.1
+			locus_tag	MKOEDHEA_00016
+			product	putative protein
+14577	15215	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00148.1
+			locus_tag	MKOEDHEA_00017
+			note	conserved membrane protein of unknown function
+			product	hypothetical protein
+15360	15680	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66565.1
+			locus_tag	MKOEDHEA_00018
+			product	chromosome segregation protein ParM
+15683	16531	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66564.1
+			locus_tag	MKOEDHEA_00019
+			product	3'-5' exonuclease
+17858	16554	CDS
+			gene	umuC_7
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52033.1
+			locus_tag	MKOEDHEA_00020
+			product	DNA polymerase V subunit UmuC
+18241	17807	CDS
+			EC_number	2.7.7.7
+			gene	umuD
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66563.1
+			locus_tag	MKOEDHEA_00021
+			product	translesion error-prone DNA polymerase V autoproteolytic subunit
+19800	18316	CDS
+			EC_number	2.7.7.49
+			gene	ltrA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QWB04413.1
+			locus_tag	MKOEDHEA_00022
+			product	group II intron reverse transcriptase/maturase
+20827	20495	CDS
+			gene	pemK
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BDT52999.1
+			locus_tag	MKOEDHEA_00023
+			product	plasmid stable inheritance protein
+21086	20829	CDS
+			gene	pemI
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66559.1
+			locus_tag	MKOEDHEA_00024
+			product	type II toxin-antitoxin system antitoxin PemI
+21832	21179	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66558.1
+			locus_tag	MKOEDHEA_00025
+			product	CPBP family intramembrane metalloprotease
+21945	22295	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66557.1
+			locus_tag	MKOEDHEA_00026
+			note	DUF1496 domain-containing protein
+			product	hypothetical protein
+22400	22795	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66556.1
+			locus_tag	MKOEDHEA_00027
+			product	lytic transglycosylase domain-containing protein
+22795	24102	CDS
+			gene	trbA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BDT52994.1
+			locus_tag	MKOEDHEA_00028
+			product	conjugal transfer protein
+24113	25063	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66554.1
+			locus_tag	MKOEDHEA_00029
+			product	DsbC family protein
+25076	27163	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66553.1
+			locus_tag	MKOEDHEA_00030
+			product	conjugal transfer protein TrbC
+27211	27720	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66552.1
+			locus_tag	MKOEDHEA_00031
+			product	MucR family transcriptional regulator
+30338	28275	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51548.1
+			locus_tag	MKOEDHEA_00032
+			product	Tn3 family transposase Tn2tnpA
+31090	30386	CDS
+			gene	tnpA_2
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:ADY00053.1
+			locus_tag	MKOEDHEA_00033
+			product	transposase
+31141	31908	CDS
+			gene	repA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AFZ84499.1
+			locus_tag	MKOEDHEA_00034
+			product	repA
+31975	32517	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QAW98278.1
+			locus_tag	MKOEDHEA_00035
+			product	DNA-binding protein
+32853	33485	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51614.1
+			locus_tag	MKOEDHEA_00036
+			product	ISNCY family transposase ISKpn21
+34917	33514	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QMI78462.1
+			locus_tag	MKOEDHEA_00037
+			product	ISNCY-like element ISKpn21 family transposase
+36044	35160	CDS
+			gene	mph(E)
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BBS34972.1
+			locus_tag	MKOEDHEA_00038
+			product	Mph(E) family macrolide 2'-phosphotransferase
+37575	36100	CDS
+			gene	msr(E)
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BBS34971.1
+			locus_tag	MKOEDHEA_00039
+			product	ABC-F type ribosomal protection protein Msr(E)
+39149	37974	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QAW98276.1
+			locus_tag	MKOEDHEA_00040
+			product	IS4 family transposase ISEc29
+39207	39392	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QEQ71041.1
+			locus_tag	MKOEDHEA_00041
+			product	putative permease
+40647	39874	CDS
+			gene	armA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AFZ84494.1
+			locus_tag	MKOEDHEA_00042
+			product	ArmA
+40890	40798	CDS
+			inference	ab initio prediction:Prodigal:002006
+			locus_tag	MKOEDHEA_00043
+			product	hypothetical protein
+41809	40973	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BBS34966.1
+			locus_tag	MKOEDHEA_00044
+			product	IS5 family transposase
+43587	42046	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52050.1
+			locus_tag	MKOEDHEA_00045
+			product	IS91 family transposase
+44831	43992	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52051.1
+			locus_tag	MKOEDHEA_00046
+			product	dihydropteroate synthase
+44936	45418	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80131.1
+			locus_tag	MKOEDHEA_00047
+			product	[NiFe] hydrogenase nickel incorporation protein HybF
+46297	45422	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QMI78658.1
+			locus_tag	MKOEDHEA_00048
+			product	LysR family transcriptional regulator
+46408	47424	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51558.1
+			locus_tag	MKOEDHEA_00049
+			product	D-aminopeptidase DeltablaDHA-1
+48048	47788	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51636.1
+			locus_tag	MKOEDHEA_00050
+			product	Bleomycin resistance protein
+48969	48157	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51637.1
+			locus_tag	MKOEDHEA_00051
+			product	Metallo-beta-lactamase NDM-1
+49982	49278	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BCG52057.1
+			locus_tag	MKOEDHEA_00052
+			product	IS6 family transposase
+50495	50019	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480523.1
+			locus_tag	MKOEDHEA_00053
+			product	putative protein
+50636	51097	CDS
+			EC_number	6.1.1.22
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN79963.1
+			locus_tag	MKOEDHEA_00054
+			product	Asparaginyl-tRNA synthetase
+51094	51342	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66486.1
+			locus_tag	MKOEDHEA_00055
+			product	helix-turn-helix domain-containing protein
+51335	51922	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UMD26765.1
+			locus_tag	MKOEDHEA_00056
+			product	restriction endonuclease
+51919	52404	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00161.1
+			locus_tag	MKOEDHEA_00057
+			note	conserved protein of unknown function
+			product	hypothetical protein
+52401	52649	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00162.1
+			locus_tag	MKOEDHEA_00058
+			note	conserved protein of unknown function
+			product	hypothetical protein
+52668	53408	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:BDJ25078.1
+			locus_tag	MKOEDHEA_00059
+			product	resolvase
+53649	54623	CDS
+			gene	parA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AEV46217.1
+			locus_tag	MKOEDHEA_00060
+			product	ParA
+54626	55069	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AQV49836.1
+			locus_tag	MKOEDHEA_00061
+			product	plasmid stability family protein
+55079	55642	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QHW57120.1
+			locus_tag	MKOEDHEA_00062
+			product	phospholipase D family protein
+55760	56266	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480533.1
+			locus_tag	MKOEDHEA_00063
+			product	putative protein
+56259	56738	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480534.1
+			locus_tag	MKOEDHEA_00064
+			product	putative protein
+56767	57177	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00169.1
+			locus_tag	MKOEDHEA_00065
+			note	conserved exported protein of unknown function
+			product	hypothetical protein
+57295	57558	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480536.1
+			locus_tag	MKOEDHEA_00066
+			product	putative protein
+57580	57942	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66498.1
+			locus_tag	MKOEDHEA_00067
+			note	DUF3085 domain-containing protein
+			product	hypothetical protein
+58064	58513	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AUY17241.1
+			locus_tag	MKOEDHEA_00068
+			product	DNA repair protein RadC
+58558	58824	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66500.1
+			locus_tag	MKOEDHEA_00069
+			product	helix-turn-helix domain-containing protein
+58888	60171	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AQV49843.1
+			locus_tag	MKOEDHEA_00070
+			product	DGQHR domain-containing protein
+60779	60958	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480541.1
+			locus_tag	MKOEDHEA_00071
+			product	putative protein
+61031	61891	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QHW57130.1
+			locus_tag	MKOEDHEA_00072
+			note	DUF4942 domain-containing protein
+			product	hypothetical protein
+62081	62419	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80009.1
+			locus_tag	MKOEDHEA_00073
+			product	Fibrinogen-binding protein
+62517	62747	CDS
+			gene	ymoA
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480544.1
+			locus_tag	MKOEDHEA_00074
+			product	Histone-like protein
+62860	62973	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480545.1
+			locus_tag	MKOEDHEA_00075
+			product	putative protein
+63079	63294	CDS
+			inference	ab initio prediction:Prodigal:002006
+			locus_tag	MKOEDHEA_00076
+			product	hypothetical protein
+63366	63776	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66507.1
+			locus_tag	MKOEDHEA_00077
+			note	DUF1380 domain-containing protein
+			product	hypothetical protein
+63838	64143	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480547.1
+			locus_tag	MKOEDHEA_00078
+			product	putative protein
+64344	64784	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80020.1
+			locus_tag	MKOEDHEA_00079
+			product	Antirestriction protein KlcA
+64828	65112	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480549.1
+			locus_tag	MKOEDHEA_00080
+			product	putative protein
+65266	65487	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480550.1
+			locus_tag	MKOEDHEA_00081
+			product	putative protein
+65559	65993	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80029.1
+			locus_tag	MKOEDHEA_00082
+			product	Single-stranded DNA-binding protein
+66052	66363	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80031.1
+			locus_tag	MKOEDHEA_00083
+			product	Transcriptional regulator, HxlR family
+66496	67032	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00187.1
+			locus_tag	MKOEDHEA_00084
+			note	conserved protein of unknown function
+			product	hypothetical protein
+67102	67242	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:CAH1480554.1
+			locus_tag	MKOEDHEA_00085
+			product	putative protein
+67898	67533	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51640.1
+			locus_tag	MKOEDHEA_00086
+			product	MobC
+68173	68490	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:QAW98362.1
+			locus_tag	MKOEDHEA_00087
+			product	NikA
+68477	70456	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80043.1
+			locus_tag	MKOEDHEA_00088
+			product	ChlI component of cobalt chelatase involved in B12 biosynthesis / ChlD component of cobalt chelatase involved in B12 biosynthesis
+70470	70970	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66518.1
+			locus_tag	MKOEDHEA_00089
+			product	DotD/TraH family lipoprotein
+70967	71746	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51594.1
+			locus_tag	MKOEDHEA_00090
+			product	TraJ
+71757	72920	CDS
+			gene	traJ
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66520.1
+			locus_tag	MKOEDHEA_00091
+			product	plasmid transfer ATPase TraJ
+72910	73170	CDS
+			gene	icmT
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66521.1
+			locus_tag	MKOEDHEA_00092
+			product	IcmT/TraK family protein
+73195	76722	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AFZ84463.1
+			locus_tag	MKOEDHEA_00093
+			product	DNA primase
+76688	77200	CDS
+			gene	traL
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:AFZ84464.1
+			locus_tag	MKOEDHEA_00094
+			product	TraL
+77398	77201	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPE00198.1
+			locus_tag	MKOEDHEA_00095
+			note	conserved protein of unknown function
+			product	hypothetical protein
+77795	77385	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66524.1
+			locus_tag	MKOEDHEA_00096
+			product	H-NS histone family protein
+77863	78576	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51599.1
+			locus_tag	MKOEDHEA_00097
+			product	TraM
+78585	79736	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66526.1
+			locus_tag	MKOEDHEA_00098
+			product	DotH/IcmK family type IV secretion protein
+79748	81097	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:SPN80059.1
+			locus_tag	MKOEDHEA_00099
+			product	IncI1 plasmid conjugative transfer protein TraO
+81109	81813	CDS
+			gene	traP
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:ADY00119.1
+			locus_tag	MKOEDHEA_00100
+			product	conjugative transfer protein
+81837	82367	CDS
+			gene	traQ
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66529.1
+			locus_tag	MKOEDHEA_00101
+			product	conjugal transfer protein TraQ
+82384	82773	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66530.1
+			locus_tag	MKOEDHEA_00102
+			product	conjugal transfer protein
+82819	83313	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UIX51605.1
+			locus_tag	MKOEDHEA_00103
+			product	conjugal transfer protein
+83310	86360	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66532.1
+			locus_tag	MKOEDHEA_00104
+			product	conjugal transfer protein
+86357	87565	CDS
+			gene	traW
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66533.1
+			locus_tag	MKOEDHEA_00105
+			product	conjugal transfer protein TraW
+87562	88212	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66534.1
+			locus_tag	MKOEDHEA_00106
+			product	TraX-like protein
+88205	90385	CDS
+			gene	traY
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:ANA08194.1
+			locus_tag	MKOEDHEA_00107
+			product	TraY
+90388	91041	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66536.1
+			locus_tag	MKOEDHEA_00108
+			product	ExcA
+91116	91346	CDS
+			inference	ab initio prediction:Prodigal:002006
+			inference	similar to AA sequence:batch2_21032019_ENT1079_Ctg2_len_91643_depth_2.11x_circ_blaNDM-1_Top100_NCBI.gbk:UHD66537.1
+			locus_tag	MKOEDHEA_00109
+			product	RepC
