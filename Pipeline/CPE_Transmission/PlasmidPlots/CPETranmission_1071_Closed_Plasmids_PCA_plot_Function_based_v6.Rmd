@@ -1,0 +1,801 @@
+---
+title: "5 year CPE Tranmission - data visualizations using R"
+author: "Prakki Sai Rama Sridatta"
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    keep_md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+## PCA
+
+This is PCA for the top CP genes in the 5 year dataset.
+
+
+```{r Plasmid_PCA_data_process, fig.width=15, fig.height=15, echo=TRUE,message=FALSE}
+
+# Copy 1071 gff files into the folder
+#cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Prokka_Plasmids_959_seqs/*_prokka_out/*.gff gff/
+#cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Prokka_Plasmids_112_seqs_unclustered/*_prokka_out/*.gff gff/  
+
+
+# Create roary pangenome alignments and gene presence absence matrix
+# time roary -p 48 *.gff 
+Plasmid_PCA_data_process <- function(filepath,gene) {
+###----------------------Plot PCA using Roary Gene Presence/Absence Matrix------------------------####
+
+library(dplyr) # left_join
+library(tidyverse) # column_to_rownames
+library(reshape2)
+library(factoextra) #fviz_eig
+library(stringr)
+library(ggplot2)
+library(plotly)
+library(ggfortify) # autoplot
+library(autoplotly)  
+library(crosstalk) # For extracting data points from plot
+library(DT) # data table
+library(kableExtra)  
+
+Gene_PA_df <- read.table(filepath, quote = "", check.names = FALSE, header = TRUE, sep = "\t")
+#head(Gene_PA_df)
+#View(as.data.frame(Gene_PA_df))
+
+# Transpose to samples in rows and genes in columns
+Gene_PA_df_t  <- data.table::transpose(Gene_PA_df, keep.names = "Plasmid", make.names = "Gene")   
+#View(Gene_PA_df_t)
+
+# Load metadata file
+Gene_PA_meta <- read.table("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/Closed_CP_Plasmids_1071_complete_v3_Plasmid_meta.csv", check.names = FALSE, header = TRUE, sep = ",", fill = TRUE)
+#head(Gene_PA_meta)
+#tail(Gene_PA_meta)
+
+# Combine the Matrix with Metadata
+Gene_PA_df_with_metadata <- left_join(Gene_PA_df_t, Gene_PA_meta, by = c("Plasmid"))
+#View(Gene_PA_df_with_metadata)
+#head(Gene_PA_df_with_metadata)
+
+Gene_PA_df_with_metadata$year=format(as.Date(Gene_PA_df_with_metadata$Date_of_culture, format="%d/%m/%Y"),"%Y")
+
+
+# Manual Plasmid Size binning
+Gene_PA_df_with_metadata <- Gene_PA_df_with_metadata %>%  
+  mutate(Plasmidlengthbin = case_when(Length<=10000 ~ "<10K",
+                               Length>=10000 & Length<=39999 ~ "10K-39.9K",
+                               Length>=40000 & Length<=49999 ~ "40K-49.9K",
+                               Length>=50000 & Length<=59999 ~ "40K-49.9K",
+                               Length>=60000 & Length<=69999 ~ "60K-69.9K",
+                               Length>=70000 & Length<=79999 ~ "70K-79.9K",
+                               Length>=80000 & Length<=89999 ~ "80K-89.9K",
+                               Length>=90000 & Length<=99999 ~ "90K-99.9K",
+                               Length>=100000 & Length<=199999 ~ "100K-199.9K",
+                               Length>=200000 ~ ">200K",
+  ))
+
+# Convert first column to rownames
+roaryTab.df  <- Gene_PA_df_with_metadata %>% remove_rownames %>% column_to_rownames(var="Plasmid")
+#head(roaryTab.df)
+#View(roaryTab.df)
+
+#write.csv(roaryTab.df,"/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/intermediate_metadata_matrix.csv")
+
+# remove last 15 metadata columns for prcomp
+# View(roaryTab.df[1:(length(roaryTab.df)-15)]) 
+
+#---------------> SCALE TRUE
+# Run PCA
+#res.pca.scaleT  <- prcomp(roaryTab.df[1:(length(roaryTab.df)-15)], scale = TRUE)
+
+#options(ggrepel.max.overlaps = 30)
+#fviz_pca_ind(res.pca.scaleT)
+#fviz_pca_ind(res.pca.scaleT,fill.ind = roaryTab.df$Hospital_type)
+#fviz_pca_ind(res.pca.scaleT,fill.ind = res.pca.scaleT$year)
+#fviz_pca_ind(res.pca.scaleT, label="none", habillage=roaryTab.df$Hospital_type, addEllipses=TRUE, ellipse.level=0.95)
+#fviz_pca_ind(res.pca.scaleT, fill.ind = roaryTab.df$Plasmid_CP_gene,pointshape = 21, pointsize = 3,addEllipses=TRUE, ellipse.level=0.95, repel = TRUE)
+
+
+#---------------> SCALE FALSE
+
+# Run PCA
+res.pca.scaleF  <- prcomp(roaryTab.df[1:(length(roaryTab.df)-17)], scale = FALSE)
+
+options(ggrepel.max.overlaps = 0)
+#fviz_pca_ind(res.pca.scaleT)
+#fviz_pca_ind(res.pca.scaleT,fill.ind = roaryTab.df$Hospital_type)
+#fviz_pca_ind(res.pca.scaleT,fill.ind = res.pca.scaleT$year)
+
+
+# fviz_pca_ind(res.pca.scaleF, label="none", habillage=roaryTab.df$Hospital, addEllipses=TRUE, ellipse.level=0.99)
+# 
+# fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$CP_Gene,pointshape = 21, pointsize = 3,addEllipses=TRUE, ellipse.level=0.70, repel = TRUE)
+# fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$CP_Gene,pointshape = 21, pointsize = 3,addEllipses=FALSE, ellipse.level=0.95, repel = TRUE)
+# 
+# fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$Plasmidlengthbin,pointshape = 21, pointsize = 3,addEllipses=TRUE, ellipse.level=0.95, repel = TRUE)
+# 
+# fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$year,pointshape = 21, pointsize = 3,addEllipses=TRUE, ellipse.level=0.95, repel = TRUE)
+# 
+# fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$Lab_Species,pointshape = 21, pointsize = 3,addEllipses=FALSE, ellipse.level=0.95, repel = TRUE)
+
+#fviz_pca_ind(res.pca.scaleF, fill.ind = roaryTab.df$Lab_Species,pointshape = 21, pointsize = 3,addEllipses=FALSE, ellipse.level=0.95, repel = TRUE)
+
+
+# With the fviz_pca_ind function, we cannot have two categorical variables: one point shape and one fill color.
+# So we modify the output from fviz_pca_ind(), so you would need to take out the data from the results, and 
+# plot it again using ggplot2:
+
+#######------------Multiple labels---------###########
+#basic_plot <- fviz_pca_ind(res.pca.scaleF, label="none")
+basic_plot <- fviz_pca_ind(res.pca.scaleF, label="var") # Adding var gives nicer legend symbols than none
+
+#View(head(basic_plot$data))
+#tail(basic_plot$data)
+
+# Combine the Matrix with Metadata
+basic_plot_with_meta <- left_join(basic_plot$data, Gene_PA_meta, by = c("name" = "Plasmid"))
+#View((basic_plot_with_meta))
+
+Plasmid_PCA_Viz_ggplotly(basic_plot, basic_plot_with_meta,gene)
+#Plasmid_PCA_Viz_autoplotly(res.pca.scaleF, roaryTab.df,gene)
+}
+
+Plasmid_PCA_Viz_ggplotly <- function(basic_plot, basic_plot_with_meta,gene) {
+# With confidence level
+
+# p3_rev <- ggplot(basic_plot_with_meta,
+#                  aes(x=x,y=y,col=Inc_group_Regrouped,shape=CP_Gene)) + geom_point(size=2, alpha = 0.3) +
+#   theme_bw() +
+#   stat_ellipse(level=0.95,linetype=2) +
+#   ggtitle(paste0("PCA plot of ",gene," plasmids based on Inc group")) +
+#   xlab("PC1") +
+#   ylab("PC2") 
+# 
+# ggplotly(p3_rev)
+  
+basic_plot_with_meta_edited <- basic_plot_with_meta %>% select(-coord,-cos2,-contrib,-Clonal_cluster,-`Clonal_re-cluster`,-Plasmid_cluster,-Inc_group_MOBtyper)
+d <- highlight_key(basic_plot_with_meta_edited , ~name)  
+
+p3_rev <- ggplotly(ggplot(d,
+                 aes(x=x,y=y,col=Inc_group_Regrouped,shape=CP_Gene)) + geom_point(size=2, alpha = 0.3) +
+  theme_bw() +
+  stat_ellipse(level=0.95,linetype=2) +
+  ggtitle(paste0("PCA plot of ",gene," plasmids based on Inc group")) +
+  xlab("PC1") +
+  ylab("PC2")) %>%
+  highlight("plotly_selected", dynamic = TRUE)
+
+#options(persistent = FALSE)
+# 
+p <- datatable(d) 
+ 
+
+#bscols(p3_rev, p)
+bscols(widths = c(10,2),  list(p3_rev, p))
+#bscols(p3_rev)
+
+# Just plotly
+#p3_rev
+  
+  
+}
+
+Plasmid_PCA_Viz_autoplotly <- function(res.pca.scaleF, roaryTab.df,gene) {
+# To explore later
+autoplotly(res.pca.scaleF, data = roaryTab.df, colour = "Inc_group_Regrouped", shape="CP_Gene")
+}
+
+
+Plasmid_PCA_data_process("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_PCA/gene_presence_absence.Rtab",gene="XXX")
+Plasmid_PCA_data_process("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_PCA/gene_presence_absence.Rtab",gene="KPC")
+Plasmid_PCA_data_process("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/OXA_PCA/gene_presence_absence.Rtab",gene="OXA")
+Plasmid_PCA_data_process("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/IMP_PCA/gene_presence_absence.Rtab",gene="IMP")
+
+```
+
+# Phylogenetic SNP tree - SNPs in Core genome - Gene Presence Absence Heatmap (Static)
+
+```{r SNPtree_SNPlocations_Heatmap, fig.width=10, fig.height=10, echo=TRUE,message=FALSE}
+# In Bash
+
+#time for d in $(cat IncN_NDM-1_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_PCA/$d.gff gff/; done
+# time for d in $(cat IncU_AND_RelatedIncGroups_KPC-2_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_PCA/$d.gff gff/; done
+
+# Core genome
+#time roary -e --mafft -g 60000 -p 48 -cd 95 *.gff
+# mkdir CoreGenome_AND_gubbins
+
+# Gubbins
+# time run_gubbins --prefix postGubbins --filter_percentage 100 --threads 48 core_gene_alignment.aln --verbose &
+
+# All roary and gubbins output is moved to /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins  
+
+library(ggtree)
+library(plotly)
+library(ggplotlyExtra)
+library(ggtreeExtra)
+library(tidyverse)
+library(glue)  
+
+Plasmid_SNPtree_SNPlocations_Heatmap <- function(location, treeInput,modifiedVCF,genePresAbsCSV,genePresAbsTAB,plot_title,gheatmap_offset,gheatmap_width,SNP_plot_offset,SNP_plot_width) {
+  
+  # In Bash
+  
+  #time for d in $(cat IncN_NDM-1_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_PCA/$d.gff gff/; done
+  # time for d in $(cat IncU_AND_RelatedIncGroups_KPC-2_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_PCA/$d.gff gff/; done
+  
+  # Core genome
+  #time roary -e --mafft -g 60000 -p 48 -cd 95 *.gff
+  # mkdir CoreGenome_AND_gubbins
+  
+  # Gubbins
+  # time run_gubbins --prefix postGubbins --filter_percentage 100 --threads 48 core_gene_alignment.aln --verbose &
+  
+  # All roary and gubbins output is moved to /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins  
+  
+  # Modify vcf file to load into R 
+  #tail -n+4 postGubbins.summary_of_snp_distribution.vcf | tr -d "#" >modified.vcf
+  
+  vcf <- read.table(file = modifiedVCF, header = TRUE, sep ='\t', check.names = FALSE)
+  head(vcf)
+
+
+  #View(vcf)
+  vcf_reqcols <- vcf %>% select(-"CHROM",-"ID",-"ALT",-"QUAL",-"FILTER",-"INFO",-"FORMAT") 
+  #View(vcf_reqcols)
+  
+  snp_data_ggtree <- reshape2::melt(vcf_reqcols, id=c("POS","REF"),variable.name = "Plasmid", value.name = "BASE") %>%
+    filter(REF != BASE) %>% 
+    filter(BASE != "-") %>% 
+    filter(BASE != "N") %>% 
+    select(Plasmid,POS) %>% arrange(Plasmid,POS)
+  
+  #View(snp_data_ggtree)
+  class(snp_data_ggtree)
+  # lets add meta data
+  meta <- read.table("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/Closed_CP_Plasmids_1071_complete_v3_Plasmid_meta_for_gubbins.csv", sep = ",", header = TRUE)
+  #head(meta)
+  
+  thetree <- read.tree(treeInput)
+  
+  #q <- ggtree(thetree,colour="black", ladderize = FALSE, right = FALSE) + geom_tiplab(size=2,align=F,linesize=0.5)
+  
+  q <-
+    ggtree(
+      thetree,
+      colour = "orange",
+      ladderize = FALSE,
+      right = FALSE,
+      size = 0.25
+    ) +
+    geom_tippoint(size = 1, colour = "red") + 
+    geom_rootpoint() + 
+    theme_tree("white")
+  
+  #q
+  
+  # q2 <- q %<+% meta + geom_tippoint(aes(color=factor(Hospital))) +
+  #   geom_facet(data=snp_data_ggtree, geom=geom_point, panel="SNP", mapping=aes( x=POS), size=2, shape="|") + theme_tree2(plot.margin = unit(c(10,8,10,8), "mm")) +
+  #   labs(x="core genome length",
+  #        y="",
+  #        title = "Facet plot with SNP tree and SNP location in core genome") 
+  # q2
+  # plotly::ggplotly(q2)  
+  
+  #Final
+  q4 <- q + #+ geom_tippoint(aes(color=factor(Hospital))) + 
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Sample_type,fill=Sample_type),
+               offset=0.07,pwidth=0.03,
+               axis.params = list(axis="x", title = "Sample Type",title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Hospital,fill=factor(Hospital)),
+               offset=0.07,#pwidth=0.07,
+               axis.params = list(axis="x", title = "Hospital",title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Lab_Species,fill=Lab_Species),
+               offset=0.07,pwidth=0.3,
+               axis.params = list(axis="x", title = "Species", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=snp_data_ggtree,geom=geom_point,
+               mapping = aes(y=Plasmid,x=POS, color="red"),shape="O",
+               offset=0.05,pwidth=1,
+               axis.params = list(axis="x", title = "SNPs in core genome (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_point,
+               mapping = aes(y=Plasmid,x=Length),shape="O",
+               offset=0.024,pwidth=0.07,
+               axis.params = list(axis="x", title = "Plasmid Lengths (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    # scale_fill_manual(values=c("#339933")) +
+    labs(title = "IncN and blaNDM-1") +
+    theme(legend.position= 'none',plot.title = element_text(size=15, hjust = 0.5)) + # the position of legend.
+    vexpand(.4, -1) + vexpand(.1,1)
+  
+  #q4
+  
+  # To add annotation to the genes since the roary only puts group_names
+  
+  heatmapData <- read.table(genePresAbsTAB, header = TRUE, check.names = FALSE, sep = "\t")
+  
+  #rn <- rownames(heatmapData)
+  GeneAnnot_mat <- read.csv(genePresAbsCSV, header = TRUE, check.names = FALSE, sep = ",")
+  
+  heatmapData2 <- GeneAnnot_mat %>% 
+    select(Gene, Annotation) %>% 
+    right_join(heatmapData, by = 'Gene') %>% unite(Gene_Annotation, c("Gene", "Annotation"))
+  
+  #View(GeneAnnot_mat)
+  #View(heatmapData)
+  write.csv(heatmapData2,file = glue('{location}geneAnnotation_presence_absence_intermediate1.csv'))
+  tmp <- as.data.frame(t(heatmapData2[,-1]))
+  
+  #View(tmp)
+  colnames(tmp) <- heatmapData2$Gene
+  #View(tmp)
+  write.csv(tmp,file = glue('{location}geneAnnotation_presence_absence_intermediate2.csv'))
+  #q4
+  #q
+  
+  # For clarity I ll remove SampleTYpe, Species and Plasmid Length panels
+  
+  q5 <- q + #+ geom_tippoint(aes(color=factor(Hospital))) + 
+    geom_fruit(data=snp_data_ggtree,geom=geom_point,
+               mapping = aes(y=Plasmid,x=POS,color="SNP"),shape="O",
+               offset=SNP_plot_offset,pwidth=SNP_plot_width,
+               axis.params = list(axis="x", title = "SNPs in core genome (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    scale_color_manual(values=c("blue")) + 
+    labs(title = glue('{plot_title}')) +
+    theme(legend.position= 'none',plot.title = element_text(size=15, hjust = 0.5)) + # the position of legend.
+    vexpand(.4, -1) + vexpand(.1,1)
+ # q5
+  
+# Add Pangenome matrix by gheatmap
+  
+  q6 <- gheatmap(q5,tmp, offset=gheatmap_offset, width=gheatmap_width,colnames_position="bottom",
+                 colnames_angle=90, colnames_offset_y = 0,font.size = 2, hjust=1, color=NA) +
+    scale_fill_gradientn(limits = c(0,1), colours=c("#FBEEE6", "#008080"),
+                         breaks=c(0,1), labels=format(c(0,1)), na.value="tomato3", name="Gene Presence/Absence") +
+    labs(x="Core and Accessory genome",
+         y="",
+         #title = "Phylogenetic tree with divergence date estimates of the 261 ST308 Pseudomonas aeruginosa samples and Resistant Gene Presence/Absence Matrix"
+    ) + theme(legend.position= 'bottom') +
+    vexpand(.1, -1)
+  
+  q6
+  
+#  plotly::ggplotly(q6)
+  
+}
+
+#NDM
+
+NDM_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_SNPTree_Recombination_Plot/NDM-1_IncN/gff/CoreGenome_AND_gubbins/"
+
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=NDM_folderloc,
+  treeInput=glue('{NDM_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{NDM_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{NDM_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{NDM_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncN and blaNDM-1 plasmids",
+  gheatmap_offset=5, gheatmap_width=2, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+#KPC
+
+KPC_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins/"
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=KPC_folderloc,
+  treeInput=glue('{KPC_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{KPC_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{KPC_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{KPC_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncU&IncURelated and blaKPC-2 plasmids",
+  gheatmap_offset=50, gheatmap_width=1, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+OXA_48_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/OXA-48_SNPTree_Recombination_Plot/gff/CoreGenome_AND_gubbins/"
+#test <- (glue('{OXA_48_folderloc}modified.vcf'))
+#testvcf <- read.table(test , header = TRUE, sep ='\t', check.names = FALSE, fill = TRUE)
+#testvcf 
+#View(testvcf)
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=OXA_48_folderloc,
+  treeInput=glue('{OXA_48_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{OXA_48_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{OXA_48_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{OXA_48_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncL/M and blaOXA-48 plasmids",
+  gheatmap_offset=700, gheatmap_width=4, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+
+#OXA-181
+
+OXA_181_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/OXA-181_SNPTree_Recombination_Plot/gff/CoreGenome_AND_gubbins/"
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=OXA_181_folderloc,
+  treeInput=glue('{OXA_181_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{OXA_181_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{OXA_181_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{OXA_181_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncA/C2 and blaOXA-181 plasmids",
+  gheatmap_offset=12, gheatmap_width=7, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+```
+
+
+# Phylogenetic SNP tree - SNPs in Core genome - Gene Presence Absence Heatmap (Dynamic)
+
+Using dynamic plots we can hover over SNP postions to know the coordinates and zoom in to see the relevant gene in the gene heatmap.
+
+
+```{r SNPtree_SNPlocations, fig.width=10, fig.height=10, echo=TRUE,message=FALSE}
+# In Bash
+
+#time for d in $(cat IncN_NDM-1_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_PCA/$d.gff gff/; done
+# time for d in $(cat IncU_AND_RelatedIncGroups_KPC-2_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_PCA/$d.gff gff/; done
+
+# Core genome
+#time roary -e --mafft -g 60000 -p 48 -cd 95 *.gff
+# mkdir CoreGenome_AND_gubbins
+
+# Gubbins
+# time run_gubbins --prefix postGubbins --filter_percentage 100 --threads 48 core_gene_alignment.aln --verbose &
+
+# All roary and gubbins output is moved to /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins  
+
+library(ggtree)
+library(plotly)
+library(ggplotlyExtra)
+library(ggtreeExtra)
+library(tidyverse)
+library(glue)  
+
+Plasmid_SNPtree_SNPlocations_Heatmap <- function(location, treeInput,modifiedVCF,genePresAbsCSV,genePresAbsTAB,plot_title,gheatmap_offset,gheatmap_width,SNP_plot_offset,SNP_plot_width) {
+  
+  # In Bash
+  
+  #time for d in $(cat IncN_NDM-1_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_PCA/$d.gff gff/; done
+  # time for d in $(cat IncU_AND_RelatedIncGroups_KPC-2_plasmids.list); do echo $d; cp /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_PCA/$d.gff gff/; done
+  
+  # Core genome
+  #time roary -e --mafft -g 60000 -p 48 -cd 95 *.gff
+  # mkdir CoreGenome_AND_gubbins
+  
+  # Gubbins
+  # time run_gubbins --prefix postGubbins --filter_percentage 100 --threads 48 core_gene_alignment.aln --verbose &
+  
+  # All roary and gubbins output is moved to /data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins  
+  
+  # Modify vcf file to load into R 
+  #tail -n+4 postGubbins.summary_of_snp_distribution.vcf | tr -d "#" >modified.vcf
+  
+  vcf <- read.table(file = modifiedVCF, header = TRUE, sep ='\t', check.names = FALSE)
+  head(vcf)
+
+
+  #View(vcf)
+  vcf_reqcols <- vcf %>% select(-"CHROM",-"ID",-"ALT",-"QUAL",-"FILTER",-"INFO",-"FORMAT") 
+  #View(vcf_reqcols)
+  
+  snp_data_ggtree <- reshape2::melt(vcf_reqcols, id=c("POS","REF"),variable.name = "Plasmid", value.name = "BASE") %>%
+    filter(REF != BASE) %>% 
+    filter(BASE != "-") %>% 
+    filter(BASE != "N") %>% 
+    select(Plasmid,POS) %>% arrange(Plasmid,POS)
+  
+  #View(snp_data_ggtree)
+  class(snp_data_ggtree)
+  # lets add meta data
+  meta <- read.table("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/Closed_CP_Plasmids_1071_complete_v3_Plasmid_meta_for_gubbins.csv", sep = ",", header = TRUE)
+  #head(meta)
+  
+  thetree <- read.tree(treeInput)
+  
+  #q <- ggtree(thetree,colour="black", ladderize = FALSE, right = FALSE) + geom_tiplab(size=2,align=F,linesize=0.5)
+  
+  q <-
+    ggtree(
+      thetree,
+      colour = "orange",
+      ladderize = FALSE,
+      right = FALSE,
+      size = 0.25
+    ) +
+    geom_tippoint(size = 1, colour = "red") + 
+    geom_rootpoint() + 
+    theme_tree("white")
+  
+  #q
+  
+  # q2 <- q %<+% meta + geom_tippoint(aes(color=factor(Hospital))) +
+  #   geom_facet(data=snp_data_ggtree, geom=geom_point, panel="SNP", mapping=aes( x=POS), size=2, shape="|") + theme_tree2(plot.margin = unit(c(10,8,10,8), "mm")) +
+  #   labs(x="core genome length",
+  #        y="",
+  #        title = "Facet plot with SNP tree and SNP location in core genome") 
+  # q2
+  # plotly::ggplotly(q2)  
+  
+  #Final
+  q4 <- q + #+ geom_tippoint(aes(color=factor(Hospital))) + 
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Sample_type,fill=Sample_type),
+               offset=0.07,pwidth=0.03,
+               axis.params = list(axis="x", title = "Sample Type",title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Hospital,fill=factor(Hospital)),
+               offset=0.07,#pwidth=0.07,
+               axis.params = list(axis="x", title = "Hospital",title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_tile,
+               mapping = aes(y=Plasmid,x=Lab_Species,fill=Lab_Species),
+               offset=0.07,pwidth=0.3,
+               axis.params = list(axis="x", title = "Species", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=snp_data_ggtree,geom=geom_point,
+               mapping = aes(y=Plasmid,x=POS, color="red"),shape="O",
+               offset=0.05,pwidth=1,
+               axis.params = list(axis="x", title = "SNPs in core genome (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    geom_fruit(data=meta,geom=geom_point,
+               mapping = aes(y=Plasmid,x=Length),shape="O",
+               offset=0.024,pwidth=0.07,
+               axis.params = list(axis="x", title = "Plasmid Lengths (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+    # scale_fill_manual(values=c("#339933")) +
+    labs(title = "IncN and blaNDM-1") +
+    theme(legend.position= 'none',plot.title = element_text(size=15, hjust = 0.5)) + # the position of legend.
+    vexpand(.4, -1) + vexpand(.1,1)
+  
+  #q4
+  
+  # To add annotation to the genes since the roary only puts group_names
+  
+  heatmapData <- read.table(genePresAbsTAB, header = TRUE, check.names = FALSE, sep = "\t")
+  
+  #rn <- rownames(heatmapData)
+  GeneAnnot_mat <- read.csv(genePresAbsCSV, header = TRUE, check.names = FALSE, sep = ",")
+  
+  heatmapData2 <- GeneAnnot_mat %>% 
+    select(Gene, Annotation) %>% 
+    right_join(heatmapData, by = 'Gene') %>% unite(Gene_Annotation, c("Gene", "Annotation"))
+  
+  #View(GeneAnnot_mat)
+  #View(heatmapData)
+ # write.csv(heatmapData2,file = glue('{location}geneAnnotation_presence_absence_intermediate1.csv'))
+  tmp <- as.data.frame(t(heatmapData2[,-1]))
+  
+  #View(tmp)
+  colnames(tmp) <- heatmapData2$Gene
+  #View(tmp)
+ # write.csv(tmp,file = glue('{location}geneAnnotation_presence_absence_intermediate2.csv'))
+  #q4
+  #q
+  
+  # For clarity I ll remove SampleTYpe, Species and Plasmid Length panels
+  
+  q5 <- q %<+% meta + geom_tippoint(aes(color=factor(Hospital))) +
+  geom_facet(data=snp_data_ggtree, geom=geom_point, panel="SNP", mapping=aes(x=POS), size=2, shape="O") + theme_tree2(plot.margin = unit(c(10,8,10,8), "mm")) +
+  labs(x="core genome length",
+       y="",
+       title = glue('{plot_title}'))
+#q2
+##plotly::ggplotly(q5)  
+  
+  # q5 <- q + #+ geom_tippoint(aes(color=factor(Hospital))) + 
+  #   geom_fruit(data=snp_data_ggtree,geom=geom_point,
+  #              mapping = aes(y=Plasmid,x=POS,color="SNP"),shape="O",
+  #              offset=SNP_plot_offset,pwidth=SNP_plot_width,
+  #              axis.params = list(axis="x", title = "SNPs in core genome (bases)", title.size = 4, text.size=4, vjust=1, line.size=0, hjust = 1, text.angle=90)) +
+  #   scale_color_manual(values=c("blue")) + 
+  #   labs(title = glue('{plot_title}')) +
+  #   theme(legend.position= 'none',plot.title = element_text(size=15, hjust = 0.5)) + # the position of legend.
+  #   vexpand(.4, -1) + vexpand(.1,1)
+ 
+  #q5
+  
+  #plotly::ggplotly(q5)
+  
+# Add Pangenome matrix by gheatmap
+  
+ q6 <- gheatmap(q5,tmp, offset=gheatmap_offset, width=gheatmap_width,colnames_position="bottom",
+                colnames_angle=90, colnames_offset_y = 0,font.size = 2, hjust=1, color=NA) +
+   scale_fill_gradientn(limits = c(0,1), colours=c("#FBEEE6", "#008080"),
+                        breaks=c(0,1), labels=format(c(0,1)), na.value="tomato3", name="Gene Presence/Absence") +
+   labs(x="Core and Accessory genome",
+        y="",
+        title = glue('{plot_title}')
+   ) + theme(legend.position= 'bottom',axis.text.x = element_text(angle = 90)) +
+   vexpand(.1, -1)
+
+#  q6
+
+  plotly::ggplotly(q6)
+  
+}
+
+#NDM
+
+NDM_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/NDM_SNPTree_Recombination_Plot/NDM-1_IncN/gff/CoreGenome_AND_gubbins/"
+
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=NDM_folderloc,
+  treeInput=glue('{NDM_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{NDM_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{NDM_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{NDM_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncN and blaNDM-1 plasmids",
+  gheatmap_offset=5, gheatmap_width=2, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+#KPC
+
+KPC_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/KPC_SNPTree_Recombination_Plot/KPC-2_IncU_AND_RelatedIncGroups/gff/CoreGenome_AND_gubbins/"
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=KPC_folderloc,
+  treeInput=glue('{KPC_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{KPC_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{KPC_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{KPC_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncU&IncURelated and blaKPC-2 plasmids",
+  gheatmap_offset=50, gheatmap_width=1, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+OXA_48_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/OXA-48_SNPTree_Recombination_Plot/gff/CoreGenome_AND_gubbins/"
+#test <- (glue('{OXA_48_folderloc}modified.vcf'))
+#testvcf <- read.table(test , header = TRUE, sep ='\t', check.names = FALSE, fill = TRUE)
+#testvcf 
+#View(testvcf)
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=OXA_48_folderloc,
+  treeInput=glue('{OXA_48_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{OXA_48_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{OXA_48_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{OXA_48_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncL/M and blaOXA-48 plasmids",
+  gheatmap_offset=700, gheatmap_width=4, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+
+
+#OXA-181
+
+OXA_181_folderloc <- "/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/OXA-181_SNPTree_Recombination_Plot/gff/CoreGenome_AND_gubbins/"
+
+Plasmid_SNPtree_SNPlocations_Heatmap(
+  location=OXA_181_folderloc,
+  treeInput=glue('{OXA_181_folderloc}postGubbins.final_tree.tre'),
+  modifiedVCF=glue('{OXA_181_folderloc}modified.vcf'),
+  genePresAbsCSV=glue('{OXA_181_folderloc}gene_presence_absence.csv'),
+  genePresAbsTAB=glue('{OXA_181_folderloc}gene_presence_absence.Rtab'),
+  plot_title="IncA/C2 and blaOXA-181 plasmids",
+  gheatmap_offset=12, gheatmap_width=7, SNP_plot_offset=0.05,SNP_plot_width=0.5
+)
+```
+
+# Phylodynamics plots
+
+We want to plot the bacterial (Clonal clusters) and plasmid transmission over the 5 years and show that plasmid transmission persisted over the years than Clonal tranmission.
+
+
+```{r PhylodynamicsMap, fig.width=10, fig.height=10, echo=TRUE,message=FALSE}
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(forcats)
+library(glue)
+
+meta <- read.table("/data02/Analysis/Projects/2_CPE_Transmission/Plasmid_roary/Plasmids_1071_PCA_plot/Closed_CP_Plasmids_1071_complete_v3_Plasmid_meta_for_gubbins.csv", sep = ",", header = TRUE)
+
+#View(meta)
+
+
+#head(subset_cpgene)
+#View(subset_cpgene)
+
+
+Phylodynamics_staticplot <- function(plot_title,cpgene){
+  #View(meta)
+  # Subsetting to a smaller set for ease of simplicity - selecting OXA-48 Plasmids records with n=41 rows
+  subset_cpgene <- meta %>% 
+    filter(CP_Gene == cpgene) %>% 
+    arrange(dmy(Date_of_culture)) %>%  # arrange according to date
+    #group_by(Clonal_cluster) %>% 
+    #transform(id=factor(Clonal_cluster))
+    mutate(Unique_Plasmid_Cluster = if_else(is.na(Clonal_cluster),paste0("Singleton_", row_number()), as.character(Clonal_cluster))) %>%  # assign unique id for NA values
+    group_by(Unique_Plasmid_Cluster) %>% 
+    mutate(group_id = cur_group_id()) # 
+  
+subset_cpgene$Date_of_culture <- as.Date(subset_cpgene$Date_of_culture, format = "%d/%m/%Y")
+  
+#View(subset_cpgene)
+  
+pd1 <- subset_cpgene %>%
+  ungroup() %>% 
+  mutate(Unique_Plasmid_Cluster = forcats::fct_reorder(Unique_Plasmid_Cluster, Date_of_culture, min)) %>%
+  ggplot(aes(Date_of_culture, Unique_Plasmid_Cluster,color = Lab_Species, shape= factor(Hospital))) +
+  geom_line(aes(group=Unique_Plasmid_Cluster), color='black') +
+  geom_point(size=3) +
+  ggtitle(plot_title) +
+  ylab("Cluster") + xlab("Date") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    legend.position = "right",
+    legend.key=element_rect(fill='gray96'),
+    legend.title =element_text(size=10),
+    text=element_text(size=12),
+    axis.title.x = element_text(vjust = 0, size = 11),
+    axis.title.y = element_text(vjust = 2, size = 11),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 9),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank())
+pd1
+
+}
+
+
+
+Phylodynamics_dynamicplot <- function(plot_title,cpgene){
+  #View(meta)
+  # Subsetting to a smaller set for ease of simplicity - selecting OXA-48 Plasmids records with n=41 rows
+  subset_cpgene <- meta %>% 
+    filter(CP_Gene == cpgene) %>% 
+    arrange(dmy(Date_of_culture)) %>%  # arrange according to date
+    #group_by(Clonal_cluster) %>% 
+    #transform(id=factor(Clonal_cluster))
+    mutate(Unique_Plasmid_Cluster = if_else(is.na(Clonal_cluster),paste0("Singleton_", row_number()), as.character(Clonal_cluster))) %>%  # assign unique id for NA values
+    group_by(Unique_Plasmid_Cluster) %>% 
+    mutate(group_id = cur_group_id()) # 
+  
+subset_cpgene$Date_of_culture <- as.Date(subset_cpgene$Date_of_culture, format = "%d/%m/%Y")
+  
+#View(subset_cpgene)
+  
+pd1 <- subset_cpgene %>%
+  ungroup() %>% 
+  mutate(Unique_Plasmid_Cluster = forcats::fct_reorder(Unique_Plasmid_Cluster, Date_of_culture, min)) %>%
+  ggplot(aes(Date_of_culture, Unique_Plasmid_Cluster,color = Lab_Species, shape= factor(Hospital))) +
+  geom_line(aes(group=Unique_Plasmid_Cluster), color='black') +
+  geom_point(size=3) +
+  ggtitle(plot_title) +
+  ylab("Cluster") + xlab("Date") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    legend.position = "right",
+    legend.key=element_rect(fill='gray96'),
+    legend.title =element_text(size=10),
+    text=element_text(size=12),
+    axis.title.x = element_text(vjust = 0, size = 11),
+    axis.title.y = element_text(vjust = 2, size = 11),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 9),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank())
+#pd1
+pd1_plotly <- plotly::ggplotly(pd1)
+pd1_plotly
+}
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",cpgene="blaNDM1")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaNDM-1 gene tranmission",cpgene="blaNDM1")
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaNDM-7 gene tranmission",cpgene="blaNDM7")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaNDM-7 gene tranmission",cpgene="blaNDM7")
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaKPC2 gene tranmission",cpgene="blaKPC2")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaKPC2 gene tranmission",cpgene="blaKPC2")
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaOXA-48 gene tranmission",cpgene="blaOXA48")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaOXA-48 gene tranmission",cpgene="blaOXA48")
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaOXA232 gene tranmission",cpgene="blaOXA232")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaOXA232 gene tranmission",cpgene="blaOXA232")
+
+Phylodynamics_staticplot(plot_title="Phylodynamics of blaOXA181 gene tranmission",cpgene="blaOXA181")
+Phylodynamics_dynamicplot(plot_title="Phylodynamics of blaOXA181 gene tranmission",cpgene="blaOXA181")
+```
